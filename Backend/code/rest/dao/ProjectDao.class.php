@@ -6,22 +6,22 @@
 
     public function __construct(){
       $servername = "localhost";
-      $username = user;
-      $password = user;
-      $schema test;
+      $username = riot;
+      $password = root;
+      $schema riot;
 
       $this->conn = new PDO("mysql:host=$servername;dbname=$schema", $username, $password);
       $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function get_all(){
-      $stmt = $this->conn->prepare("SELECT * FROM 'stat tracker'");
+      $stmt = $this->conn->prepare("SELECT * FROM 'summoner'");
       $stmt->execute();
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function add(){
-      $stmt = $this->conn->prepare("INSERT INTO 'stat tracker' (wins, playername) VALUES (:wins, :playtime)");
+      $stmt = $this->conn->prepare("INSERT INTO 'summoner' (idsummoner, summonerName) VALUES (:idsummoner, :summonerName)");
       $stat->execute(['description' => $description, 'playername' => $playername]);
     }
   }
