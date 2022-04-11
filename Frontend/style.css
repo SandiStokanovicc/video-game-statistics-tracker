@@ -1,0 +1,57 @@
+#navbar {
+    background-color: #351a6e;
+}
+
+.caption {
+    position: absolute;
+    top: 38%;
+    width: 100%;
+    color: white;
+}
+
+.caption h1 {
+    font-size: 3rem;
+    letter-spacing: .2rem;
+    text-shadow: .1rem .1rem .8rem black;
+    padding-bottom: 1rem;
+}
+
+.caption h3 {
+    font-size: 2rem;
+    text-shadow: .1rem .1rem .5rem black;
+    padding-bottom: 1.6rem;
+}
+
+.btn-lg {
+    border-width: medium;
+    border-radius: 0;
+    font-size: 1.1rem;
+    padding: .6rem 1.3rem;
+}
+
+@media (max-width: 768px) {
+    .caption h1 {
+        font-size: 1.4rem;
+        letter-spacing: .15rem;
+        padding-bottom: .5rem;
+    }
+
+    .caption h3 {
+        font-size: 1.1rem;
+        padding-bottom: 1.2rem;
+    }
+
+    .btn-lg {
+        font-size: 1rem;
+        padding: .5rem 1rem;
+    }
+}
+
+.masthead {
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    position: relative;
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+}
