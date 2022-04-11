@@ -1,6 +1,22 @@
 #navbar {
-    background-color: #351a6e;
+    padding-top: 16px;
 }
+
+.navbar-brand {
+    margin-right: 1.5rem;
+    margin-left: 1rem;
+}
+
+.nav-item {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.search {
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
 
 .caption {
     position: absolute;
@@ -10,14 +26,14 @@
 }
 
 .caption h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     letter-spacing: .2rem;
     text-shadow: .1rem .1rem .8rem black;
     padding-bottom: 1rem;
 }
 
 .caption h3 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-shadow: .1rem .1rem .5rem black;
     padding-bottom: 1.6rem;
 }
@@ -53,5 +69,4 @@
     min-height: 100vh;
     position: relative;
     color: white;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
 }
