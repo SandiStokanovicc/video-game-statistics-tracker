@@ -1,3 +1,7 @@
+body {
+    min-height: 150rem;
+}
+
 #navbar {
     padding-top: 16px;
 }
@@ -12,17 +16,17 @@
     margin-left: 1rem;
 }
 
-.search {
-    margin-right: 1rem;
-    margin-left: 1rem;
-}
-
-
 .caption {
     position: absolute;
     top: 38%;
     width: 100%;
     color: white;
+}
+
+.caption #form {
+    display: inline-block;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .caption h1 {
@@ -47,26 +51,46 @@
 
 @media (max-width: 768px) {
     .caption h1 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         letter-spacing: .15rem;
         padding-bottom: .5rem;
     }
 
     .caption h3 {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         padding-bottom: 1.2rem;
     }
 
     .btn-lg {
-        font-size: 1rem;
+        font-size: 1.2rem;
         padding: .5rem 1rem;
     }
 }
 
-.masthead {
+#background {
     background-size: cover;
     background-position: center;
     min-height: 100vh;
     position: relative;
     color: white;
+}
+
+#server-button {
+    display: inline;
+}
+
+#foot {
+    position: relative;
+    margin: 0 auto;
+    bottom: 0px;
+    margin-top: 100%;
+    display: inline;
+}
+
+.footer-item {
+    display: inline;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    text-decoration: none;
+    padding-bottom: 16px;
 }
