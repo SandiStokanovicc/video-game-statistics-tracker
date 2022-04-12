@@ -19,8 +19,8 @@
 
     <div>
         <nav class="navbar navbar-expand-sm navbar-dark " aria-label="navbar" id="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Stat Track</a>
+            <div class="container-fluid" id="navbar-container">
+                <a class="navbar-brand" id="navbar-brand" href="#">Stat Track</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -32,18 +32,15 @@
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">About us</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-bs-toggle="dropdown"
-                                aria-expanded="false">Dropdown</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                            <a class="nav-link active" href="#">Your profile</a>
                         </li>
                     </ul>
+                    <!-- LOG IN -->
+                    <button id="sign-in" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                        data-bs-target="#modalFormLog">Log In</button>
+                    <a class="nav-link active text-white" id="or" href="#">or</a>
+                    <button id="sign-up" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                        data-bs-target="#modalFormSign">Sign up</button>
                 </div>
             </div>
         </nav>
@@ -79,8 +76,7 @@
     <div id="foot" class="container my-5">
         <footer class="text-center text-white fixed-bottom">
             <div class="text-center p-3">
-                © 2020 Copyright:
-                <a class="text-white footer-item" href="#">StatTrack.com</a>
+                <a class="text-white footer-item" href="#">© 2020 Copyright: StatTrack.com</a>
                 <a class="text-white footer-item" href="#">Faq</a>
                 <a class="text-white footer-item" href="#">About us</a>
                 <a class="text-white footer-item" href="#">Why StatTrack ? </a>
@@ -88,6 +84,87 @@
         </footer>
     </div>
 
+    <!-- MODAL LOG IN -->
+
+    <div class="modal fade" id="modalFormLog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Please Log In to you account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Email Address</label>
+                            <input type="text" class="form-control" id="emailLogIn" name="emailLogIn"
+                                placeholder="Enter your email address" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Password</label>
+                            <input type="password" class="form-control" id="passwordLogIn" name="passwordLogIn"
+                                placeholder="Enter your password" />
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMeLogIn" />
+                            <label class="form-check-label text-white" for="rememberMeSignIn">Remember me</label>
+                        </div>
+                        <div class="modal-footer d-block">
+                            <p class="float-start text-white p-2">Don't have an account yet <a class="text-white"
+                                    href="#" data-bs-toggle="modal" data-bs-target="#modalFormSign">Sign Up</a></p>
+                            <button type="submit" class="btn btn-danger float-end">Log In</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SIGN UP -->
+
+    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Please Log In to you account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Email Address</label>
+                            <input type="text" class="form-control" id="emailSignUp" name="emailSignUp"
+                                placeholder="Enter your email address" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Username</label>
+                            <input type="text" class="form-control" id="usernameSignUp" name="usernameSignUp"
+                                placeholder="Enter your username" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Password</label>
+                            <input type="password" class="form-control" id="passwordSignUp" name="passwordSignUp"
+                                placeholder="Enter your password" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-white">Confirm your Password</label>
+                            <input type="password" class="form-control" id="passwordSignUpConfirm"
+                                name="passwordSignUpConfirm" placeholder="Confirm your password" />
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMeSignUp" />
+                            <label class="form-check-label text-white" for="rememberMeSignUp">Remember me</label>
+                        </div>
+                        <div class="modal-footer d-block">
+                            <p class="float-start text-white p-2">Already have an accout ? <a class="text-white"
+                                    href="#" data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
+                            <button type="submit" class="btn btn-danger float-end">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

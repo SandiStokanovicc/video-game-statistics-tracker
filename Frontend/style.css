@@ -2,13 +2,19 @@ body {
     min-height: 150rem;
 }
 
-#navbar {
-    padding-top: 16px;
+.nav-link {
+    color: #fff;
 }
 
-.navbar-brand {
+#navbar {
+    padding-top: 16px;
+    font-size: 1.2rem;
+}
+
+#navbar-brand {
     margin-right: 1.5rem;
-    margin-left: 1rem;
+    margin-left: 1.5rem;
+    font-size: 1.8rem;
 }
 
 .nav-item {
@@ -65,6 +71,19 @@ body {
         font-size: 1.2rem;
         padding: .5rem 1rem;
     }
+
+    .footer-item {
+        display: inline;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        text-decoration: none;
+        padding-bottom: 16px;
+        font-size: 0.9rem;
+    }
+
+    #or {
+        display: inline;
+    }
 }
 
 #background {
@@ -72,7 +91,6 @@ body {
     background-position: center;
     min-height: 100vh;
     position: relative;
-    color: white;
 }
 
 #server-button {
@@ -93,4 +111,19 @@ body {
     margin-right: 1.5rem;
     text-decoration: none;
     padding-bottom: 16px;
+}
+
+#login {
+    margin-right: 1.5rem;
+}
+
+.btn-outline-light {
+    margin-right: 1.5rem;
+    margin-left: 1rem
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+    background-color: #403742;
 }
