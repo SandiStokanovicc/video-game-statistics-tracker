@@ -125,6 +125,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     //checking for errors before inserting
-    
+    if(empty($username_error) && empty($password_error) && empty($confirm_password_error) && empty($email_error)){
+        //preparing insert statement
+        $sql = "INSERT INTO user (username, password, email) VALUES (:username, :password, :email)";
+
+        if($stmt = $pdo ->prepare($sql)){
+            //bind variables to statement as parameters
+            $stmt -> bindParam(":username", $param_username, PDO::PARAM_STR);
+            $stmt -> bindParam(":password", $param_password, PDO::PARAM_STR);
+            $stmt -> bindParam(":email", $param_email, PDO::PARAM_STR);
+            
+            //set params
+            $param_username = $username;
+            $param_email = $email;
+            $param_password = password_hash($password, PASSWORD_DEFAULT); //creates password hash using bcrypt algorithm + randomly generated salt
+            //execute statement
+            if($stmt->execute()){
+                header("location: ?.php"); //replace later
+            } else {
+                echo "Something went wrong";
+            }
+            //closing statement
+            unset($stmt);
+        }
+    } 
+    //close connection
+    unset($pdo);
 }
 ?>
