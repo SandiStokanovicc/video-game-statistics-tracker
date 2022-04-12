@@ -13,12 +13,12 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-48cf1032-11e4-44d8-bda9-09fc4bbc52c3"
+      "X-Riot-Token: RGAPI-4fec613a-3fc6-41f9-9d84-a415a93dc4ef"
     );
 
     $ch = curl_init(); // initialize cURL_PHP connection
 
-    $apiKey = "RGAPI-48cf1032-11e4-44d8-bda9-09fc4bbc52c3"; // change every 24h
+    $apiKey = "RGAPI-4fec613a-3fc6-41f9-9d84-a415a93dc4ef"; // change every 24h
     $accountName = "Condemn for Stun"; // Condemn for Stun, Turbo Guardian, etc.
     $accountName = str_replace(" ", "%20" , $accountName); // space replaced with "%20" for GET method. Doesn't work otherwise
     $accountName = htmlspecialchars($accountName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
@@ -58,7 +58,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-48cf1032-11e4-44d8-bda9-09fc4bbc52c3"
+      "X-Riot-Token: RGAPI-4fec613a-3fc6-41f9-9d84-a415a93dc4ef"
     );
 
     $ch = curl_init();
