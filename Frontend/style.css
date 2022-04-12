@@ -29,7 +29,7 @@ body {
     color: white;
 }
 
-.caption #form {
+.caption #SearchPlayer {
     display: inline-block;
     width: 50%;
     margin: 0 auto;
@@ -96,6 +96,11 @@ body {
 #server-button {
     display: inline;
 }
+
+#search-button {
+    display: inline;
+}
+
 
 #foot {
     position: relative;

@@ -53,9 +53,6 @@
             <h1>WELCOME TO STAT TRACK</h1>
             <h3>FIND A PLAYER</h3>
             <div>
-                <form id="form">
-                    <input class="form-control" type="text" placeholder="Search for a Player" aria-label="Search">
-                </form>
                 <div id="server-button" class="btn-group">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -66,6 +63,14 @@
                         <li><a class="dropdown-item" href="#">EUW</a></li>
                         <li><a class="dropdown-item" href="#">NA</a></li>
                     </ul>
+                </div>
+                <form id="SearchPlayer">
+                    <input class="form-control" type="text" placeholder="Search for a Player" aria-label="Search">
+                </form>
+                <div id="search-button" class="btn-group">
+                    <button type="button" class="btn btn-danger">
+                        Search
+                    </button>
                 </div>
             </div>
         </div>
@@ -110,7 +115,7 @@
                             <label class="form-check-label text-white" for="rememberMeSignIn">Remember me</label>
                         </div>
                         <div class="modal-footer d-block">
-                            <p class="float-start text-white p-2">Don't have an account yet <a class="text-white"
+                            <p class="float-start text-white p-2">Don't have an account yet ? <a class="text-white"
                                     href="#" data-bs-toggle="modal" data-bs-target="#modalFormSign">Sign Up</a></p>
                             <button type="submit" class="btn btn-danger float-end">Log In</button>
                         </div>
