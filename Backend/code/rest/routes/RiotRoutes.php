@@ -3,8 +3,7 @@ Flight::route('/summoner/@summonerName', function($summonerName){ // goes to "lo
   Flight::json(Flight::riotService()->getSummonerInfo());
 });
 
-Flight::route('POST /getMatches@puuid@continent', function($puuid, $continent){
+Flight::route('POST /getMatches/@puuid/@continent', function($puuid, $continent){
   Flight::json(Flight::riotService()->getMatchIDs($puuid, $continent));
 });
-
- ?>
+?>

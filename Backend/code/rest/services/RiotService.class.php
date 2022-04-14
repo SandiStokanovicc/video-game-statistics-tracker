@@ -3,7 +3,6 @@
 
     public function getSummonerInfo($summonerName){
       header('Content-Type: text/html; charset=utf-8');
-      $var = $_REQUEST();
       $headers = array(
         "User-Agent: StatTrack",
         "Accept-Language: en-US,en;q=0.9",
