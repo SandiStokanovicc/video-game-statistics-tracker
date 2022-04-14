@@ -6,4 +6,5 @@ Flight::route('/summoner/@summonerName', function($summonerName){ // goes to "lo
 Flight::route('POST /getMatches@puuid@continent', function($puuid, $continent){
   Flight::json(Flight::riotService()->getMatchIDs($puuid, $continent));
 });
+
  ?>
