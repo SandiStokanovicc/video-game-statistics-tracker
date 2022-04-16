@@ -3,16 +3,18 @@ var RiotService = {
         var requestData = {};
 
         $.ajax({
-            url: 'Backend/code/rest/summoners/' + document.getElementById("SearchPlayerInput").value + '/' + document.getElementById('RegionButton').innerText,
-            //$('summonerName') je search bar, $('region') bi trebalo biti onaj dropdown
+            url: '../Backend/code/rest/summoners/' + $('#SearchPlayerInput').val() + "/" + $('#RegionButton').html(),
+         
             type: 'GET',
             contentType: "application/json",
             //data nije potrebno jer se svi proslijedjeni podaci koriste u URL-u
             dataType: "json",
             success: function (results) {
-                console.log("Printing returned json: " + results);
+                console.log(JSON.stringify(results));
             },
-            error: console.log("Error!")
+            error: function() {
+                console.log("Error!")
+            }
         });
     }
 
