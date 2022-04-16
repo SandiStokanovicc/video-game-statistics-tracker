@@ -10,10 +10,12 @@ require_once __DIR__.'/dao/ProjectDao.class.php';
 Flight::register('riotService', 'RiotService');
 Flight::register('trackerDao', 'TrackerDAO');
 
+/* // OVO JE BESKORISNO... ali nek ostane za sad
 Flight::map('error', function(Exception $ex){
     // Handle error
     Flight::json(['message' => $ex->getMessage()], 500);
 });
+*/
 
 require_once __DIR__.'/routes/RiotRoutes.php';
 

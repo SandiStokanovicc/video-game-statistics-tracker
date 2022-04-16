@@ -15,4 +15,5 @@ var RiotService = {
             error: console.log("Error!")
         });
     }
+    
 }

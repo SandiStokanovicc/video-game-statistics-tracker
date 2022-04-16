@@ -9,7 +9,13 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
   Flight::json(Flight::riotService()->getSummonerInfo($summonerName, $region));
 });
 
+/* //ne moze na ovaj nacin jer je post. Treba proslijediti samo request()->data->getData()
 Flight::route('POST /matches/@puuid/@continent', function($puuid, $continent){
   Flight::json(Flight::riotService()->getMatchIDs($puuid, $continent));
+});
+*/
+
+Flight::route('POST /matches', function(){
+  Flight::json(Flight::riotService()->getMatchIDs(Flight::request()->data->getData()));
 });
 ?>
