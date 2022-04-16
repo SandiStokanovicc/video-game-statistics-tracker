@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-d4749e55-7326-49ad-9273-3b1664b72309"
+      "X-Riot-Token: RGAPI-b5256bf0-b83c-43d9-9328-d5449c3b4cb6"
     );
     
     
@@ -23,10 +23,8 @@
       /*
       * pass options to the connection
       */
-      curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+      $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch); // get results
 
@@ -45,35 +43,40 @@
 
 
     public function getMatchIDs($requestData){
-    //da bi se testirala ova ruta, ide se na localhost/video-game-statistics-tracker/getMatches (trenutno su podaci hard-coded, trebat ce se kasnije preko frontenda to promijeniti)
-    //$puuid je path parameter (mora biti unutar url-a), dok su $start i $count query params (optional)
+      $ch = curl_init();
 
-    //$puuid = $_REQUEST["puuid"];
-    //$puuid = Flight::request()->data->puuid;
-    //if(isset)
-    //$puuid = "bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q";
-    $puuid = $requestData['puuid'];
-    $continent = $requestData['continent'];
-    $start = 0;
-    $count = 10;
+      //$puuid je path parameter (mora biti unutar url-a), dok su $start i $count query params (optional)
+      //$start = 0;
+      //$count = 10;
+      //$url = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=0' . $start . '&count=10' . $count;
 
+      $url = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=0&count=10';
 
+      $this->setCurlOptions($ch, $url);
+
+      $response = curl_exec($ch);
+      $json = json_decode($response, true);
+      return $json;
+      //print_r($json);
+      //foreach($json as $key=>$value) print_r($value . '<br/>');
+    }
+  
+    public function getMatchById($continent, $matchId){
 
     $ch = curl_init();
 
-    //$continent = "europe";
-    $url2 = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=' . $start . '&count=' . $count;
+    $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
 
+    $this->setCurlOptions($ch, $url);
+
+    return $json;
+  }
+  
+  private function setCurlOptions($ch, $url){
     curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
-    curl_setopt($ch, CURLOPT_URL, $url2);
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-    $response = curl_exec($ch);
-    $json = json_decode($response, true);
-    return $json;
-    //print_r($json);
-    //foreach($json as $key=>$value) print_r($value . '<br/>');
-    }
   }
+}
 ?>

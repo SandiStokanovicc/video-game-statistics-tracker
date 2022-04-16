@@ -13,7 +13,7 @@ var RiotService = {
                 console.log(JSON.stringify(results));
             },
             error: function() {
-                console.log("Error!")
+                console.log("Error! RiotService.getSummonerInfo() [script]");
             }
         });
     }
