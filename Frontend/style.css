@@ -84,6 +84,10 @@ body {
     #or {
         display: inline;
     }
+
+    .faq-questions {
+        margin-right: 3rem;
+    }
 }
 
 #background {
@@ -91,6 +95,7 @@ body {
     background-position: center;
     min-height: 100vh;
     position: relative;
+
 }
 
 #server-button {
@@ -130,5 +135,9 @@ body {
 .modal-header,
 .modal-body,
 .modal-footer {
+    background-color: #403742;
+}
+
+.col-sm {
     background-color: #403742;
 }
