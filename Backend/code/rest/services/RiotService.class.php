@@ -12,8 +12,6 @@
     
     
     public function getSummonerInfo($summonerName, $region){
-      //echo $summonerName;
-      //$summonerName = "Condemn for Stun"; // Condemn for Stun, Turbo Guardian, etc.
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
       //$region = "eun1";
@@ -31,14 +29,7 @@
       curl_close($ch); // close connection
 
       $json = json_decode($response, true); // transform result from JSON (or whatever) into array
-      //var_dump($json);
       return $json;
-      
-      //print_r("id => " . $json["id"] . "<br/>accountId => " . $json["accountId"] . "<br/>puuid => " . $json["puuid"] . "<br/>name => " . $json["name"] . "<br/>profileIconId => " . $json["profileIconId"]);
-      //Flight::json($json);
-      //return $json;
-      //Flight::response($json);
-
     }
 
 
@@ -57,18 +48,16 @@
       $response = curl_exec($ch);
       $json = json_decode($response, true);
       return $json;
-      //print_r($json);
-      //foreach($json as $key=>$value) print_r($value . '<br/>');
     }
   
-    public function getMatchById($continent, $matchId){
+    public function getMatchById($matchId, $continent){
 
     $ch = curl_init();
-
     $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
-
     $this->setCurlOptions($ch, $url);
 
+    $response = curl_exec($ch);
+    $json = json_decode($response, true);
     return $json;
   }
   

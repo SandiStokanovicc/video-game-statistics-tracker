@@ -19,7 +19,7 @@ Flight::route('POST /matches', function(){
   Flight::json(Flight::riotService()->getMatchIDs(Flight::request()->data->getData()));
 });
 
-Flight::route('GET /matches/@matchId', function($matchId){
+Flight::route('GET /matches/@matchId/@continent', function($matchId, $continent){
   Flight::json(Flight::riotService()->getMatchById($matchId));
 });
 ?>
