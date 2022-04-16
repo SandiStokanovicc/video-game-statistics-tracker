@@ -55,14 +55,14 @@
             <h3>FIND A PLAYER</h3>
             <div>
                 <div id="server-button" class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
+                    <button id="RegionButton" type="button" class="btn btn-danger dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Server
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">EUNE</a></li>
-                        <li><a class="dropdown-item" href="#">EUW</a></li>
-                        <li><a class="dropdown-item" href="#">NA</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText(this.innerText)">EUNE</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText(this.innerText)">EUW</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="changeButtonText(this.innerText)">NA</a></li>
                     </ul>
                 </div>
                 <form id="SearchPlayer">
@@ -70,7 +70,7 @@
                 </form>
                 <!-- <div id="search-button" class="btn-group" onclick="RiotService.getSummonerInfo()">-->
                 <div id="search-button" class="btn-group">
-                    <button type="button" class="btn btn-danger">
+                    <button type="button" class="btn btn-danger" onclick="RiotService.getSummonerInfo()">
                         Search
                     </button>
                 </div>
@@ -173,22 +173,15 @@
         </div>
     </div>
 
+    <script>
+        function changeButtonText(value) {
+            document.getElementById('RegionButton').innerText = value;
+        }
+    </script>
     <script src="js/script.js"></script>
     <script src="js/riot-service.js"></script>
     <script src="Bootstrap/js/bootstrap.bundle.js"></script>
     <script src="jQuery/jquery-3.6.0.min.js"></script>
 </body>
-<!--
-    <div class="video-background">
-        <div class="video-wrap">
-            <div id="video">
-                <video id="bgvid" autoplay loop muted playsinline>
-                    <source src="Pictures/background.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div> -->
-
-<!-- <a class="btn btn-outline-light btn-lg" href="profiles.html">STAT</a> -->
 
 </html>
