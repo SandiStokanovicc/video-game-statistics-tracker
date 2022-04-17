@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#buttonSignUp").click(function () {
 
         // using serialize function of jQuery to get all values of form
-        var serializedData = {
+        var requestData = {
             email: $("#emailSignUp").val,
             username: $("#usernameSignUp").val,
             password: $("#passwordSignUp").val,
@@ -15,7 +15,7 @@ $(document).ready(function () {
         request = $.ajax({
             url: "registration.php",
             type: "post",
-            data: serializedData
+            data: requestData
         });
 
         // Callback handler that will be called on success
