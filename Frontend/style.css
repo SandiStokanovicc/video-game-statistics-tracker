@@ -56,6 +56,11 @@ body {
 }
 
 @media (max-width: 768px) {
+    .accordion-item {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
     .caption h1 {
         font-size: 1.6rem;
         letter-spacing: .15rem;
@@ -83,10 +88,6 @@ body {
 
     #or {
         display: inline;
-    }
-
-    .faq-questions {
-        margin-right: 3rem;
     }
 }
 
@@ -140,4 +141,22 @@ body {
 
 .col-sm {
     background-color: #403742;
+}
+
+.accordion-item {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.accordion {
+    margin-top: 2%;
+}
+
+.accordion-body {
+    background-color: #403742;
+    font-size: 1.2rem;
+}
+
+.accordion-button {
+    font-size: 1.5rem !important;
 }
