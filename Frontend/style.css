@@ -1,5 +1,5 @@
 body {
-    min-height: 150rem;
+    min-height: 100vh;
 }
 
 .nav-link {
@@ -10,6 +10,7 @@ body {
     padding-top: 16px;
     font-size: 1.2rem;
 }
+
 
 #navbar-brand {
     margin-right: 1.5rem;
