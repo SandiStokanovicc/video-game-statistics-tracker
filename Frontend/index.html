@@ -131,7 +131,8 @@
 
     <!-- MODAL SIGN UP -->
 
-    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        action="ProjectDao.class.php">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -167,7 +168,7 @@
                         <div class="modal-footer d-block">
                             <p class="float-start text-white p-2">Already have an accout ? <a class="text-white"
                                     href="#" data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
-                            <button type="submit" class="btn btn-danger float-end">Sign Up</button>
+                            <button id="buttonSignUp" type="submit" class="btn btn-danger float-end">Sign Up</button>
                         </div>
                     </form>
                 </div>
@@ -193,6 +194,7 @@
     <script src="js/riot-service.js"></script>
     <script src="Bootstrap/js/bootstrap.bundle.js"></script>
     <script src="jQuery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="js/registration.js"></script>
 </body>
 
 </html>

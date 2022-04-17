@@ -6,9 +6,11 @@ error_reporting(E_ALL);
 require_once __DIR__.'\..\..\vendor\autoload.php';
 require_once __DIR__.'/services/RiotService.class.php';
 require_once __DIR__.'/dao/ProjectDao.class.php';
+require_once __DIR__.'/../Frontend/Registration.class.php';
 
 Flight::register('riotService', 'RiotService');
 Flight::register('trackerDao', 'TrackerDAO');
+Flight::register('registration', 'Registration');
 
 /* // OVO JE BESKORISNO... ali nek ostane za sad
 Flight::map('error', function(Exception $ex){

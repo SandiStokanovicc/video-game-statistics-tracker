@@ -1,5 +1,5 @@
 body {
-    min-height: 150rem;
+    min-height: 100vh;
 }
 
 .nav-link {
@@ -10,6 +10,7 @@ body {
     padding-top: 16px;
     font-size: 1.2rem;
 }
+
 
 #navbar-brand {
     margin-right: 1.5rem;
@@ -56,6 +57,11 @@ body {
 }
 
 @media (max-width: 768px) {
+    .accordion-item {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
     .caption h1 {
         font-size: 1.6rem;
         letter-spacing: .15rem;
@@ -91,6 +97,7 @@ body {
     background-position: center;
     min-height: 100vh;
     position: relative;
+
 }
 
 #server-button {
@@ -131,4 +138,26 @@ body {
 .modal-body,
 .modal-footer {
     background-color: #403742;
+}
+
+.col-sm {
+    background-color: #403742;
+}
+
+.accordion-item {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.accordion {
+    margin-top: 2%;
+}
+
+.accordion-body {
+    background-color: #403742;
+    font-size: 1.2rem;
+}
+
+.accordion-button {
+    font-size: 1.5rem !important;
 }
