@@ -4,6 +4,7 @@ public function register($requestData){
 //include config file
     require_once '/../Backend/code/rest/config.php';
 
+
     //defining variables
     $username = $password = $confirm_password = $username_error = $password_error = $confirm_password_error = $email = $email_error = "";
 
