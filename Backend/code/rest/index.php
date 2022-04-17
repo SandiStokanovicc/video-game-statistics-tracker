@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 require_once __DIR__.'\..\..\vendor\autoload.php';
 require_once __DIR__.'/services/RiotService.class.php';
 require_once __DIR__.'/dao/ProjectDao.class.php';
-require_once __DIR__.'/../Frontend/Registration.class.php';
+require_once __DIR__.'/../../../Frontend/registration.class.php';
 
 Flight::register('riotService', 'RiotService');
 Flight::register('trackerDao', 'TrackerDAO');
