@@ -199,7 +199,17 @@ body {
     letter-spacing: .2rem;
     text-shadow: .1rem .1rem .8rem black;
     padding-top: 1rem;
+    margin-bottom: 2rem;
     color: white;
+}
+
+#copyright-text h1 {
+    font-size: 3.5rem;
+    letter-spacing: .2rem;
+    text-shadow: .1rem .1rem .8rem black;
+    padding-top: 1rem;
+    color: white;
+    margin-top: 5%;
 }
 
 #about-us-text {
