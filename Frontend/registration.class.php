@@ -8,7 +8,7 @@ public function register($requestData){
     //defining variables
     $username = $password = $confirm_password = $username_error = $password_error = $confirm_password_error = $email = $email_error = "";
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //if($_SERVER["REQUEST_METHOD"] == "POST"){
         //validating email
         if(empty(trim($requestData["email"]))){
             $email_error = "Please enter an email";
@@ -79,7 +79,7 @@ public function register($requestData){
         //checking for errors before inserting
         if(empty($username_error) && empty($password_error) && empty($confirm_password_error) && empty($email_error)){
             //preparing insert statement
-            $sql = "INSERT INTO user (username, password, email) VALUES (:username, :password, :email)";
+            $sql = "INSERT INTO user (username, ¸`password`, email) VALUES (:username, :`password`, :email)";
 
             if($stmt = $pdo ->prepare($sql)){
                 //bind variables to statement as parameters
@@ -104,24 +104,5 @@ public function register($requestData){
         //close connection
         unset($pdo);
         echo "hljeb";
-      }      
+      } } 
 ?>
-/* <?php
-include ('config.php');
-$username = trim($requestData['username']);
-$email = trim($requestData['email']);
-$confirm_password = trim($requestData['confirm_password']);
-$password = trim($requestData['password']);
-if ((isset($username) && !empty($username)) && (isset($email) && !empty($email)) && (isset($confirm_password) && !empty($confirm_password)) && (isset($password) && !empty($password))) {
-    $query = "insert into user (username, email, password) values ('$username', '$email', '$password')";
-    $result = pg_query($query);
-    if (!$result) {
-        $errormessage = pg_last_error();
-        echo "Error with query: " . $errormessage;
-    } else {
-        echo "User Registration Successfull!!!";
-    }
-} else {
-    echo "Invalid input. Please enter all the input fields in form";
-}}}
-?> 
