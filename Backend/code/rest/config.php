@@ -13,9 +13,3 @@ try{
     die("Could not connect" . $e->getMessage());
 }
 ?>
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $schema = "riot";
-            $this->conn = new PDO("mysql:host=$servername; dbname=$schema", $username, $password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 

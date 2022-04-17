@@ -1,5 +1,5 @@
 <?php
-    Flight::route('/register', function (){
-    Flight::json(Flight::trackerDao()->register());
-});
-?>
+Flight::route('POST /register', function($requestData){
+    Flight::json(Flight::Registration()->register(Flight::request()->data->getData()));
+  });
+  ?>
