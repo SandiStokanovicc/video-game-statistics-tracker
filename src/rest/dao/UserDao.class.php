@@ -7,7 +7,7 @@ class UserDao extends BaseDao {
   * constructor of dao class
   */
   public function __construct(){
-    parent::__construct("users");
+    parent::__construct("user");
   }
 
 }
