@@ -3,7 +3,7 @@ var RiotService = {
         var requestData = {};
 
         $.ajax({
-            url: '/rest/summoners/' + $('#SearchPlayerInput').val() + "/" + $('#RegionButton').html(),
+            url: '/video-game-statistics-tracker/src/rest/summoners/' + $('#SearchPlayerInput').val() + "/" + $('#RegionButton').html(),
 
             type: 'GET',
             contentType: "application/json",
