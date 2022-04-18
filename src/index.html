@@ -131,8 +131,7 @@
 
     <!-- MODAL SIGN UP -->
 
-    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        action="ProjectDao.class.php">
+    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -140,37 +139,35 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label text-white">Email Address</label>
-                            <input type="text" class="form-control" id="emailSignUp" name="emailSignUp"
-                                placeholder="Enter your email address" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-white">Username</label>
-                            <input type="text" class="form-control" id="usernameSignUp" name="usernameSignUp"
-                                placeholder="Enter your username" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-white">Password</label>
-                            <input type="password" class="form-control" id="passwordSignUp" name="passwordSignUp"
-                                placeholder="Enter your password" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-white">Confirm your Password</label>
-                            <input type="password" class="form-control" id="passwordSignUpConfirm"
-                                name="passwordSignUpConfirm" placeholder="Confirm your password" />
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMeSignUp" />
-                            <label class="form-check-label text-white" for="rememberMeSignUp">Remember me</label>
-                        </div>
-                        <div class="modal-footer d-block">
-                            <p class="float-start text-white p-2">Already have an accout ? <a class="text-white"
-                                    href="#" data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
-                            <button id="buttonSignUp" type="submit" class="btn btn-danger float-end">Sign Up</button>
-                        </div>
-                    </form>
+                    <div class="mb-3">
+                        <label class="form-label text-white">Email Address</label>
+                        <input type="text" class="form-control" id="emailSignUp" name="emailSignUp"
+                            placeholder="Enter your email address" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white">Username</label>
+                        <input type="text" class="form-control" id="usernameSignUp" name="usernameSignUp"
+                            placeholder="Enter your username" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white">Password</label>
+                        <input type="password" class="form-control" id="passwordSignUp" name="passwordSignUp"
+                            placeholder="Enter your password" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-white">Confirm your Password</label>
+                        <input type="password" class="form-control" id="passwordSignUpConfirm"
+                            name="passwordSignUpConfirm" placeholder="Confirm your password" />
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMeSignUp" />
+                        <label class="form-check-label text-white" for="rememberMeSignUp">Remember me</label>
+                    </div>
+                    <div class="modal-footer d-block">
+                        <p class="float-start text-white p-2">Already have an accout ? <a class="text-white" href="#"
+                                data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
+                        <button id="buttonSignUp" type="button" class="btn btn-danger float-end">Sign Up</button>
+                    </div>
                 </div>
             </div>
         </div>

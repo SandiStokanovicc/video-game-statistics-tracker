@@ -1,7 +1,4 @@
 <?php
-Flight::route('/', function(){
-  echo "Located in index.php";
-});
 
 Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $region){ 
   // trenutno se poziva sa 
@@ -22,4 +19,4 @@ Flight::route('POST /matches', function(){
 Flight::route('GET /matches/@matchId/@continent', function($matchId, $continent){
   Flight::json(Flight::riotService()->getMatchById($matchId, $continent));
 });
-?>
+
