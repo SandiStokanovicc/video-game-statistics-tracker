@@ -9,7 +9,7 @@ $(document).ready(function () {
         };
 
         // Variable to hold request
-        $.post("/api/registration.php", requestData)
+        $.post("/rest/registration.php", requestData)
             .done(function () {
                 // you will get response from your php page (what you echo or print)
                 // show successfully for submit message

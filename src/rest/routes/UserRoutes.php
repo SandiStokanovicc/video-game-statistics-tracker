@@ -10,6 +10,16 @@ Flight::route('GET /users', function(){
 });
 
 /**
+* register user
+*/
+Flight::route('POST /authentication/register', ['AuthenticationController', 'register']);
+
+/**
+* login user
+*/
+Flight::route('POST /authentication/login', ['AuthenticationController', 'login']);
+
+/**
 * List invidiual note
 */
 /*
@@ -27,15 +37,6 @@ Flight::route('GET /notes/@id/todos', function($id){
 });
 */
 
-
-/**
-* add notes
-*/
-/*
-Flight::route('POST /notes', function(){
-  Flight::json(Flight::noteService()->add(Flight::request()->data->getData()));
-});
-/*
 
 /**
 * update notes
