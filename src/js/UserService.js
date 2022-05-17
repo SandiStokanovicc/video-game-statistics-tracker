@@ -111,10 +111,10 @@
 // }
 var UserService = {
     init: function () {
-        var token = localStorage.getItem("token");
-        if (token) {
-            window.location.replace("index.html");
-        }
+       // var token = localStorage.getItem("token");
+      //  if (token) {
+       //     window.location.replace("index.html");
+       // }
 
 
         $('#modalFormLog').validate({
@@ -144,8 +144,8 @@ var UserService = {
 
             success: function (data) {
                 console.log(data);
-                localStorage.setItem("token", data.token);
-                window.location.replace("index.html");
+               // localStorage.setItem("token", data.token);
+               // window.location.replace("index.html");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -162,7 +162,7 @@ var UserService = {
     register: function (user) {
         $.ajax({
             type: "POST",
-            url: 'video-game-statistics-tracker/src/rest/authentication/register',
+            url: '/video-game-statistics-tracker/src/rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -172,11 +172,17 @@ var UserService = {
                 // localStorage.setItem("token", data.token);
                 // toastr.success('You have been succesfully registered.');
                 // localStorage.clear();
-                console.log("1")
+                console.log("data")
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
+                toastr.error("test");
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+                
             }
         });
     }
