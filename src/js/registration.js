@@ -9,7 +9,7 @@ $(document).ready(function () {
         };
 
         // Variable to hold request
-        $.post("/rest/registration.php", requestData)
+        $.post("/video-game-statistics-tracker/src/rest/register", requestData)
             .done(function () {
                 // you will get response from your php page (what you echo or print)
                 // show successfully for submit message
