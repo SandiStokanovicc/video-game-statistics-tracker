@@ -104,7 +104,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="login-form">
                         <div class="mb-3">
                             <label class="form-label text-white">Email Address</label>
                             <input type="text" class="form-control" id="emailLogIn" name="emailLogIn"
@@ -139,6 +139,7 @@
                     <h5 class="modal-title text-white" id="exampleModalLabel">Please Log In to you account</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form id="signup-form">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label text-white">Email Address</label>
@@ -167,9 +168,10 @@
                     <div class="modal-footer d-block">
                         <p class="float-start text-white p-2">Already have an accout ? <a class="text-white" href="#"
                                 data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
-                        <button id="buttonSignUp" type="button" class="btn btn-danger float-end" onclick="UserService.register()">Sign Up</button>
+                        <button id="buttonSignUp" type="button" class="btn btn-danger float-end">Sign Up</button>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -197,7 +199,7 @@
     <script type="text/javascript" src="js/UserService.js"></script>
     <script type="text/javascript" scr="js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <!-- <script>  UserService.init();</script> -->
+    <script>  UserService.init();</script>
 </body>
 
 </html>

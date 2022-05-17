@@ -118,14 +118,14 @@ var UserService = {
        // }
 
 
-        $('#modalFormLog').validate({
+        $('#login-form').validate({
             submitHandler: function (form) {
                 var user = Object.fromEntries((new FormData(form)).entries());
                 UserService.login(user);
             }
         });
 
-        $('#modalFormSign').validate({
+        $('#signup-form').validate({
             submitHandler: function (form) {
                 var user = {};
                 user.username = $('#usernameSignUp').val();
@@ -163,7 +163,7 @@ var UserService = {
     register: function (user) {
         $.ajax({
             type: "POST",
-            url: ' /rest/authentication/register',
+            url: '/video-game-statistics-tracker/src/rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
