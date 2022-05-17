@@ -125,15 +125,7 @@ var UserService = {
             }
         });
 
-        $('#signup-form').validate({
-            submitHandler: function (form) {
-                var user = {};
-                user.username = $('#usernameSignUp').val();
-                user.password = $('#passwordSignUp').val();
-                user.email = $('#emailSignUp').val();
-                UserService.register(user);
-            }
-        });
+
     },
     login: function (user) {
         $.ajax({
@@ -161,6 +153,16 @@ var UserService = {
     },
 
     register: function (user) {
+        $('#signup-form').validate({
+            submitHandler: function (form) {
+                var user = {};
+                user.username = $('#usernameSignUp').val();
+                user.password = $('#passwordSignUp').val();
+                user.email = $('#emailSignUp').val();
+                UserService.register(user);
+            }
+        });
+
         $.ajax({
             type: "POST",
             url: '/video-game-statistics-tracker/src/rest/authentication/register',
