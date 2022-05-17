@@ -41,7 +41,7 @@
                         data-bs-target="#modalFormLog">Log In</button>
                     <a class="nav-link active text-white" id="or" href="#">or</a>
                     <button id="sign-up" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                        data-bs-target="#modalFormSign">Sign up</button>
+                        data-bs-target="#modalFormSign" onclick="UserService.register()">Sign up</button>
                 </div>
             </div>
         </nav>
@@ -121,7 +121,7 @@
                         <div class="modal-footer d-block">
                             <p class="float-start text-white p-2">Don't have an account yet ? <a class="text-white"
                                     href="#" data-bs-toggle="modal" data-bs-target="#modalFormSign">Sign Up</a></p>
-                            <button type="submit" class="btn btn-danger float-end">Log In</button>
+                            <button type="submit" class="btn btn-danger float-end" onclick="UserService.login()">Log In</button>
                         </div>
                     </form>
                 </div>
@@ -191,7 +191,7 @@
     <script src="js/riot-service.js"></script>
     <script src="Bootstrap/js/bootstrap.bundle.js"></script>
     <script src="jQuery/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="js/registration.js"></script>
+    <script type="text/javascript" src="js/UserService.js"></script>
 </body>
 
 </html>
