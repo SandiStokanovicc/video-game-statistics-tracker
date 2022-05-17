@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stat Track</title>
 
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -41,7 +42,7 @@
                         data-bs-target="#modalFormLog">Log In</button>
                     <a class="nav-link active text-white" id="or" href="#">or</a>
                     <button id="sign-up" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
-                        data-bs-target="#modalFormSign" onclick="UserService.register()">Sign up</button>
+                        data-bs-target="#modalFormSign">Sign up</button>
                 </div>
             </div>
         </nav>
@@ -166,7 +167,7 @@
                     <div class="modal-footer d-block">
                         <p class="float-start text-white p-2">Already have an accout ? <a class="text-white" href="#"
                                 data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
-                        <button id="buttonSignUp" type="button" class="btn btn-danger float-end">Sign Up</button>
+                        <button id="buttonSignUp" type="button" class="btn btn-danger float-end" onclick="UserService.register()">Sign Up</button>
                     </div>
                 </div>
             </div>

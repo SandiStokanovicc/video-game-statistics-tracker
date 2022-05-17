@@ -60,6 +60,7 @@ var UserService = {
     },
 
     login: function (user) {
+        
         $.ajax({
             type: "POST",
             url: '/video-game-statistics-tracker/src/rest/authentication/login',
@@ -85,23 +86,38 @@ var UserService = {
 
 
     register: function (user) {
-        $.ajax({
-            type: "POST",
-            url: '/video-game-statistics-tracker/src/rest/authentication/register',
-            data: JSON.stringify(user),
-            contentType: "application/json",
-            dataType: "json",
+                 $.post("", user)
+             .done(function () {
+                 // you will get response from your php page (what you echo or print)
+                 // show successfully for submit message
+                 $("#result").html();
+                 console.log("hljeb1");
+             })
+             .fail(function (response) {
+                 // Log the error to the console
+                 // show error
+                 $("#result").html('There is some error while submit');
+                 console.error("The following error occurred: " + response.responseText);
+             });
 
-            success: function (data) {
-                $('#modalFormSign').modal('toggle');
-                localStorage.setItem("token", data.token);
-                toastr.success('You have been succesfully registered.');
-                localStorage.clear();
+        // $.ajax({
+        //     type: "POST",
+        //     url: '/video-game-statistics-tracker/src/rest/authentication/register',
+        //     data: JSON.stringify(user),
+        //     contentType: "application/json",
+        //     dataType: "json",
 
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
-            }
-        });
+        //     success: function (data) {
+        //        // $('#modalFormSign').modal('toggle');
+        //        // localStorage.setItem("token", data.token);
+        //        // toastr.success('You have been succesfully registered.');
+        //         //localStorage.clear();
+        //         console.log("knai2");
+        //     },
+        //     error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //         console.log("knai2");
+        //         //toastr.error(XMLHttpRequest.responseJSON.message);
+        //     }
+        // });
     }
 }
