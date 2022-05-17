@@ -1,11 +1,6 @@
 // $(document).ready(function () {
 //     $("#buttonSignUp").click(function () {
-//         $('#modalFormSign').validate({
-//             submitHandler: function(form) {
-//               var entity = Object.fromEntries((new FormData(form)).entries());
-//               UserService.login(entity);
-//             }
-//           });
+
 //         var requestData = {
 //             email: $("#emailSignUp").val(),
 //             username: $("#usernameSignUp").val(),
@@ -14,7 +9,7 @@
 //         };
 
 //         // Variable to hold request
-//         $.post("", requestData)
+//         $.post("rest/authentication/register", requestData)
 //             .done(function () {
 //                 // you will get response from your php page (what you echo or print)
 //                 // show successfully for submit message
@@ -33,82 +28,88 @@
 // });
 
 
-// var UserService = {
-//     init: function () {
-//         var token = localStorage.getItem("token");
-//         if (token) {
-//             window.location.replace("homepage.html");
-//         }
+// // var UserService = {
+// //     init: function () {
+// //         var token = localStorage.getItem("token");
+// //         if (token) {
+// //             window.location.replace("homepage.html");
+// //         }
 
 
-//         $('#modalFormLog').validate({
-//             submitHandler: function (form) {
-//                 var user = Object.fromEntries((new FormData(form)).entries());
-//                 UserService.login(user);
-//             }
-//         });
+// //         $('#modalFormLog').validate({
+// //             submitHandler: function (form) {
+// //                 var user = Object.fromEntries((new FormData(form)).entries());
+// //                 UserService.login(user);
+// //             }
+// //         });
 
-//         $('#modalFormSign').validate({
-//             submitHandler: function (form) {
-//                 var user = {};
-//                 user.username = $('#usernameSignUp').val();
-//                 user.password = $('#passwordSignUp').val();
-//                 user.email = $('#emailSignUp').val();
-//                 UserService.register(user);
-//             }
-//         });
-//     },
+// //         $('#modalFormSign').validate({
+// //             submitHandler: function (form) {
+// //                 var user = {};
+// //                 user.username = $('#usernameSignUp').val();
+// //                 user.password = $('#passwordSignUp').val();
+// //                 user.email = $('#emailSignUp').val();
+// //                 UserService.register(user);
+// //             }
+// //         });
+// //     },
 
-//     login: function (user) {
+// //     login: function (user) {
         
-//         $.ajax({
-//             type: "POST",
-//             url: '/video-game-statistics-tracker/src/rest/authentication/login',
-//             data: JSON.stringify(user),
-//             contentType: "application/json",
-//             dataType: "json",
+// //         $.ajax({
+// //             type: "POST",
+// //             url: '/video-game-statistics-tracker/src/rest/authentication/login',
+// //             data: JSON.stringify(user),
+// //             contentType: "application/json",
+// //             dataType: "json",
 
-//             success: function (data) {
-//                 console.log(data);
-//                 localStorage.setItem("token", data.token);
-//                 window.location.replace("index.html");
+// //             success: function (data) {
+// //                 console.log(data);
+// //                 localStorage.setItem("token", data.token);
+// //                 window.location.replace("index.html");
 
-//             },
-//             error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                 toastr.error(XMLHttpRequest.responseJSON.message);
-//             }
-//         });
-//     },
-//     logout: function(){
-//         localStorage.clear();
-//         window.location.replace("index.html");
-//       },
-
-
-//     register: function (user) {
+// //             },
+// //             error: function (XMLHttpRequest, textStatus, errorThrown) {
+// //                 toastr.error(XMLHttpRequest.responseJSON.message);
+// //             }
+// //         });
+// //     },
+// //     logout: function(){
+// //         localStorage.clear();
+// //         window.location.replace("index.html");
+// //       },
 
 
-//         $.ajax({
-//             type: "POST",
-//             url: '/rest/authentication/register',
-//             data: JSON.stringify(user),
-//             contentType: "application/json",
-//             dataType: "json",
+// //     register: function (user) {
 
-//             success: function (data) {
-//                // $('#modalFormSign').modal('toggle');
-//                // localStorage.setItem("token", data.token);
-//                // toastr.success('You have been succesfully registered.');
-//                 //localStorage.clear();
-//                 console.log("knai1");
-//             },
-//             error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                 console.log("knai2");
-//                 //toastr.error(XMLHttpRequest.responseJSON.message);
-//             }
-//         });
-//     }
-// }
+
+// //         $.ajax({
+// //             type: "POST",
+// //             url: '/rest/authentication/register',
+// //             data: JSON.stringify(user),
+// //             contentType: "application/json",
+// //             dataType: "json",
+
+// //             success: function (data) {
+// //                // $('#modalFormSign').modal('toggle');
+// //                // localStorage.setItem("token", data.token);
+// //                // toastr.success('You have been succesfully registered.');
+// //                 //localStorage.clear();
+// //                 console.log("knai1");
+// //             },
+// //             error: function (XMLHttpRequest, textStatus, errorThrown) {
+// //                 console.log("knai2");
+// //                 //toastr.error(XMLHttpRequest.responseJSON.message);
+// //             }
+// //         });
+// //     }
+// // }
+
+
+
+
+
+//-----------------------------------------------------------------------------------------------
 var UserService = {
     init: function () {
        // var token = localStorage.getItem("token");
@@ -162,14 +163,14 @@ var UserService = {
     register: function (user) {
         $.ajax({
             type: "POST",
-            url: '/video-game-statistics-tracker/src/rest/authentication/register',
+            url: ' /rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
 
             success: function (data) {
-                // $('#SignUpModal').modal('toggle');
-                // localStorage.setItem("token", data.token);
+                $('#SignUpModal').modal('toggle');
+                localStorage.setItem("token", data.token);
                 // toastr.success('You have been succesfully registered.');
                 // localStorage.clear();
                 console.log("data")

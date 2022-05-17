@@ -12,8 +12,8 @@ class BaseDao{
   public function __construct($table_name){
     $this->table_name = $table_name;
     $servername = "localhost";
-    $username = "riot";
-    $password = "riot";
+    $username = "root";
+    $password = "root";
     $schema = "riot";
     $this->conn = new PDO("mysql:host=$servername;dbname=$schema", $username, $password);
     // set the PDO error mode to exception
@@ -57,7 +57,7 @@ class BaseDao{
     }
     $query = substr($query, 0, -2);
     $query .= ")";
-
+    
     //$stmt= $this->conn->prepare($entity);
     $stmt= $this->conn->prepare($query);
     $stmt->execute($entity); // sql injection prevention
