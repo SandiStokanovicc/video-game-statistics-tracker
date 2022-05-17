@@ -165,7 +165,7 @@ var UserService = {
 
         $.ajax({
             type: "POST",
-            url: '/video-game-statistics-tracker/src/rest/authentication/register',
+            url: '/rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
