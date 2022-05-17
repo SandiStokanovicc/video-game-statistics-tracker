@@ -162,16 +162,17 @@ var UserService = {
     register: function (user) {
         $.ajax({
             type: "POST",
-            url: ' rest/authentication/register',
+            url: 'video-game-statistics-tracker/src/rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
 
             success: function (data) {
-                $('#SignUpModal').modal('toggle');
-                localStorage.setItem("token", data.token);
-                toastr.success('You have been succesfully registered.');
-                localStorage.clear();
+                // $('#SignUpModal').modal('toggle');
+                // localStorage.setItem("token", data.token);
+                // toastr.success('You have been succesfully registered.');
+                // localStorage.clear();
+                console.log("1")
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
