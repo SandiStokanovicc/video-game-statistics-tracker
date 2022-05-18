@@ -1,4 +1,6 @@
 <?php
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class AuthenticationController {
     /**
@@ -23,16 +25,21 @@ class AuthenticationController {
     public static function login() {
         // get data from request
         $data = Flight::request()->data->getData();
-      
-        // validate data maybe? - username required, password required
-      
-        // Get user from database - if not ok return error
+        $user = Flight::userDao()->getUserByEmail($data['username']);
+        if(isset($user['id'])){
 
-        // Check credentials - if not ok return error
-        
-        // Start sessioon
-      
+            if($user['password'] == $data['password']){
+              unset($user['password']);
+              $jwt = JWT::encode($data, Config::JWT_SECRET(), 'HS256');
+              Flight::json(['token' => $jwt]);
+            }else{
+              Flight::json(["message"=>"Password is incorrect"], 404);
+            }
+          }else{
+            Flight::json(["message"=>"User with that username doesn't exist"], 404);
+          }
         // return user as JSON
         Flight::json($user);
-    }
-}
+    
+        };
+      };

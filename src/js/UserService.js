@@ -1,4 +1,3 @@
-
 var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
@@ -40,7 +39,12 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
+                toastr.error("error");
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
             }
         });
     },
@@ -68,7 +72,7 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error("test");
+                toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
