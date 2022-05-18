@@ -8,4 +8,8 @@ class UserService extends BaseService {
     parent::__construct(new UserDao());
   }
 
+  public function getUserByEmail($email){
+    return $this->dao->getUserByEmail($email);
+  }
+
 }

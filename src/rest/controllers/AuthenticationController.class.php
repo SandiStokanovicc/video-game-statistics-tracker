@@ -25,7 +25,7 @@ class AuthenticationController {
     public static function login() {
         // get data from request
         $data = Flight::request()->data->getData();
-        $user = Flight::userDao()->getUserByEmail($data['username']);
+        $user = Flight::userService()->getUserByEmail($data['emailLogIn']);
         if(isset($user['id'])){
 
             if($user['password'] == $data['password']){
@@ -41,5 +41,5 @@ class AuthenticationController {
         // return user as JSON
         Flight::json($user);
     
-        };
+        }
       };

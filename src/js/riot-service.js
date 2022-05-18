@@ -12,7 +12,11 @@ var RiotService = {
             success: function (results) {
                 console.log(JSON.stringify(results));
             },
-            error: function () {
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
                 console.log("Error! RiotService.getSummonerInfo() [script]");
             }
         });
