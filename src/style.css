@@ -114,16 +114,6 @@ body {
     display: inline;
 }
 
-
-#foot {
-    position: relative;
-    margin: 0 auto;
-    bottom: 0px;
-    margin-top: 100%;
-    display: inline;
-    font-size: 1.2rem;
-}
-
 .footer-item {
     display: inline;
     margin-left: 1.5rem;
