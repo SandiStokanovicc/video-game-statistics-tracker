@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-cbfc02e2-9827-4788-ae5a-6089370fecc2"
+      "X-Riot-Token: RGAPI-48196fa7-8fc5-4263-aa3b-c81471396e76"
     );
     
     
