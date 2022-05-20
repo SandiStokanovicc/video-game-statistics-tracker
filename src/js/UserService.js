@@ -29,7 +29,7 @@ var UserService = {
         $.ajax({
             type: "POST",
             url: 'rest/login',
-            data: (user),
+            data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
 
