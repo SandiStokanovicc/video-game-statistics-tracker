@@ -24,22 +24,18 @@ class AuthenticationController {
      */
     public static function login() {
         // get data from request
-        $data = Flight::request()->data->getData();
-        $user = Flight::userService()->getUserByEmail($data['emailLogIn']);
-        if(isset($user['id'])){
-
-            if($user['password'] == $data['password']){
-              unset($user['password']);
-              $jwt = JWT::encode($data, Config::JWT_SECRET(), 'HS256');
-              Flight::json(['token' => $jwt]);
-            }else{
-              Flight::json(["message"=>"Password is incorrect"], 404);
-            }
+        $login = Flight::request()->data->getData();
+        $user = Flight::userDao()->get_user_by_email($login['email']);
+        if (isset($user['id'])){
+          if($user['password'] == md5($login['password'])){
+            unset($user['password']);
+            $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
+            Flight::json(['token' => $jwt]);
           }else{
-            Flight::json(["message"=>"User with that username doesn't exist"], 404);
+            Flight::json(["message" => "Wrong password"], 404);
           }
-        // return user as JSON
-        Flight::json($user);
-    
+        }else{
+          Flight::json(["message" => "User doesn't exist"], 404);
         }
+    }
       };

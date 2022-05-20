@@ -28,8 +28,8 @@ var UserService = {
         //console.log(JSON.stringify(user));
         $.ajax({
             type: "POST",
-            url: ' /video-game-statistics-tracker/src/rest/authentication/login',
-            data: JSON.stringify(user),
+            url: 'rest/login',
+            data: (user),
             contentType: "application/json",
             dataType: "json",
 
@@ -59,7 +59,7 @@ var UserService = {
         
         $.ajax({
             type: "POST",
-            url: ' /video-game-statistics-tracker/src/rest/authentication/register',
+            url: ' /rest/authentication/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",

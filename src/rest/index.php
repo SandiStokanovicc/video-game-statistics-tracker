@@ -9,7 +9,8 @@ require_once __DIR__.'/services/RiotService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
 require_once __DIR__.'/dao/UserDao.class.php';
 require_once __DIR__.'/controllers/AuthenticationController.class.php';
-
+Flight::set('flight.log_errors', true);
+Flight::register('userDao', 'UserDao');
 Flight::register('userService', 'UserService');
 Flight::register('riotService', 'RiotService');
 /* // OVO JE BESKORISNO... ali nek ostane za sad
