@@ -1,5 +1,6 @@
 <?php
-
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 // CRUD operations for todos entity
 
 /**
@@ -22,8 +23,8 @@ Flight::route('POST /authentication/register', ['AuthenticationController', 'reg
 Flight::route('POST /login', function(){
   $login = Flight::request()->data->getData();
   $user = Flight::userDao()->getUserByEmail($login['emailLogIn']);
-  if (isset($user['id'])){
-    if($user['password'] == md5($login['password'])){
+  if (isset($user['iduser'])){
+    if($user['password'] == md5($login['passwordLogIn'])){
       unset($user['password']);
       $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
       Flight::json(['token' => $jwt]);

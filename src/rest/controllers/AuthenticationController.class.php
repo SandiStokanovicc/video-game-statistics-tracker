@@ -9,7 +9,7 @@ class AuthenticationController {
     public static function register() {
         // get data from request
         $data = Flight::request()->data->getData();
-      
+        $data['password'] = md5($data['password']);
         // validate data maybe?
       
         // Create a user

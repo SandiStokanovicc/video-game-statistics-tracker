@@ -2,7 +2,7 @@ var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
-        window.location.replace("index.html");
+        //window.location.replace("index.html");
     }
 
 
@@ -29,7 +29,7 @@ var UserService = {
         
         $.ajax({
             type: "POST",
-            url: 'rest/login',
+            url: '/rest/login',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -37,7 +37,7 @@ var UserService = {
             success: function (data) {
                 console.log(data);
                 localStorage.setItem("token", data.token);
-                window.location.replace("index.html");
+                //window.location.replace("index.html");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -58,7 +58,7 @@ var UserService = {
     },
 
     register: function (user) {
-        
+        console.log(JSON.stringify(user));
         $.ajax({
             type: "POST",
             url: ' /rest/authentication/register',
