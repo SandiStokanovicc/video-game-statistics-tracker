@@ -129,7 +129,7 @@ var UserService = {
         console.log(JSON.stringify(user));
         $.ajax({
             type: "POST",
-            url: ' /rest/authentication/register',
+            url: ' /rest/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
