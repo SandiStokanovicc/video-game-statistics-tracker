@@ -25,7 +25,7 @@ class AuthenticationController {
     public static function login() {
         // get data from request
         $login = Flight::request()->data->getData();
-        $user = Flight::userDao()->get_user_by_email($login['email']);
+        $user = Flight::userDao()->get_user_by_email($login['emailLogIn']);
         if (isset($user['id'])){
           if($user['password'] == md5($login['password'])){
             unset($user['password']);

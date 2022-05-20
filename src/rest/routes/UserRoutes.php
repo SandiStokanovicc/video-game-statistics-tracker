@@ -21,7 +21,7 @@ Flight::route('POST /authentication/register', ['AuthenticationController', 'reg
 
 Flight::route('POST /login', function(){
   $login = Flight::request()->data->getData();
-  $user = Flight::userDao()->getUserByEmail($login['email']);
+  $user = Flight::userDao()->getUserByEmail($login['emailLogIn']);
   if (isset($user['id'])){
     if($user['password'] == md5($login['password'])){
       unset($user['password']);

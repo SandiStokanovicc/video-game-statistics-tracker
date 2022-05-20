@@ -25,11 +25,12 @@ var UserService = {
 
     },
     login: function (user) {
-        //console.log(JSON.stringify(user));
+        console.log(JSON.stringify(user));
+        
         $.ajax({
             type: "POST",
             url: 'rest/login',
-            data: (user),
+            data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
 
@@ -40,6 +41,7 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //console.log(data);
                 toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
