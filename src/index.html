@@ -32,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarsExample03">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Your profile</a>
+                            <a id="your-profile" class="nav-link active" href="#">Your profile</a>
                         </li>
                     </ul>
                     <!-- LOG IN -->
@@ -41,6 +41,8 @@
                     <a class="nav-link active text-white" id="or" href="#">or</a>
                     <button id="sign-up" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
                         data-bs-target="#modalFormSign">Sign up</button>
+                    <button id="sign-out" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                        data-bs-target="#modalFormSign" onclick="UserService.logout()">Log Out</button>
                 </div>
             </div>
         </nav>
@@ -349,7 +351,7 @@
 
     <!-- MODAL LOG IN -->
 
-    <div class="modal fade" id="modalFormLog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade text-white" id="modalFormLog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -386,7 +388,7 @@
 
     <!-- MODAL SIGN UP -->
 
-    <div class="modal fade" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade text-white" id="modalFormSign" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

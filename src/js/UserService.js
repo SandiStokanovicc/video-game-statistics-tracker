@@ -2,8 +2,19 @@ var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
-        //window.location.replace("index.html");
+         document.getElementById("sign-in").classList.add('d-none');
+         document.getElementById("sign-up").classList.add('d-none');
+         document.getElementById("or").classList.add('d-none');
+         document.getElementById("sign-out").classList.remove('d-none');
+         
+    } else {
+        document.getElementById("sign-in").classList.remove('d-none');
+        document.getElementById("sign-up").classList.remove('d-none');
+        document.getElementById("sign-out").classList.add('d-none');
+        document.getElementById("your-profile").classList.add('d-none');
+        document.getElementById("or").classList.remove('d-none');
     }
+
 
 
         $('#login-form').validate({
@@ -94,7 +105,7 @@ var UserService = {
             success: function (data) {
                 console.log(data);
                 localStorage.setItem("token", data.token);
-                //window.location.replace("index.html");
+                window.location.replace("index.html");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
