@@ -13,12 +13,16 @@ Flight::route('GET /users', function(){
 /**
 * register user
 */
-Flight::route('POST /authentication/register', ['AuthenticationController', 'register']);
-
+Flight::route('POST /register', function(){
+$data = Flight::request()->data->getData();
+$data['password'] = md5($data['password']);
+$user = Flight::userService()->add($data);
+Flight::json($user);}
+);
 /**
 * login user
 */
-// Flight::route('POST /authentication/login', ['AuthenticationController', 'login']);
+
 
 Flight::route('POST /login', function(){
   $login = Flight::request()->data->getData();
@@ -34,4 +38,9 @@ Flight::route('POST /login', function(){
   }else{
     Flight::json(["message" => "User doesn't exist"], 404);
   }
+});
+
+
+Flight::route('GET /getUser', function(){
+  $decoded = JWT::decode($jwt, new Key(Config::JWT_SECRET(), 'HS256'));
 });
