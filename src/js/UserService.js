@@ -2,31 +2,31 @@ var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
-         document.getElementById("sign-in").classList.add('d-none');
-         document.getElementById("sign-up").classList.add('d-none');
-         document.getElementById("or").classList.add('d-none');
-         document.getElementById("sign-out").classList.remove('d-none');
-         
-    } else {
-        document.getElementById("sign-in").classList.remove('d-none');
-        document.getElementById("sign-up").classList.remove('d-none');
-        document.getElementById("sign-out").classList.add('d-none');
-        document.getElementById("your-profile").classList.add('d-none');
-        document.getElementById("or").classList.remove('d-none');
-    }
+            document.getElementById("sign-in").classList.add('d-none');
+            document.getElementById("sign-up").classList.add('d-none');
+            document.getElementById("or").classList.add('d-none');
+            document.getElementById("sign-out").classList.remove('d-none');
+
+        } else {
+            document.getElementById("sign-in").classList.remove('d-none');
+            document.getElementById("sign-up").classList.remove('d-none');
+            document.getElementById("sign-out").classList.add('d-none');
+            document.getElementById("your-profile").classList.add('d-none');
+            document.getElementById("or").classList.remove('d-none');
+        }
 
 
 
         $('#login-form').validate({
-            rules : {
-                emailLogIn :{
+            rules: {
+                emailLogIn: {
                     required: true,
                     email: true
                 },
-                passwordLogIn : {
+                passwordLogIn: {
                     required: true,
                     minlength: 6
-                } 
+                }
             },
             messages: {
                 emailLogIn: {
@@ -41,52 +41,52 @@ var UserService = {
             },
             submitHandler: function (form) {
                 var user = Object.fromEntries((new FormData(form)).entries());
-                 UserService.login(user);
+                UserService.login(user);
             }
         });
         $('#signup-form').validate({
-            rules : {
-                emailSignUp :{
+            rules: {
+                emailSignUp: {
                     required: true,
                     email: true
                 },
-                usernameSignUp :{
-                    required : true,
-                    minlength : 3
+                usernameSignUp: {
+                    required: true,
+                    minlength: 3
                 },
-                passwordSignUp : {
+                passwordSignUp: {
                     required: true,
                     minlength: 6
                 },
-                passwordSignUpConfirm : {
-                    required : true,
-                    minlength : 6,
-                    equalTo : "#passwordSignUp" //for checking both passwords are same or not
-                    },
+                passwordSignUpConfirm: {
+                    required: true,
+                    minlength: 6,
+                    equalTo: "#passwordSignUp" //for checking both passwords are same or not
+                },
             },
             messages: {
-                usernameSignUp :{
-                    required : "Please enter a username",
-                    minlength : "Your username must consist of at least 3 characters"
-                    },
-                    passwordSignUp : {
-                    required : "Please enter a password",
-                    minlength : "Your password must be consist of at least 6 characters"
-                    },
-                    passwordSignUpConfirm : {
-                    required : "Please confirm your password",
-                    minlength : "Your password must be consist of at least 6 characters",
-                    equalTo : "Please enter the same password as above"
-                    },
+                usernameSignUp: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 3 characters"
+                },
+                passwordSignUp: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be consist of at least 6 characters"
+                },
+                passwordSignUpConfirm: {
+                    required: "Please confirm your password",
+                    minlength: "Your password must be consist of at least 6 characters",
+                    equalTo: "Please enter the same password as above"
+                },
             },
             submitHandler: function (form) {
                 var user = {};
                 user.username = $('#usernameSignUp').val();
                 user.password = $('#passwordSignUp').val();
                 user.email = $('#emailSignUp').val();
-                
+
                 UserService.register(user);
-                
+
             }
         });
 
@@ -94,10 +94,10 @@ var UserService = {
     },
     login: function (user) {
         console.log(JSON.stringify(user));
-        
+
         $.ajax({
             type: "POST",
-            url: '/rest/login',
+            url: ' /video-game-statistics-tracker/src/rest/login',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -129,7 +129,7 @@ var UserService = {
         console.log(JSON.stringify(user));
         $.ajax({
             type: "POST",
-            url: ' /rest/register',
+            url: ' /video-game-statistics-tracker/src/rest/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -149,7 +149,7 @@ var UserService = {
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
-                
+
             }
         });
     }
