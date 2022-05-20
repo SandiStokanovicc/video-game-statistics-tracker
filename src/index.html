@@ -32,7 +32,7 @@
                 <div class="collapse navbar-collapse" id="navbarsExample03">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Your profile</a>
+                            <a class="nav-link active" href="#" onclick="displayShowMatches()">Your profile</a>
                         </li>
                     </ul>
                     <!-- LOG IN -->
@@ -50,7 +50,7 @@
 
 
     <div class="center text" id="main">
-        <div class="caption text-center">
+        <div id="caption" class="caption text-center">
             <h1>WELCOME TO STAT TRACK</h1>
             <h3>FIND A PLAYER</h3>
             <div>
@@ -78,6 +78,74 @@
                         onclick="RiotService.getSummonerInfo()">
                         Search
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MATCHES -->
+
+    <div id="matches" class="d-none">
+        <div class="center text text-white">
+            <div class="caption text-center">
+                <div class="container-sm mb-5 mt-5">
+                    <div class="row">
+                        <div class="col-sm p-4">
+                            Profile
+                        </div>
+                    </div>
+                </div>
+                <div class="container-sm">
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 1
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 2
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 3
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 4
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 5
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 6
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 7
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 8
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 9
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm p-2">
+                            Match 10
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -390,7 +458,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">Please Log In to you account</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Please Sign Up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -470,6 +538,11 @@
             document.getElementById("main").classList.add('d-none');
             document.getElementById("faq").classList.add('d-none');
             document.getElementById("copyright").classList.add('d-none');
+        }
+
+        function displayShowMatches() {
+            document.getElementById("main").classList.add('d-none');
+            document.getElementById("matches").classList.remove('d-none');
         }
 
 
