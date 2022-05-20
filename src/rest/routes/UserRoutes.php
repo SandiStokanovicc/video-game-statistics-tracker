@@ -39,8 +39,3 @@ Flight::route('POST /login', function(){
     Flight::json(["message" => "User doesn't exist"], 404);
   }
 });
-
-
-Flight::route('GET /getUser', function(){
-  $decoded = JWT::decode($jwt, new Key(Config::JWT_SECRET(), 'HS256'));
-});

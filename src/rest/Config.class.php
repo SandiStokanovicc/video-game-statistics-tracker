@@ -6,10 +6,10 @@ class Config {
     return Config::get_env("DB_HOST", "localhost");
   }
   public static function DB_USERNAME(){
-    return Config::get_env("DB_USERNAME", "root");
+    return Config::get_env("DB_USERNAME", "riot");
   }
   public static function DB_PASSWORD(){
-    return Config::get_env("DB_PASSWORD", "root");
+    return Config::get_env("DB_PASSWORD", "riot");
   }
   public static function DB_SCHEME(){
     return Config::get_env("DB_SCHEME", "riot");

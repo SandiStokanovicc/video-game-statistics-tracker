@@ -6,6 +6,16 @@ var UserService = {
          document.getElementById("sign-up").classList.add('d-none');
          document.getElementById("or").classList.add('d-none');
          document.getElementById("sign-out").classList.remove('d-none');
+         var token = localStorage.getItem("token");
+         var base64Url = token.split('.')[1];
+         var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+         var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+         }).join(''));
+         var parsedUser = JSON.parse(jsonPayload);
+         console.log(parsedUser.username); 
+         document.getElementById("your-profile").innerHTML = parsedUser.username;
+         
          
     } else {
         document.getElementById("sign-in").classList.remove('d-none');
@@ -97,7 +107,7 @@ var UserService = {
         
         $.ajax({
             type: "POST",
-            url: '/rest/login',
+            url: ' /video-game-statistics-tracker/src/rest/login',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -106,8 +116,9 @@ var UserService = {
                 console.log(data);
                 localStorage.setItem("token", data.token);
                 window.location.replace("index.html");
-
             },
+
+
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log(data);
                 toastr.error("error");
@@ -120,16 +131,20 @@ var UserService = {
         });
     },
 
+
+
     logout: function () {
         localStorage.clear();
         window.location.replace("index.html");
     },
 
+
+
     register: function (user) {
         console.log(JSON.stringify(user));
         $.ajax({
             type: "POST",
-            url: ' /rest/register',
+            url: ' /video-game-statistics-tracker/src/rest/register',
             data: JSON.stringify(user),
             contentType: "application/json",
             dataType: "json",
@@ -137,9 +152,11 @@ var UserService = {
             success: function (data) {
                 $('#SignUpModal').modal('toggle');
                 localStorage.setItem("token", data.token);
+                console.log(token);
                 toastr.success('You have been succesfully registered.');
                 localStorage.clear();
-                console.log("data")
+                console.log("data");
+                window.location.replace("index.html");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -152,7 +169,7 @@ var UserService = {
                 
             }
         });
-    }
+    },
 }
 
 
