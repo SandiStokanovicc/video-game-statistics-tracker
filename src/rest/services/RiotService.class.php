@@ -10,7 +10,7 @@
       "X-Riot-Token: RGAPI-48196fa7-8fc5-4263-aa3b-c81471396e76"
     );
     
-    public function mrzimBoga($summonerName, $region){
+    public function getMatchBySummoner($summonerName, $region){
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
       //$region = "eun1";
