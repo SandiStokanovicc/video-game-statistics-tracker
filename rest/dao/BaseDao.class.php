@@ -16,7 +16,7 @@ class BaseDao{
     $password = Config::DB_PASSWORD();
     $schema = Config::DB_SCHEME();
     $port = Config::DB_PORT();
-    $this->conn = new PDO("mysql:host=$servername;port=3306;dbname=$schema", $username, $password);
+    $this->conn = new PDO("mysql:host=$servername;port=$port;dbname=$schema", $username, $password);
     // set the PDO error mode to exception
     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
