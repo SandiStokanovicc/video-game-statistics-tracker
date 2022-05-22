@@ -152,7 +152,7 @@ var UserService = {
             success: function (data) {
                 $('#SignUpModal').modal('toggle');
                 localStorage.setItem("token", data.token);
-                console.log(token);
+                console.log(data.token);
                 toastr.success('You have been succesfully registered.');
                 localStorage.clear();
                 console.log("data");
