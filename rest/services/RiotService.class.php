@@ -65,7 +65,7 @@
         return $response;
 
       }
-    
+    */
     public function getSummonerInfo($summonerName, $region){
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
@@ -86,7 +86,7 @@
 
     }
 
-    */
+    
     public function getMatchIDs($requestData){
       $ch = curl_init();
 
