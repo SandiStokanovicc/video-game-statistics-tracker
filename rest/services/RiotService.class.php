@@ -9,7 +9,7 @@
       "Origin: https://developer.riotgames.com",
       "X-Riot-Token: RGAPI-48196fa7-8fc5-4263-aa3b-c81471396e76"
     );
-    
+    /*
     public function getMatchBySummoner($summonerName, $region){
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
@@ -17,9 +17,7 @@
 
       $ch = curl_init(); // initialize cURL_PHP connection
       $url = 'https://' . $region .'.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $summonerName;
-      /*
-      * pass options to the connection
-      */
+      
       $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch); // get results
@@ -75,9 +73,7 @@
 
       $ch = curl_init(); // initialize cURL_PHP connection
       $url = 'https://' . $region .'.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $summonerName;
-      /*
-      * pass options to the connection
-      */
+      
 
       $this->setCurlOptions($ch, $url);
 
@@ -90,7 +86,7 @@
 
     }
 
-    
+    */
     public function getMatchIDs($requestData){
       $ch = curl_init();
 
