@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-48196fa7-8fc5-4263-aa3b-c81471396e76"
+      "X-Riot-Token: RGAPI-259883a2-e25a-4d0d-be41-73524f582617"
     );
     /*
     public function getMatchBySummoner($summonerName, $region){
