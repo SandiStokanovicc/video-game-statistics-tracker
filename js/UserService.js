@@ -121,7 +121,8 @@ var UserService = {
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log(data);
-                toastr.error("error");
+                toastr.error(XMLHttpRequest.responseJSON.message);
+                //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
@@ -160,7 +161,8 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error("error");
+                toastr.error(XMLHttpRequest.responseJSON.message);
+                //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));

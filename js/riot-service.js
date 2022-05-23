@@ -9,15 +9,16 @@ var RiotService = {
             contentType: "application/json",
             //data nije potrebno jer se svi proslijedjeni podaci koriste u URL-u
             dataType: "json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+            },
             success: function (results) {
                 console.log(JSON.stringify(results));
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                
+                toastr.error(XMLHttpRequest.responseJSON.message);
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
-                console.log("Error! RiotService.getSummonerInfo() [script]");
             }
         });
     }
