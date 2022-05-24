@@ -79,7 +79,58 @@
       $json = json_decode($response, true);
       return $json = $this->filterInfo($json['info']);
     }
+/*
+    private function getMatchItems($matchId, $continent, $matchLength){
+      $ch = curl_init();
+      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline';
+      $this->setCurlOptions($ch, $url);
 
+      $response = curl_exec($ch);
+      $json = json_decode($response, true);
+
+      //return $json;
+
+      $i = 0;
+      $countAdded = 0;
+      $countDestroyed = 0;
+      $itemsAdded = array();
+      $itemsDestroyed = array();
+      $finalItems = array();
+      while($i<$matchLength+2){
+        $idkArray = json_decode($itemsAdded,true);
+        $tempArray = array('itemId' => [], 'participantId' => []);
+        foreach($json['info']['frames'][$i]['events'] as $eventIndex => $event){
+          //return $event;
+          if(isset($event['itemId'])){
+            if(strcmp($event['type'], "ITEM_PURCHASED")==0){
+              array_push($itemsAdded, $tempArray);
+              array_push($itemsAdded[$countAdded]['itemId'], json_decode($event['itemId'], true));
+              array_push($itemsAdded[$countAdded]['participantId'], $event['participantId']);
+              $countAdded++;
+            } 
+            else if(strcmp($event['type'], "ITEM_DESTROYED")==0){
+              array_push($itemsDestroyed, $tempArray);
+              array_push($itemsDestroyed[$countDestroyed], $event['itemId']);
+              array_push($itemsDestroyed[$countDestroyed], $event['participantId']);
+              $countDestroyed++;
+            }
+          }
+        
+          
+          $i++;
+          //return $itemsAdded;
+          //return $event;
+          
+          //array_push($itemsAdded['participantId'], $event['participantId']);
+          //return $itemsAdded;
+          //$itemsAdded[$i]['itemId'] = $event['itemId'];
+        }
+        //return $itemsAdded;
+        //$itemsAdded[$json['info']['frames'][$i]['events']]
+      }
+      return $itemsAdded;
+    }
+*/
     private function filterInfo($info){
       //return $info['participants'] = $this->filterParticipants($info['participants']);
       $parts = $this->filterParticipants($info['participants']);
@@ -122,15 +173,17 @@
       else{
         $continent = "europe";
       }
+      
       $summoner = $this->getSummonerInfo($summonerName, $region);
+      
       $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
-      $j = 0;
+      //$j = 0;
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
-
-        //$summoner['matches'][$i] = getMatchInfo($match['matchid']);
-        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $j);
-        $j++;
+        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent);
+        //$summoner['items'][$i] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+        
+        //$j++;
       }
       return $summoner;
       //exclude useless info
