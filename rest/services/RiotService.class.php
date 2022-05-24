@@ -37,7 +37,7 @@
       //return $json;
 
       // or 
-      return array('name' => $json['name'], 'puuid' => $json['puuid']);
+      return array('name' => $json['name'], 'puuid' => $json['puuid'], 'profileIconId' => $json['profileIconId'], 'summonerLevel' => $json['summonerLevel']);
     }
 
     private function getSummonerMatchesPrivate($puuid, $continent){
@@ -71,15 +71,20 @@
       //return $info['participants'] = $this->filterParticipants($info['participants']);
       $parts = $this->filterParticipants($info['participants']);
 
-      return array('info' => array('participants' => $parts));
+      //return array('info' => array('participants' => $parts));
       //return $info = filterParticipants($info['participants']);
+      return array('info' => array('participants' => $parts, 'win' => $info['teams']['0']['win']));
     }
 
     private function filterParticipants($participants){
-      $returnVal = array();
+      //$returnVal = array('summonerName' => array(), 'champLevel' => array());
+      $returnVal = array('0' => [], '1' => [], '2' => [], 
+      '3' => [], '4' => [], '5' => [],
+      '6' => [], '7' => [],'8' => [], '9' => []);
       $i = 0;
       while($i<10){
-        array_push($returnVal, $participants[$i]['summonerName']);
+        $returnVal[$i]['summonerName'] = $participants[$i]['summonerName'];
+        $returnVal[$i]['champLevel'] = $participants[$i]['champLevel'];
         $i++;
       }
       return $returnVal;
