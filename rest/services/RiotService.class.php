@@ -37,7 +37,7 @@
       //return $json;
 
       // or 
-      return array('name' => $json['name'], 'puuid' => $json['puuid'], 'profileIconId' => $json['profileIconId'], 'summonerLevel' => $json['summonerLevel']);
+      return array('id' => $json['id'], 'name' => $json['name'], 'puuid' => $json['puuid'], 'profileIconId' => $json['profileIconId'], 'summonerLevel' => $json['summonerLevel']);
     }
 
     private function getSummonerMatchesPrivate($puuid, $continent){
@@ -48,13 +48,26 @@
       //$count = 10;
       //$url = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=0' . $start . '&count=10' . $count;
 
-      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=2';
+      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=2&type=ranked';
 
       $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch);
       $json = json_decode($response, true);
       return $json;
+    }
+
+    private function getSummonerRanks($encryptedSummonerId, $region){
+      $ch = curl_init();
+      $url = 'https://' . $region . '.api.riotgames.com/lol/league/v4/entries/by-summoner/' . $encryptedSummonerId;
+      $this->setCurlOptions($ch, $url);
+
+      $response = curl_exec($ch);
+      //return $response;
+      $json = json_decode($response, true);
+      //return $json;
+      return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 
+      'RANKED_SOLO_5x5' => array('tier' => $json[1]['tier'],'rank' => $json[1]['rank'],'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
     }
 
     private function getMatchInfo($matchId, $continent){
@@ -99,6 +112,7 @@
         $continent = "europe";
       }
       $summoner = $this->getSummonerInfo($summonerName, $region);
+      $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
       $j = 0;
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
