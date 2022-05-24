@@ -86,7 +86,8 @@
 
       //return array('info' => array('participants' => $parts));
       //return $info = filterParticipants($info['participants']);
-      return array('info' => array('participants' => $parts, 'win' => $info['teams']['0']['win']));
+      return array('info' => array('participants' => $parts, 'win' => $info['teams']['0']['win'],
+      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10))));
     }
 
     private function filterParticipants($participants){
@@ -98,6 +99,16 @@
       while($i<10){
         $returnVal[$i]['summonerName'] = $participants[$i]['summonerName'];
         $returnVal[$i]['champLevel'] = $participants[$i]['champLevel'];
+        $returnVal[$i]['kills'] = $participants[$i]['kills'];
+        $returnVal[$i]['deaths'] = $participants[$i]['deaths'];
+        $returnVal[$i]['assists'] = $participants[$i]['assists'];
+        $returnVal[$i]['kda'] = $participants[$i]['challenges']['kda'];
+        $returnVal[$i]['controlWardsPlaced'] = $participants[$i]['challenges']['controlWardsPlaced'];
+        $returnVal[$i]['wardsPlaced'] = $participants[$i]['wardsPlaced'];
+        $returnVal[$i]['wardsKilled'] = $participants[$i]['wardsKilled'];
+        $returnVal[$i]['totalDamageDealtToChampions'] = $participants[$i]['totalDamageDealtToChampions'];
+        $returnVal[$i]['totalDamageTaken'] = $participants[$i]['totalDamageTaken'];
+        $returnVal[$i]['totalMinionsKilled'] = $participants[$i]['totalMinionsKilled'] + $participants[$i]['neutralMinionsKilled'];
         $i++;
       }
       return $returnVal;
