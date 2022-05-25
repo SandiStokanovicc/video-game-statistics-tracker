@@ -79,7 +79,7 @@
       $json = json_decode($response, true);
       return $json = $this->filterInfo($json['info']);
     }
-/*
+
     private function getMatchItems($matchId, $continent, $matchLength){
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline';
@@ -93,31 +93,45 @@
       $i = 0;
       $countAdded = 0;
       $countDestroyed = 0;
-      $itemsAdded = array();
-      $itemsDestroyed = array();
-      $finalItems = array();
+      $itemsAdded = array('0' => array(), '1' => array(), 
+      '2' => array(), '3' => array(), '4' => array(), '5' => array(),
+      '6' => array(), '7' => array(),'8' => array(), '9' => array());
+      $itemsDestroyed = array('0' => [], '1' => [], '2' => [], 
+      '3' => [], '4' => [], '5' => [],
+      '6' => [], '7' => [],'8' => [], '9' => []);
+      $finalItems = array('0' => [array(),array()], '1' => [array(), array()], '2' => [array(),array()], 
+      '3' => [array(),array()], '4' => [array(),array()], '5' => [array(),array()],
+      '6' => [array(),array()], '7' => [array(),array()],'8' => [array(),array()], '9' => [array(),array()]);
       while($i<$matchLength+2){
-        $idkArray = json_decode($itemsAdded,true);
-        $tempArray = array('itemId' => [], 'participantId' => []);
+        //$tempArray = array('itemId' => [], 'participantId' => []);
         foreach($json['info']['frames'][$i]['events'] as $eventIndex => $event){
           //return $event;
           if(isset($event['itemId'])){
+            //array_push($itemsAdded[$event['participantId']-1], $event);
             if(strcmp($event['type'], "ITEM_PURCHASED")==0){
-              array_push($itemsAdded, $tempArray);
-              array_push($itemsAdded[$countAdded]['itemId'], json_decode($event['itemId'], true));
-              array_push($itemsAdded[$countAdded]['participantId'], $event['participantId']);
-              $countAdded++;
+              array_push($itemsAdded[$event['participantId']-1], $event['itemId']);
             } 
-            else if(strcmp($event['type'], "ITEM_DESTROYED")==0){
-              array_push($itemsDestroyed, $tempArray);
-              array_push($itemsDestroyed[$countDestroyed], $event['itemId']);
-              array_push($itemsDestroyed[$countDestroyed], $event['participantId']);
-              $countDestroyed++;
+            else if((strcmp($event['type'], "ITEM_DESTROYED")==0) || (strcmp($event['type'], "ITEM_UNDO")==0) || (strcmp($event['type'], "ITEM_SOLD") == 0)){
+            //else if(strcmp($event['type'], "ITEM_DESTROYED")==0){
+            //  else if($event['type'] == "ITEM_DESTROYED"){
+              //array_push($itemsAdded[$event['participantId']-1], $event);
+              
+              //array_push($itemsDestroyed[$event['participantId']-1], $event['itemId']);
+              if (($key = array_search($event['itemId'], $itemsAdded[$event['participantId']-1])) !== false) {
+                
+              
+              //  print_r($key);
+                unset($itemsAdded[$event['participantId']-1][$key]);
+              }
+              //array_push($itemsDestroyed, $tempArray);
+              //array_push($itemsDestroyed[$countDestroyed], $event['itemId']);
+              //array_push($itemsDestroyed[$countDestroyed], $event['participantId']);
+              //$countDestroyed++;
             }
+            //print_r($itemsAdded); die;
           }
-        
           
-          $i++;
+          
           //return $itemsAdded;
           //return $event;
           
@@ -125,12 +139,25 @@
           //return $itemsAdded;
           //$itemsAdded[$i]['itemId'] = $event['itemId'];
         }
+        
+        
+          
+        $i++;
+        
         //return $itemsAdded;
         //$itemsAdded[$json['info']['frames'][$i]['events']]
       }
+      $j = 0;
+        while($j<10){
+          //$finalItems[$j][0] = $itemsAdded[$j];
+          //$finalItems[$j][1] = $itemsDestroyed[$j];
+          $itemsAdded[$j] = array_unique($itemsAdded[$j]);
+          $j++;
+        }
+        //return $finalItems;
       return $itemsAdded;
     }
-*/
+
     private function filterInfo($info){
       //return $info['participants'] = $this->filterParticipants($info['participants']);
       $parts = $this->filterParticipants($info['participants']);
@@ -181,7 +208,7 @@
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent);
-        //$summoner['items'][$i] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+        //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
         
         //$j++;
       }
