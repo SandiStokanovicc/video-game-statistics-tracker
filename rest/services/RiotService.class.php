@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-5a6436e1-28ad-4805-9b98-5fa972af90bb"
+      "X-Riot-Token: RGAPI-97080a01-ae68-48c3-9885-ed7e01749c3c"
     );
     
     private function setCurlOptions($ch, $url){
@@ -88,6 +88,9 @@
       $response = curl_exec($ch);
       $json = json_decode($response, true);
 
+      $componentItems = array(3044, 3191, 3051, 3057, 3066, 3067, 3070, 3076, 3077, 3082, 3086, 3108, 3112, 3113, 3114, 3123, 3133, 3134, 3140,
+       3145, 3155, 3340, 3363, 3364, 3400, 3802, 3850, 3851, 3854, 3855, 3858, 3859, 3862, 3863, 3916, 4630, 6670, 6660);
+
       //return $json;
 
       $i = 0;
@@ -109,25 +112,20 @@
           if(isset($event['itemId'])){
             //array_push($itemsAdded[$event['participantId']-1], $event);
             if(strcmp($event['type'], "ITEM_PURCHASED")==0){
-              array_push($itemsAdded[$event['participantId']-1], $event['itemId']);
+              if(($event['itemId'] > 3000) && !in_array($event['itemId'], $componentItems)) array_push($itemsAdded[$event['participantId']-1], $event['itemId']);
             } 
-            else if((strcmp($event['type'], "ITEM_DESTROYED")==0) || (strcmp($event['type'], "ITEM_UNDO")==0) || (strcmp($event['type'], "ITEM_SOLD") == 0)){
+            //else if((strcmp($event['type'], "ITEM_DESTROYED")==0) || (strcmp($event['type'], "ITEM_UNDO")==0) || (strcmp($event['type'], "ITEM_SOLD") == 0)){
             //else if(strcmp($event['type'], "ITEM_DESTROYED")==0){
             //  else if($event['type'] == "ITEM_DESTROYED"){
               //array_push($itemsAdded[$event['participantId']-1], $event);
               
               //array_push($itemsDestroyed[$event['participantId']-1], $event['itemId']);
-              if (($key = array_search($event['itemId'], $itemsAdded[$event['participantId']-1])) !== false) {
-                
-              
-              //  print_r($key);
-                unset($itemsAdded[$event['participantId']-1][$key]);
-              }
+
               //array_push($itemsDestroyed, $tempArray);
               //array_push($itemsDestroyed[$countDestroyed], $event['itemId']);
               //array_push($itemsDestroyed[$countDestroyed], $event['participantId']);
               //$countDestroyed++;
-            }
+           // }
             //print_r($itemsAdded); die;
           }
           
@@ -147,13 +145,13 @@
         //return $itemsAdded;
         //$itemsAdded[$json['info']['frames'][$i]['events']]
       }
-      $j = 0;
-        while($j<10){
+  //    $j = 0;
+        //while($j<10){
           //$finalItems[$j][0] = $itemsAdded[$j];
           //$finalItems[$j][1] = $itemsDestroyed[$j];
-          $itemsAdded[$j] = array_unique($itemsAdded[$j]);
-          $j++;
-        }
+          //$itemsAdded[$j] = array_unique($itemsAdded[$j]); //remove duplicates
+         // $j++;
+      // }
         //return $finalItems;
       return $itemsAdded;
     }
@@ -204,13 +202,11 @@
       $summoner = $this->getSummonerInfo($summonerName, $region);
       
       $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
-      //$j = 0;
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent);
-        //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
-        
-        //$j++;
+        $summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+
       }
       return $summoner;
       //exclude useless info
