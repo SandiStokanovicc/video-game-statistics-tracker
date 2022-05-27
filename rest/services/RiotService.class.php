@@ -48,7 +48,7 @@
       //$count = 10;
       //$url = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=0' . $start . '&count=10' . $count;
 
-      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=2&type=ranked';
+      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=3&type=ranked';
 
       $this->setCurlOptions($ch, $url);
 
@@ -70,14 +70,57 @@
       'RANKED_SOLO_5x5' => array('tier' => $json[1]['tier'],'rank' => $json[1]['rank'],'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
     }
 
-    private function getMatchInfo($matchId, $continent){
+    private function getMatchInfo($matchId, $continent, $mainPlayerPuuid){
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
       $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch);
       $json = json_decode($response, true);
-      return $json = $this->filterInfo($json['info']);
+      return $json = $this->filterInfo($json['info'], $mainPlayerPuuid);
+    }
+    
+    private function filterInfo($info, $mainPlayerPuuid){
+      //return $info['participants'] = $this->filterParticipants($info['participants']);
+      $parts = $this->filterParticipants($info, $mainPlayerPuuid);
+
+      //return array('info' => array('participants' => $parts));
+      //return $info = filterParticipants($info['participants']);
+      return array('info' => array('participants' => $parts['participants'], 'win' => $parts['win'],
+      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10))));
+    }
+
+    private function filterParticipants($info, $mainPlayerPuuid){
+      $foundPlayer = "false";
+      //$returnVal = array('summonerName' => array(), 'champLevel' => array());
+      $returnVal = array('win'=>"lmao", 'participants' => array('0' => [], '1' => [], '2' => [], 
+      '3' => [], '4' => [], '5' => [],
+      '6' => [], '7' => [],'8' => [], '9' => []));
+      $i = 0;
+      while($i<10){
+        if($foundPlayer == "false"){
+          if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
+            $foundPlayer = true;
+            if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['win'] = "true";
+            else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['win'] = "true";
+            else $returnVal['win'] = "false";
+        }}
+        $returnVal['participants'][$i]['summonerName'] = $info['participants'][$i]['summonerName'];
+        $returnVal['participants'][$i]['puuid'] = $info['participants'][$i]['puuid'];
+        $returnVal['participants'][$i]['champLevel'] = $info['participants'][$i]['champLevel'];
+        $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
+        $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
+        $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
+        $returnVal['participants'][$i]['kda'] = $info['participants'][$i]['challenges']['kda'];
+        $returnVal['participants'][$i]['controlWardsPlaced'] = $info['participants'][$i]['challenges']['controlWardsPlaced'];
+        $returnVal['participants'][$i]['wardsPlaced'] = $info['participants'][$i]['wardsPlaced'];
+        $returnVal['participants'][$i]['wardsKilled'] = $info['participants'][$i]['wardsKilled'];
+        $returnVal['participants'][$i]['totalDamageDealtToChampions'] = $info['participants'][$i]['totalDamageDealtToChampions'];
+        $returnVal['participants'][$i]['totalDamageTaken'] = $info['participants'][$i]['totalDamageTaken'];
+        $returnVal['participants'][$i]['totalMinionsKilled'] = $info['participants'][$i]['totalMinionsKilled'] + $info['participants'][$i]['neutralMinionsKilled'];
+        $i++;
+      }
+      return $returnVal;
     }
 
     private function getMatchItems($matchId, $continent, $matchLength){
@@ -94,8 +137,6 @@
       //return $json;
 
       $i = 0;
-      $countAdded = 0;
-      $countDestroyed = 0;
       $itemsAdded = array('0' => array(), '1' => array(), 
       '2' => array(), '3' => array(), '4' => array(), '5' => array(),
       '6' => array(), '7' => array(),'8' => array(), '9' => array());
@@ -156,39 +197,6 @@
       return $itemsAdded;
     }
 
-    private function filterInfo($info){
-      //return $info['participants'] = $this->filterParticipants($info['participants']);
-      $parts = $this->filterParticipants($info['participants']);
-
-      //return array('info' => array('participants' => $parts));
-      //return $info = filterParticipants($info['participants']);
-      return array('info' => array('participants' => $parts, 'win' => $info['teams']['0']['win'],
-      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10))));
-    }
-
-    private function filterParticipants($participants){
-      //$returnVal = array('summonerName' => array(), 'champLevel' => array());
-      $returnVal = array('0' => [], '1' => [], '2' => [], 
-      '3' => [], '4' => [], '5' => [],
-      '6' => [], '7' => [],'8' => [], '9' => []);
-      $i = 0;
-      while($i<10){
-        $returnVal[$i]['summonerName'] = $participants[$i]['summonerName'];
-        $returnVal[$i]['champLevel'] = $participants[$i]['champLevel'];
-        $returnVal[$i]['kills'] = $participants[$i]['kills'];
-        $returnVal[$i]['deaths'] = $participants[$i]['deaths'];
-        $returnVal[$i]['assists'] = $participants[$i]['assists'];
-        $returnVal[$i]['kda'] = $participants[$i]['challenges']['kda'];
-        $returnVal[$i]['controlWardsPlaced'] = $participants[$i]['challenges']['controlWardsPlaced'];
-        $returnVal[$i]['wardsPlaced'] = $participants[$i]['wardsPlaced'];
-        $returnVal[$i]['wardsKilled'] = $participants[$i]['wardsKilled'];
-        $returnVal[$i]['totalDamageDealtToChampions'] = $participants[$i]['totalDamageDealtToChampions'];
-        $returnVal[$i]['totalDamageTaken'] = $participants[$i]['totalDamageTaken'];
-        $returnVal[$i]['totalMinionsKilled'] = $participants[$i]['totalMinionsKilled'] + $participants[$i]['neutralMinionsKilled'];
-        $i++;
-      }
-      return $returnVal;
-    }
 
     // DINO KECO
     public function getSummonerMatches($summonerName, $region){
@@ -204,7 +212,7 @@
       $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
-        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent);
+        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
         $summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
 
       }
