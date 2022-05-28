@@ -89,7 +89,7 @@ var RiotService = {
 
                 var i, itemCount;
 
-                for (i = 0; i < 20; i++) {
+                for (i = 0; i < 5; i++) {
 
                     if (results.matches[i].info.win == "true") {
                         html += `
