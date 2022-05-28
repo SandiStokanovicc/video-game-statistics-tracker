@@ -14,15 +14,27 @@ var RiotService = {
         document.getElementById("matches").classList.remove('d-none');
     },
 
+    unhideMainPageOnFail: function() {
+        document.getElementById("background").style.background = "url('Pictures/background1.png')";
+        document.getElementById("main-container").classList.add('d-none'); 
+        document.getElementById("matches").classList.add('d-none');
+        document.getElementById("main").classList.remove('d-none');
+       
+    },
+
     getSummonerInfo: function () {
         this.displaySpinner();
+        let searchPlayerInput = $('#SearchPlayerInput').val();
+        let regionButton = $('#RegionButton').html().trim();
+        if(searchPlayerInput.length == 0) searchPlayerInput = "";
+        //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
 
         var requestData = {};
 
         $.ajax({
-            url: 'rest/summoners/' + $('#SearchPlayerInput').val() + "/" + $('#RegionButton').html(),
+            url: 'rest/summoners/' + searchPlayerInput + "/" + regionButton,
 
             type: 'GET',
             contentType: "application/json",
@@ -77,7 +89,7 @@ var RiotService = {
 
                 var i, itemCount;
 
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < 20; i++) {
 
                     if (results.matches[i].info.win == "true") {
                         html += `
@@ -199,8 +211,13 @@ var RiotService = {
                 RiotService.displayShowMatches();
                 //this.displayShowMatches(); 
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
+            error: function (errorMessage,XMLHttpRequest, textStatus, errorThrown) {
+                RiotService.unhideMainPageOnFail();
+                $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText; 
+                toastr.error($fullErrorMessage);
+                console.log(errorMessage);
+                console.log($fullErrorMessage);
+                //toastr.error(XMLHttpRequest.responseJSON.message);
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
             }

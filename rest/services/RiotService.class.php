@@ -16,6 +16,33 @@
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     }
+
+    private function checkFor429Error($json){
+      
+      if(!isset($json['status'])) return;
+      else if($json['status']['status_code'] == 429){
+        $httpStatusCode = 429;
+        $httpStatusMsg  = 'Rate limit exceeded';
+        $phpSapiName    = substr(php_sapi_name(), 0, 3);
+        if ($phpSapiName == 'cgi' || $phpSapiName == 'fpm') {
+            die(header('Status: '.$httpStatusCode.' '.$httpStatusMsg));
+        } else {
+            $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
+            die(header($protocol.' '.$httpStatusCode.' '.$httpStatusMsg));
+        }
+      }
+      else{
+        $httpStatusCode = $json['status']['status_code'];
+        $httpStatusMsg  = $json['status']['message'];
+        $phpSapiName    = substr(php_sapi_name(), 0, 3);
+        if ($phpSapiName == 'cgi' || $phpSapiName == 'fpm') {
+            die(header('Status: '.$httpStatusCode.' '. $httpStatusMsg));
+        } else {
+            $protocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
+            die(header($protocol.' '.$httpStatusCode.' '.$httpStatusMsg));
+        }
+      } 
+    }
     
     // NEW STUFF THAT PRINTS FILTERED INFORMATION
     private function getSummonerInfo($summonerName, $region){
@@ -30,10 +57,11 @@
       $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch); // get results
-
       curl_close($ch); // close connection
 
       $json = json_decode($response, true); // transform result from JSON (or whatever) into array
+
+      $this->checkFor429Error($json);
       //return $json;
 
       // or 
@@ -48,12 +76,13 @@
       //$count = 10;
       //$url = 'https://' . $requestData['continent'] . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $requestData['puuid'] . '/ids?start=0' . $start . '&count=10' . $count;
 
-      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=3&type=ranked';
+      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=20&type=ranked';
 
       $this->setCurlOptions($ch, $url);
 
       $response = curl_exec($ch);
       $json = json_decode($response, true);
+      $this->checkFor429Error($json);
       return $json;
     }
 
@@ -65,6 +94,7 @@
       $response = curl_exec($ch);
       //return $response;
       $json = json_decode($response, true);
+      $this->checkFor429Error($json);
       //return $json;
       return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 
       'RANKED_SOLO_5x5' => array('tier' => $json[1]['tier'],'rank' => $json[1]['rank'],'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
@@ -77,6 +107,7 @@
 
       $response = curl_exec($ch);
       $json = json_decode($response, true);
+      $this->checkFor429Error($json);
       return $json = $this->filterInfo($json['info'], $mainPlayerPuuid);
     }
     
@@ -136,6 +167,7 @@
 
       $response = curl_exec($ch);
       $json = json_decode($response, true);
+      $this->checkFor429Error($json);
 
       $componentItems = array(3044, 3191, 3051, 3057, 3066, 3067, 3070, 3076, 3077, 3082, 3086, 3108, 3112, 3113, 3114, 3123, 3133, 3134, 3140,
        3145, 3155, 3340, 3363, 3364, 3400, 3802, 3850, 3851, 3854, 3855, 3858, 3859, 3862, 3863, 3916, 4630, 6670, 6660);
@@ -206,6 +238,9 @@
 
     // DINO KECO
     public function getSummonerMatches($summonerName, $region){
+      //if(strlen($summonerName) == 0) $summonerName = "!";
+      //if($region == "Server") $region = "eun1";
+
       if($region == "na1"){
         $continent = "americas";
       }
