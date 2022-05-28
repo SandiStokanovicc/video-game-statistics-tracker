@@ -38,7 +38,7 @@ var RiotService = {
                 //$("#matchContainer").html();
 
                 html += `
-                <div class="container-sm mb-5 mt-5">
+                <div class="container mb-5 mt-5">
                 <div class="row">
                     <div class="col-sm p-4">
                     profileIconId: `
@@ -48,24 +48,28 @@ var RiotService = {
                     + results.name +
                     //+ results.matches[0].items[0][0] +
                     `
-                    <br>summonerLevel: `
+                    <br>Summoner Level: `
                     + results.summonerLevel +
                     `
-                    <br>Rank Flex: `
-                    + results.ranks.RANKED_FLEX_SR.tier + ' ' + results.ranks.RANKED_FLEX_SR.rank +
-                    `
-                    <br>Wins: `
-                    + results.ranks.RANKED_FLEX_SR.wins +
-                    `
-                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses +
-                    `
-                    <br>Rank Solo-Duo: `
+                    </div>
+                    <div class="col-sm p-4"">
+                    Ranked SoloDuo: `
                     + results.ranks.RANKED_SOLO_5x5.tier + ' ' + results.ranks.RANKED_SOLO_5x5.rank +
                     `
                     <br>Wins: `
                     + results.ranks.RANKED_SOLO_5x5.wins +
                     `
                     <br>Losses: ` + results.ranks.RANKED_SOLO_5x5.losses +
+                    `
+                    </div>
+                    <div class="col-sm p-4"">
+                    Ranked Flex: `
+                    + results.ranks.RANKED_FLEX_SR.tier + ' ' + results.ranks.RANKED_FLEX_SR.rank +
+                    `
+                    <br>Wins: `
+                    + results.ranks.RANKED_FLEX_SR.wins +
+                    `
+                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses +
                     `
                     </div>
                 </div>
