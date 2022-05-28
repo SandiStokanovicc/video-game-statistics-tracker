@@ -85,7 +85,7 @@ var RiotService = {
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
-                        <br>victory </button>
+                        <br>Victory </button>
                     </h2>`;
                     }
                     else {
@@ -98,7 +98,7 @@ var RiotService = {
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
-                        <br>defeat </button>
+                        <br>Defeat </button>
                     </h2>`;
                     }
 
