@@ -139,15 +139,21 @@ var RiotService = {
                             `<div class="col-sm" id="minionsKilled">Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
 
 
-                            `<div class="col-sm">Participant ` + j + `<br>Items:<br> </div>
+                            `<div class="col-sm">Participant ` + j + `<br>Items:<br></div>
+                            <div class = col-sm>`;
+                            results.matches[i].items[j].forEach(item => {
+                                html += `<div id="itemBought">Item ` + itemCount + `: ` + item + `<br></div>`;
+                                itemCount++;
+                            });
+                            html+= `</div>
                             </div>
                             </div>
                             <hr>
                             `;
-                        results.matches[i].items[j].forEach(item => {
-                            html += `<div id="itemBought"><br>Item ` + itemCount + `: ` + item + `</div>`;
-                            itemCount++;
-                        });
+                        //</hr>results.matches[i].items[j].forEach(item => {
+                        //    html += `<div id="itemBought"><br>Item ` + itemCount + `: ` + item + `</div>`;
+                        //    itemCount++;
+                        //});
                     }
                     html += `       </div>
                                  </div>
