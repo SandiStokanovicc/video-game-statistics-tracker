@@ -103,23 +103,24 @@ var RiotService = {
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
                         <br>Defeat`;
                     }
-                    if(results.matches[i].info.playedBefore > 86399){
+                    if (results.matches[i].info.playedBefore > 86399) {
                         html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 86400) + ` days`
                     }
-                    else if(results.matches[i].info.playedBefore > 3599){
-                        html += `<br>Played before: ` +  parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
+                    else if (results.matches[i].info.playedBefore > 3599) {
+                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
                     }
                     else {
-                        html += `<br>Played before: ` +  parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
-                        
+                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
+
                     }
                     //`<br>KDA: ` + results.matches[i].info 
-                    html += `<br>Kills: ` + results.matches[i].info.searchedPlayerInfo.kills + ` Deaths: ` + 
+                    html += `<br>Kills: ` + results.matches[i].info.searchedPlayerInfo.kills + ` Deaths: ` +
                         results.matches[i].info.searchedPlayerInfo.deaths + ` Assists: ` + results.matches[i].info.searchedPlayerInfo.assists +
-                        `<br>ChampionName: ` + results.matches[i].info.searchedPlayerInfo.championName + 
-                        `</button>
-                    </h2>` + 
-                    `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
+                        `<br>ChampionName: ` + results.matches[i].info.searchedPlayerInfo.championName +
+                        `<img src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championName + `.png" alt="ChampName" width="100" height="100"></img>
+                        </button>
+                    </h2>` +
+                        `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body text-white">`;
                     for (var j = 0; j < 10; j++) {
@@ -128,8 +129,8 @@ var RiotService = {
                             <div class="container">
                             <div class="row">
                             <div class="col-sm" id="playerName">Participant ` + j + `<br>Name: ` + results.matches[i].info.participants[j].summonerName +
-                            `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel  +
-                            `<br>Champion Name: ` + results.matches[i].info.participants[j].championName + `</div>` + 
+                            `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel +
+                            `<br>Champion Name: ` + results.matches[i].info.participants[j].championName + `</div>` +
                             `<div class="col-sm" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
                             `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
                             `<br>Assists: ` + results.matches[i].info.participants[j].assists +
@@ -152,16 +153,21 @@ var RiotService = {
                             </div>
                             </div>` +
                             `<div class="col-sm" id="minionsKilled">Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
+                            `
+                            <div class="col-sm">Participant ` + j + `<br>Items:<br></div>
+                            <div class="col-sm">
+                            <div class="container">
+                            <div class="row">`;
 
-
-                            `<div class="col-sm">Participant ` + j + `<br>Items:<br></div>
-                            <div class = col-sm>`;
-                            results.matches[i].items[j].some(function(item) {
-                                html += `<div id="itemBought">Item ` + itemCount + `: ` + item + `<br></div>`;
-                                itemCount++;
-                                return itemCount === 7;
-                              });
-                            html+= `</div>
+                        results.matches[i].items[j].some(function (item) {
+                            //if(itemCount == 4) html += `<div class="row">`;
+                            html += `<div class = col-sm>Item ` + itemCount + `: ` + item + `<br></div>`;
+                            itemCount++;
+                            return itemCount === 7;
+                        });
+                        html += `</div>
+                        </div>
+                        </div>
                             </div>
                             </div>
                             <hr>
