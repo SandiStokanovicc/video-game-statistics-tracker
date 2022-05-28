@@ -210,12 +210,12 @@ var RiotService = {
                                     </div>`;
                                     }*/
                 $("#matchContainer").html(html);
-
-            },
-            complete: function (data) {
                 RiotService.displayShowMatches();
-                //this.displayShowMatches(); 
             },
+            //complete: function (data) {
+                //RiotService.displayShowMatches();
+                //this.displayShowMatches(); 
+            //},
             error: function (errorMessage,XMLHttpRequest, textStatus, errorThrown) {
                 RiotService.unhideMainPageOnFail();
                 $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText; 
