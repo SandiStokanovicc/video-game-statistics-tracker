@@ -141,10 +141,11 @@ var RiotService = {
 
                             `<div class="col-sm">Participant ` + j + `<br>Items:<br></div>
                             <div class = col-sm>`;
-                            results.matches[i].items[j].forEach(item => {
+                            results.matches[i].items[j].some(function(item) {
                                 html += `<div id="itemBought">Item ` + itemCount + `: ` + item + `<br></div>`;
                                 itemCount++;
-                            });
+                                return itemCount === 7;
+                              });
                             html+= `</div>
                             </div>
                             </div>
