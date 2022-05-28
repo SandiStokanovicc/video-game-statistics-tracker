@@ -110,12 +110,12 @@ var RiotService = {
                         html += `
                             <div class="container">
                             <div class="row">
-                            <div class="col-sm" id="playerName"><br>Participant ` + j + `<br>Name: ` + results.matches[i].info.participants[j].summonerName +
+                            <div class="col-sm" id="playerName">Participant ` + j + `<br>Name: ` + results.matches[i].info.participants[j].summonerName +
                             `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel + `</div>` +
-                            `<div class="col-sm" id="Kills"><br>Kills: ` + results.matches[i].info.participants[j].kills +
+                            `<div class="col-sm" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
                             `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
                             `<br>Assists: ` + results.matches[i].info.participants[j].assists + `</div>` +
-                            `<div class="col-sm" id="controlWardsPlaced"><br>Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
+                            `<div class="col-sm" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
                             `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
                             `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
                             `<div class="col-sm"> Total Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
@@ -132,10 +132,10 @@ var RiotService = {
                             `</div>
                             </div>
                             </div>` +
-                            `<div class="col-sm" id="minionsKilled"><br>Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
+                            `<div class="col-sm" id="minionsKilled">Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
 
 
-                            `<div class="col-sm"><br><br>Participant ` + j + `<br>Items:<br> </div>
+                            `<div class="col-sm">Participant ` + j + `<br>Items:<br> </div>
                             </div>
                             </div>
                             <hr>
