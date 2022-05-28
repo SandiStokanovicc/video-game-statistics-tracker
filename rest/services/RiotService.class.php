@@ -133,8 +133,8 @@
           if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
             $foundPlayer = true;
             $returnVal['searchedPlayerInfo']['kills'] = $info['participants'][$i]['kills'];
-            $returnVal['searchedPlayerInfo']['deaths'] = $info['participants'][$i]['kills'];
-            $returnVal['searchedPlayerInfo']['assists'] = $info['participants'][$i]['kills'];
+            $returnVal['searchedPlayerInfo']['deaths'] = $info['participants'][$i]['deaths'];
+            $returnVal['searchedPlayerInfo']['assists'] = $info['participants'][$i]['assists'];
             $returnVal['searchedPlayerInfo']['championName'] = $info['participants'][$i]['championName'];
 
             if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['win'] = "true";
