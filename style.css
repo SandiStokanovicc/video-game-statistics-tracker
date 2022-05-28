@@ -103,7 +103,6 @@ body {
     background-position: center;
     min-height: 100vh;
     position: relative;
-
 }
 
 #server-button {
@@ -215,8 +214,8 @@ body {
 
 
 
- /** main container element **/
- #main-container {
+/** main container element **/
+#main-container {
     position: absolute;
     margin: 0 auto;
     left: 0;
@@ -231,7 +230,7 @@ body {
     height: 0;
     border-style: solid;
     border-width: 50px 50px 0 0;
-    border-color: #354952 transparent transparent transparent;
+    border-color: #403742 transparent transparent transparent;
     margin: 0 auto;
     animation: anticlockwise 1s ease-in-out infinite normal;
 }
@@ -241,7 +240,7 @@ body {
     height: 0;
     border-style: solid;
     border-width: 0 0 50px 50px;
-    border-color: transparent transparent #ECC93E transparent;
+    border-color: transparent transparent #dc3545 transparent;
     margin: -50px auto 0;
     animation: clockwise 1s ease-in-out infinite alternate;
 }

@@ -1,13 +1,15 @@
 // array.forEach(function(currentValue, index, arr), thisValue)
 
 var RiotService = {
-    displaySpinner: function(){
+    displaySpinner: function () {
+        document.getElementById("background").style.background = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
         document.getElementById("main-container").classList.remove('d-none');
     },
 
-    displayShowMatches: function() {
+    displayShowMatches: function () {
         //document.getElementById("main").classList.add('d-none');
+        document.getElementById("background").style.background = "url('Pictures/background-blur.png')";
         document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
@@ -26,104 +28,147 @@ var RiotService = {
             contentType: "application/json",
             //data nije potrebno jer se svi proslijedjeni podaci koriste u URL-u
             dataType: "json",
-            beforeSend: function(xhr){
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },
             success: function (results) {
-                
+
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
-                
+
                 html += `
                 <div class="container-sm mb-5 mt-5">
                 <div class="row">
                     <div class="col-sm p-4">
-                    summonerLevel: `
-                        + results.summonerLevel +
-                    `
-                    <br>profileIconId: ` 
+                    profileIconId: `
                     + results.profileIconId +
                     `
-                    <br>Name: ` 
+                    <br>Name: `
                     + results.name +
                     //+ results.matches[0].items[0][0] +
                     `
+                    <br>summonerLevel: `
+                    + results.summonerLevel +
+                    `
                     <br>Rank Flex: `
-                    + results.ranks.RANKED_FLEX_SR.tier + ' ' + results.ranks.RANKED_FLEX_SR.rank + 
+                    + results.ranks.RANKED_FLEX_SR.tier + ' ' + results.ranks.RANKED_FLEX_SR.rank +
                     `
                     <br>Wins: `
-                    + results.ranks.RANKED_FLEX_SR.wins + 
+                    + results.ranks.RANKED_FLEX_SR.wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses + 
+                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses +
                     `
                     <br>Rank Solo-Duo: `
-                    + results.ranks.RANKED_SOLO_5x5.tier + ' ' + results.ranks.RANKED_SOLO_5x5.rank + 
+                    + results.ranks.RANKED_SOLO_5x5.tier + ' ' + results.ranks.RANKED_SOLO_5x5.rank +
                     `
                     <br>Wins: `
-                    + results.ranks.RANKED_SOLO_5x5.wins + 
+                    + results.ranks.RANKED_SOLO_5x5.wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_SOLO_5x5.losses + 
+                    <br>Losses: ` + results.ranks.RANKED_SOLO_5x5.losses +
                     `
                     </div>
                 </div>
                 </div>`;
-                
+
                 var i, itemCount;
 
-                for(i = 0; i < 3; i++){
-                    html += `
-                    <div class="container-sm">
-                        <div class="row mb-3">
-                            <div class="col-sm p-2" id="match` + (i+1) + `">
-                            <br>matchLength: ` + results.matches[i].info.matchLength; 
+                for (i = 0; i < 3; i++) {
 
-                            if(results.matches[i].info.win == "true") html += `<br>victory`;
-                            else html += `<br>defeat`;
-
-                            html+=`<br><br>Participants:`; 
-                            for(var j = 0; j < 10; j++){
-                                itemCount = 1;
-                                html += `<br><br>Participant ` + j + `<br>Basic info:<br><br>name: ` + results.matches[i].info.participants[j].summonerName +  
-                                `<br>champLevel: ` + results.matches[i].info.participants[j].champLevel +
-                                `<br>kills: ` + results.matches[i].info.participants[j].kills +
-                                `<br>deaths: ` + results.matches[i].info.participants[j].deaths +
-                                `<br>assists: ` + results.matches[i].info.participants[j].assists + 
-                                `<br>controlWardsPlaced: `  + results.matches[i].info.participants[j].controlWardsPlaced + 
-                                `<br>totalDamageDealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions +
-                                `<br>totalDamageTaken: ` + results.matches[i].info.participants[j].totalDamageTaken +
-                                `<br>totalMinionsKilled: ` + results.matches[i].info.participants[j].totalMinionsKilled +
-                                `<br>wardsKilled: ` + results.matches[i].info.participants[j].wardsKilled + 
-                                `<br>wardsPlaced: ` + results.matches[i].info.participants[j].wardsPlaced + 
-
-                                `<br><br>Participant ` + j + `<br>Items:<br>`;
-                                results.matches[i].items[j].forEach(item => {
-                                    html +=`<br>Item ` + itemCount + `: ` + item;
-                                    itemCount++;
-                                });
-                                }
-                            html+=`</div>
-                        </div>
-                    </div>`;
+                    if (results.matches[i].info.win == "true") {
+                        html += `
+                        <div id="listallmatches">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item" id="match` + (i + 1) + `">
+                                    <h2 class="accordion-header bg-primary p-2" id="flush-heading` + (i + 1) + `">
+                                    <button class="accordion-button collapsed bg-primary text-white" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
+                                        aria-controls="flush-collapse` + (i + 1) + `">
+                                    Match Length: ` + results.matches[i].info.matchLength + ` minutes
+                        <br>victory </button>
+                    </h2>`;
                     }
-/*
-                for(i = 0; i < 2; i++){
-                    html += `
-                    <div class="container-sm">
-                        <div class="row mb-3">
-                            <div class="col-sm p-2" id="match` + (i+1) + `">
-                                 <br>name: ` + results.matches[0].participants[0].summonerName + `
+                    else {
+                        html += `
+                        <div id="listallmatches">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item" id="match` + (i + 1) + `">
+                                    <h2 class="accordion-header bg-danger p-2" id="flush-heading` + (i + 1) + `">
+                                    <button class="accordion-button collapsed bg-danger text-white" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
+                                        aria-controls="flush-collapse` + (i + 1) + `">
+                                    Match Length: ` + results.matches[i].info.matchLength + ` minutes
+                        <br>defeat </button>
+                    </h2>`;
+                    }
+
+                    html += `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body text-white">`;
+                    for (var j = 0; j < 10; j++) {
+                        itemCount = 1;
+                        html += `
+                            <div class="container">
+                            <div class="row">
+                            <div class="col-sm" id="playerName"><br>Participant ` + j + `<br>Name: ` + results.matches[i].info.participants[j].summonerName +
+                            `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel + `</div>` +
+                            `<div class="col-sm" id="Kills"><br>Kills: ` + results.matches[i].info.participants[j].kills +
+                            `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
+                            `<br>Assists: ` + results.matches[i].info.participants[j].assists + `</div>` +
+                            `<div class="col-sm" id="controlWardsPlaced"><br>Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
+                            `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
+                            `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
+                            `<div class="col-sm"> Total Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
+                            <div class="progress mt-3 mb-3">` +
+                            `<div class="progress-bar progress-bar-striped progress-bar-animated bg-info text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `"
+                            aria-valuemin="0" aria-valuemax="100" style="width:` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `%` + `;" id="totalDamageDealt">` + results.matches[i].info.participants[j].totalDamageDealtToChampions +
+                            `</div>
+                            </div>
+                            </div>` +
+                            `<div class="col-sm"> Total Damage Taken: ` + results.matches[i].info.participants[j].totalDamageTaken + `
+                            <div class="progress mt-3 mb-3">` +
+                            `<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `"
+                            aria-valuemin="0" aria-valuemax="100" style="width:` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `%` + `;" id="totalDamageDealt">` + results.matches[i].info.participants[j].totalDamageTaken +
+                            `</div>
+                            </div>
+                            </div>` +
+                            `<div class="col-sm" id="minionsKilled"><br>Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
+
+
+                            `<div class="col-sm"><br><br>Participant ` + j + `<br>Items:<br> </div>
+                            </div>
+                            </div>
+                            <hr>
+                            `;
+                        results.matches[i].items[j].forEach(item => {
+                            html += `<div id="itemBought"><br>Item ` + itemCount + `: ` + item + `</div>`;
+                            itemCount++;
+                        });
+                    }
+                    html += `       </div>
+                                 </div>
                             </div>
                         </div>
                     </div>`;
-                    }*/
-                        $("#matchContainer").html(html);
-                        
+                }
+                /*
+                                for(i = 0; i < 2; i++){
+                                    html += `
+                                    <div class="container-sm">
+                                        <div class="row mb-3">
+                                            <div class="col-sm p-2" id="match` + (i+1) + `">
+                                                 <br>name: ` + results.matches[0].participants[0].summonerName + `
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                    }*/
+                $("#matchContainer").html(html);
+
             },
             complete: function (data) {
                 RiotService.displayShowMatches();
                 //this.displayShowMatches(); 
-               },
+            },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 toastr.error(XMLHttpRequest.responseJSON.message);
                 console.log(JSON.stringify(XMLHttpRequest));
