@@ -118,7 +118,7 @@
       //return array('info' => array('participants' => $parts));
       //return $info = filterParticipants($info['participants']);
       return array('info' => array('searchedPlayerInfo' => $parts['searchedPlayerInfo'], 'participants' => $parts['participants'], 'win' => $parts['win'],
-      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10)), 'playedBefore' => (int)(time() - $info['gameStartTimestamp'] / 1000)));
+      'matchLength' => (round(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,2)), 'playedBefore' => (int)(time() - $info['gameStartTimestamp'] / 1000)));
     }
 
     private function filterParticipants($info, $mainPlayerPuuid){
@@ -148,7 +148,7 @@
         $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
         $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
         $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
-        $returnVal['participants'][$i]['kda'] = round($info['participants'][$i]['challenges']['kda'], 2);;
+        $returnVal['participants'][$i]['kda'] = round($info['participants'][$i]['challenges']['kda'], 2);
         $returnVal['participants'][$i]['controlWardsPlaced'] = $info['participants'][$i]['challenges']['controlWardsPlaced'];
         $returnVal['participants'][$i]['wardsPlaced'] = $info['participants'][$i]['wardsPlaced'];
         $returnVal['participants'][$i]['wardsKilled'] = $info['participants'][$i]['wardsKilled'];
