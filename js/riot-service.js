@@ -89,8 +89,7 @@ var RiotService = {
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
-                        <br>Victory </button>
-                    </h2>`;
+                        <br>Victory`;
                     }
                     else {
                         html += `
@@ -102,11 +101,25 @@ var RiotService = {
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
-                        <br>Defeat </button>
-                    </h2>`;
+                        <br>Defeat`;
                     }
-
-                    html += `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
+                    if(results.matches[i].info.playedBefore > 86399){
+                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 86400) + ` days`
+                    }
+                    else if(results.matches[i].info.playedBefore > 3599){
+                        html += `<br>Played before: ` +  parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
+                    }
+                    else {
+                        html += `<br>Played before: ` +  parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
+                        
+                    }
+                    //`<br>KDA: ` + results.matches[i].info 
+                    html += `<br>Kills: ` + results.matches[i].info.searchedPlayerInfo.kills + ` Deaths: ` + 
+                        results.matches[i].info.searchedPlayerInfo.deaths + ` Assists: ` + results.matches[i].info.searchedPlayerInfo.assists +
+                        `<br>ChampionName: ` + results.matches[i].info.searchedPlayerInfo.championName + 
+                        `</button>
+                    </h2>` + 
+                    `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body text-white">`;
                     for (var j = 0; j < 10; j++) {
@@ -115,10 +128,12 @@ var RiotService = {
                             <div class="container">
                             <div class="row">
                             <div class="col-sm" id="playerName">Participant ` + j + `<br>Name: ` + results.matches[i].info.participants[j].summonerName +
-                            `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel + `</div>` +
+                            `<br>Champion Level: ` + results.matches[i].info.participants[j].champLevel  +
+                            `<br>Champion Name: ` + results.matches[i].info.participants[j].championName + `</div>` + 
                             `<div class="col-sm" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
                             `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
-                            `<br>Assists: ` + results.matches[i].info.participants[j].assists + `</div>` +
+                            `<br>Assists: ` + results.matches[i].info.participants[j].assists +
+                            `<br>KDA: ` + results.matches[i].info.participants[j].kda + `</div>` +
                             `<div class="col-sm" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
                             `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
                             `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
@@ -187,4 +202,4 @@ var RiotService = {
             }
         })
     }
-}
+}//if($playedBefore > 86400) $playedBefore /= 86400;

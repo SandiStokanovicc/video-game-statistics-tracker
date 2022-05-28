@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-97080a01-ae68-48c3-9885-ed7e01749c3c"
+      "X-Riot-Token: RGAPI-30568ae8-4702-4180-8a80-fcfab4e7a707"
     );
     
     private function setCurlOptions($ch, $url){
@@ -86,14 +86,14 @@
 
       //return array('info' => array('participants' => $parts));
       //return $info = filterParticipants($info['participants']);
-      return array('info' => array('participants' => $parts['participants'], 'win' => $parts['win'],
-      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10))));
+      return array('info' => array('searchedPlayerInfo' => $parts['searchedPlayerInfo'], 'participants' => $parts['participants'], 'win' => $parts['win'],
+      'matchLength' => (substr(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,0, -10)), 'playedBefore' => (int)(time() - $info['gameStartTimestamp'] / 1000)));
     }
 
     private function filterParticipants($info, $mainPlayerPuuid){
       $foundPlayer = "false";
       //$returnVal = array('summonerName' => array(), 'champLevel' => array());
-      $returnVal = array('win'=>"lmao", 'participants' => array('0' => [], '1' => [], '2' => [], 
+      $returnVal = array('win'=>" ", 'searchedPlayerInfo' => array('kills' => 0, 'deaths' => 0, 'assists' => 0, 'championId' => 0), 'participants' => array('0' => [], '1' => [], '2' => [], 
       '3' => [], '4' => [], '5' => [],
       '6' => [], '7' => [],'8' => [], '9' => []));
       $i = 0;
@@ -101,6 +101,11 @@
         if($foundPlayer == "false"){
           if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
             $foundPlayer = true;
+            $returnVal['searchedPlayerInfo']['kills'] = $info['participants'][$i]['kills'];
+            $returnVal['searchedPlayerInfo']['deaths'] = $info['participants'][$i]['kills'];
+            $returnVal['searchedPlayerInfo']['assists'] = $info['participants'][$i]['kills'];
+            $returnVal['searchedPlayerInfo']['championName'] = $info['participants'][$i]['championName'];
+
             if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['win'] = "true";
             else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['win'] = "true";
             else $returnVal['win'] = "false";
@@ -108,6 +113,7 @@
         $returnVal['participants'][$i]['summonerName'] = $info['participants'][$i]['summonerName'];
         $returnVal['participants'][$i]['puuid'] = $info['participants'][$i]['puuid'];
         $returnVal['participants'][$i]['champLevel'] = $info['participants'][$i]['champLevel'];
+        $returnVal['participants'][$i]['championName'] = $info['participants'][$i]['championName'];
         $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
         $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
         $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
