@@ -126,11 +126,11 @@ var RiotService = {
 
                     }
                     //`<br>KDA: ` + results.matches[i].info 
-                    html += `<br>Kills: ` + results.matches[i].info.searchedPlayerInfo.kills + ` Deaths: ` +
-                        results.matches[i].info.searchedPlayerInfo.deaths + ` Assists: ` + results.matches[i].info.searchedPlayerInfo.assists +
-                        `<br>ChampionName: ` + results.matches[i].info.searchedPlayerInfo.championName +
-                        `<img src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championName + `.png" alt="ChampName" width="100" height="100"></img>
-                        </button>
+                    html += `<img class="shadow" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championName + `.png" alt="ChampName" width="100" height="100"></img>
+                        <br>Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
+                        `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
+                        results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
+                        ` </button>
                     </h2>` +
                         `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
@@ -150,7 +150,8 @@ var RiotService = {
                             `<div class="col-sm" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
                             `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
                             `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
-                            `<div class="col-sm"> Total Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
+                            `<div class="col-sm">
+                            <div class="col-sm"> Total Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
                             <div class="progress mt-3 mb-3">` +
                             `<div class="progress-bar progress-bar-striped progress-bar-animated bg-info text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `"
                             aria-valuemin="0" aria-valuemax="100" style="width:` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `%` + `;" id="totalDamageDealt">` + results.matches[i].info.participants[j].totalDamageDealtToChampions +
@@ -163,15 +164,19 @@ var RiotService = {
                             aria-valuemin="0" aria-valuemax="100" style="width:` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `%` + `;" id="totalDamageDealt">` + results.matches[i].info.participants[j].totalDamageTaken +
                             `</div>
                             </div>
+                            </div>
                             </div>` +
-                            `<div class="col-sm" id="minionsKilled">Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
-                            `
-                            <div class="col-sm">
+                            `<div class="col-sm">  
+                            <div id="minionsKilled"> CS: ` + results.matches[i].info.participants[j].totalMinionsKilled + ` </div> ` +
+                            `<div> CS per Minute: ` + (results.matches[i].info.participants[j].totalMinionsKilled / results.matches[i].info.matchLength).toFixed(2) + `</div>
+                            </div>
+    
+                            <div class="col-2">
                             <div class="row">`;
 
                         results.matches[i].items[j].some(function (item) {
-                            if(itemCount == 4) html += `</div><div class="row">`;
-                            html += `<div class = col-sm>` + item + `</div>`;
+                            if (itemCount == 4) html += `</div><div class="row">`;
+                            html += `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` + item + `.png" alt="Item" width="50" height="50"></div>`;
                             itemCount++;
                             return itemCount === 7;
                         });
