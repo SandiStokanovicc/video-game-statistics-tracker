@@ -154,18 +154,16 @@ var RiotService = {
                             </div>` +
                             `<div class="col-sm" id="minionsKilled">Minions Killed: ` + results.matches[i].info.participants[j].totalMinionsKilled + `</div>` +
                             `
-                            <div class="col-sm">Participant ` + j + `<br>Items:<br></div>
                             <div class="col-sm">
-                            <div class="container">
                             <div class="row">`;
 
                         results.matches[i].items[j].some(function (item) {
-                            //if(itemCount == 4) html += `<div class="row">`;
-                            html += `<div class = col-sm>Item ` + itemCount + `: ` + item + `<br></div>`;
+                            if(itemCount == 4) html += `</div><div class="row">`;
+                            html += `<div class = col-sm>` + item + `</div>`;
                             itemCount++;
                             return itemCount === 7;
                         });
-                        html += `</div>
+                        html += `
                         </div>
                         </div>
                             </div>
