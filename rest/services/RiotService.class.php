@@ -117,7 +117,7 @@
         $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
         $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
         $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
-        $returnVal['participants'][$i]['kda'] = $info['participants'][$i]['challenges']['kda'];
+        $returnVal['participants'][$i]['kda'] = round($info['participants'][$i]['challenges']['kda'], 2);;
         $returnVal['participants'][$i]['controlWardsPlaced'] = $info['participants'][$i]['challenges']['controlWardsPlaced'];
         $returnVal['participants'][$i]['wardsPlaced'] = $info['participants'][$i]['wardsPlaced'];
         $returnVal['participants'][$i]['wardsKilled'] = $info['participants'][$i]['wardsKilled'];
