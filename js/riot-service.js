@@ -2,31 +2,31 @@
 
 var RiotService = {
     displaySpinner: function () {
-        document.getElementById("background").style.background = "url('Pictures/background-blur.png')";
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
         document.getElementById("main-container").classList.remove('d-none');
     },
 
     displayShowMatches: function () {
         //document.getElementById("main").classList.add('d-none');
-        document.getElementById("background").style.background = "url('Pictures/background-blur.png')";
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
-    unhideMainPageOnFail: function() {
-        document.getElementById("background").style.background = "url('Pictures/background1.png')";
-        document.getElementById("main-container").classList.add('d-none'); 
+    unhideMainPageOnFail: function () {
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background1.png')";
+        document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("main").classList.remove('d-none');
-       
+
     },
 
     getSummonerInfo: function () {
         this.displaySpinner();
         let searchPlayerInput = $('#SearchPlayerInput').val();
         let regionButton = $('#RegionButton').html().trim();
-        if(searchPlayerInput.length == 0) searchPlayerInput = "";
+        if (searchPlayerInput.length == 0) searchPlayerInput = "";
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
@@ -213,12 +213,12 @@ var RiotService = {
                 RiotService.displayShowMatches();
             },
             //complete: function (data) {
-                //RiotService.displayShowMatches();
-                //this.displayShowMatches(); 
+            //RiotService.displayShowMatches();
+            //this.displayShowMatches(); 
             //},
-            error: function (errorMessage,XMLHttpRequest, textStatus, errorThrown) {
+            error: function (errorMessage, XMLHttpRequest, textStatus, errorThrown) {
                 RiotService.unhideMainPageOnFail();
-                $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText; 
+                $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText;
                 toastr.error($fullErrorMessage);
                 console.log(errorMessage);
                 console.log($fullErrorMessage);
