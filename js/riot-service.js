@@ -19,7 +19,6 @@ var RiotService = {
         document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("main").classList.remove('d-none');
-
     },
 
     getSummonerInfo: function () {
