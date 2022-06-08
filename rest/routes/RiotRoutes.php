@@ -13,10 +13,10 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
    //http://localhost/video-game-statistics-tracker/Backend/code/rest/summoners/Condemn%20for%20Stun/eun1
    //Flight::json(Flight::riotService()->getSummonerInfo($summonerName, $region));
    Flight::json(Flight::riotService()->getSummonerMatches($summonerName, $region));
- });
+});
 
 Flight::route("GET /summonersMobileAPI/@summonerName/@region",  function($summonerName, $region){
-  Flight::json(Flight::riotService()->getSummonerMatches($summonerName, $region));
+   Flight::json(Flight::riotService()->getSummonerMatchesMobileAPI($summonerName, $region));
 });
 
 

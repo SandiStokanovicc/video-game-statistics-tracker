@@ -31,8 +31,6 @@ Flight::route('/*', function(){
     //return TRUE;
     //perform JWT decode
     $path = Flight::request()->url;
-    //var_dump($path); die;
-    // /summonersMobileAPI/Condemn%20for%20Stun/eun1
     if ($path == '/login' || $path == '/register' || $path == '/docs.json' 
     || str_starts_with($path, '/summonersMobileAPI/')) return TRUE; // exclude routes from middleware
   

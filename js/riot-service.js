@@ -173,12 +173,34 @@ var RiotService = {
                             <div class="col-2">
                             <div class="row">`;
 
-                        results.matches[i].items[j].some(function (item) {
-                            if (itemCount == 4) html += `</div><div class="row">`;
-                            html += `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` + item + `.png" alt="Item" width="50" height="50"></div>`;
-                            itemCount++;
-                            return itemCount === 7;
-                        });
+                            html += `</div><div class="row">`
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item0 + `.png" alt="Item" width="50" height="50"></div>`;
+                                
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item1 + `.png" alt="Item" width="50" height="50"></div>`;
+                                
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item2 + `.png" alt="Item" width="50" height="50"></div>`;
+                                
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item3 + `.png" alt="Item" width="50" height="50"></div>`;
+                            html += `</div><div class="row">`;
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item4 + `.png" alt="Item" width="50" height="50"></div>`;
+                                    
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item5 + `.png" alt="Item" width="50" height="50"></div>`;
+                                    
+                                html+= `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item6 + `.png" alt="Item" width="50" height="50"></div>`;
+
+                            //results.matches[i].info.participants[j].some(function (item) {
+                            //if (itemCount == 4) html += `</div><div class="row">`;
+                            //html += `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` + item + `.png" alt="Item" width="50" height="50"></div>`;
+                            //itemCount++;
+                            //return itemCount === 7;
+                        //});
                         html += `
                         </div>
                         </div>

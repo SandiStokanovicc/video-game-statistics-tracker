@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-c9e99a54-592b-4023-a629-da79cfb10462"
+      "X-Riot-Token: RGAPI-8bb79c9b-f9ca-48a2-a9a2-89f58f9e6cc4"
     );
     
     private function setCurlOptions($ch, $url){
@@ -155,11 +155,20 @@
         $returnVal['participants'][$i]['totalDamageDealtToChampions'] = $info['participants'][$i]['totalDamageDealtToChampions'];
         $returnVal['participants'][$i]['totalDamageTaken'] = $info['participants'][$i]['totalDamageTaken'];
         $returnVal['participants'][$i]['totalMinionsKilled'] = $info['participants'][$i]['totalMinionsKilled'] + $info['participants'][$i]['neutralMinionsKilled'];
+        $returnVal['participants'][$i]['item0'] = $info['participants'][$i]['item0'];
+        $returnVal['participants'][$i]['item1'] = $info['participants'][$i]['item1'];
+        $returnVal['participants'][$i]['item2'] = $info['participants'][$i]['item2'];
+        $returnVal['participants'][$i]['item3'] = $info['participants'][$i]['item3'];
+        $returnVal['participants'][$i]['item4'] = $info['participants'][$i]['item4'];
+        $returnVal['participants'][$i]['item5'] = $info['participants'][$i]['item5'];
+        $returnVal['participants'][$i]['item6'] = $info['participants'][$i]['item6'];
         $i++;
       }
       return $returnVal;
     }
 
+    // BELOW METHOD IS NO LONGER IN USE!!!!
+    /*
     private function getMatchItems($matchId, $continent, $matchLength){
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId . '/timeline';
@@ -178,12 +187,6 @@
       $itemsAdded = array('0' => array(), '1' => array(), 
       '2' => array(), '3' => array(), '4' => array(), '5' => array(),
       '6' => array(), '7' => array(),'8' => array(), '9' => array());
-      $itemsDestroyed = array('0' => [], '1' => [], '2' => [], 
-      '3' => [], '4' => [], '5' => [],
-      '6' => [], '7' => [],'8' => [], '9' => []);
-      $finalItems = array('0' => [array(),array()], '1' => [array(), array()], '2' => [array(),array()], 
-      '3' => [array(),array()], '4' => [array(),array()], '5' => [array(),array()],
-      '6' => [array(),array()], '7' => [array(),array()],'8' => [array(),array()], '9' => [array(),array()]);
       while($i<$matchLength+2){
         //$tempArray = array('itemId' => [], 'participantId' => []);
         foreach($json['info']['frames'][$i]['events'] as $eventIndex => $event){
@@ -193,28 +196,7 @@
             if(strcmp($event['type'], "ITEM_PURCHASED")==0){
               if(($event['itemId'] > 3000) && !in_array($event['itemId'], $componentItems)) array_push($itemsAdded[$event['participantId']-1], $event['itemId']);
             } 
-            //else if((strcmp($event['type'], "ITEM_DESTROYED")==0) || (strcmp($event['type'], "ITEM_UNDO")==0) || (strcmp($event['type'], "ITEM_SOLD") == 0)){
-            //else if(strcmp($event['type'], "ITEM_DESTROYED")==0){
-            //  else if($event['type'] == "ITEM_DESTROYED"){
-              //array_push($itemsAdded[$event['participantId']-1], $event);
-              
-              //array_push($itemsDestroyed[$event['participantId']-1], $event['itemId']);
-
-              //array_push($itemsDestroyed, $tempArray);
-              //array_push($itemsDestroyed[$countDestroyed], $event['itemId']);
-              //array_push($itemsDestroyed[$countDestroyed], $event['participantId']);
-              //$countDestroyed++;
-           // }
-            //print_r($itemsAdded); die;
           }
-          
-          
-          //return $itemsAdded;
-          //return $event;
-          
-          //array_push($itemsAdded['participantId'], $event['participantId']);
-          //return $itemsAdded;
-          //$itemsAdded[$i]['itemId'] = $event['itemId'];
         }
         
         
@@ -234,7 +216,7 @@
         //return $finalItems;
       return $itemsAdded;
     }
-
+*/
 
     // DINO KECO
     public function getSummonerMatches($summonerName, $region){
@@ -254,12 +236,124 @@
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       foreach($summoner['matches'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
-        $summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+        //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
 
       }
       return $summoner;
       //exclude useless info
     }
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    public function getSummonerMatchesMobileAPI($summonerName, $region){
+      //if(strlen($summonerName) == 0) $summonerName = "!";
+      //if($region == "Server") $region = "eun1";
+
+      if($region == "na1"){
+        $continent = "americas";
+      }
+      else{
+        $continent = "europe";
+      }
+      
+      $summoner = $this->getSummonerInfo($summonerName, $region);
+      
+      //$summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
+      $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
+      foreach($summoner['matches'] as $i => $match){
+        $summoner['matches'][$i] = $this->getMatchInfoMobileAPI($match, $continent, $summoner['puuid']);
+        //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+
+      }
+      return $summoner;
+      //exclude useless info
+    }
+
+
+    private function getMatchInfoMobileAPI($matchId, $continent, $mainPlayerPuuid){
+      $ch = curl_init();
+      $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
+      $this->setCurlOptions($ch, $url);
+
+      $response = curl_exec($ch);
+      $json = json_decode($response, true);
+      $this->checkFor429Error($json);
+      return $json = $this->filterInfoMobileAPI($json['info'], $mainPlayerPuuid);
+    }
+    
+    private function filterInfoMobileAPI($info, $mainPlayerPuuid){
+      //return $info['participants'] = $this->filterParticipants($info['participants']);
+      $parts = $this->filterParticipantsMobileAPI($info, $mainPlayerPuuid);
+
+      //return array('info' => array('participants' => $parts));
+      //return $info = filterParticipants($info['participants']);
+      return $parts;
+      //return array('info' => array('searchedPlayerInfo' => $parts['searchedPlayerInfo'], 'participants' => $parts['participants'], 'win' => $parts['win'],
+      //'matchLength' => (round(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,2)), 'playedBefore' => (int)(time() - $info['gameStartTimestamp'] / 1000)));
+    }
+    
+    private function filterParticipantsMobileAPI($info, $mainPlayerPuuid){
+      $foundPlayer = "false";
+      //$returnVal = array('summonerName' => array(), 'champLevel' => array());
+      $returnVal = array('championIcon' => 0,'kda' => 0, 'matchResult' => " ", 'killsDeathsAssists' => 0, 
+      'controlWardsPlaced' => 0, 'wardsKilled' => 0, 'wardsPlaced' => 0, 'damageDealt' => 0, 'damageTaken' => 0,
+      'minionsKilled' => 0, 'champLevel' => 0, 'summonerSpell1Id' => 0, 'summonerSpell2Id' => 0, 'item0' => 0, 
+      'item1' => 0, 'item2' => 0, 'item3' => 0, 'item4' => 0, 'item5' => 0, 'item6' => 0);
+      $i = 0;
+      while($i<10){
+        $i++;
+        if($foundPlayer == "false"){
+          if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
+            $foundPlayer = true;
+            $returnVal['championIcon'] = $info['participants'][$i]['championName'];
+            $returnVal['kda'] = round($info['participants'][$i]['challenges']['kda'], 2);
+            $returnVal['killsDeathsAssists'] = $info['participants'][$i]['kills'] . "/" . $info['participants'][$i]['deaths'] .
+            "/" . $info['participants'][$i]['assists'];
+            $returnVal['controlWardsPlaced'] = $info['participants'][$i]['challenges']['controlWardsPlaced'];
+            $returnVal['wardsKilled'] = $info['participants'][$i]['wardsKilled'];
+            $returnVal['wardsPlaced'] = $info['participants'][$i]['wardsPlaced'];
+            $returnVal['damageDealt'] = $info['participants'][$i]['totalDamageDealtToChampions'];
+            $returnVal['damageTaken'] = $info['participants'][$i]['totalDamageTaken'];
+            $returnVal['minionsKilled'] = $info['participants'][$i]['totalMinionsKilled'] + 
+            $info['participants'][$i]['neutralMinionsKilled'];
+            $returnVal['champLevel'] = $info['participants'][$i]['champLevel'];
+            $returnVal['summonerSpell1Id'] = $info['participants'][$i]['summoner1Id'];
+            $returnVal['summonerSpell2Id'] = $info['participants'][$i]['summoner2Id'];
+            $returnVal['item0'] = $info['participants'][$i]['item0'];
+            $returnVal['item1'] = $info['participants'][$i]['item1'];
+            $returnVal['item2'] = $info['participants'][$i]['item2'];
+            $returnVal['item3'] = $info['participants'][$i]['item3'];
+            $returnVal['item4'] = $info['participants'][$i]['item4'];
+            $returnVal['item5'] = $info['participants'][$i]['item5'];
+            $returnVal['item6'] = $info['participants'][$i]['item6'];
+            if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['matchResult'] = "false";
+            else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['matchResult'] = "true";
+            else $returnVal['matchResult'] = "false";
+            return $returnVal;
+        }}
+      }
+      return $returnVal;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
