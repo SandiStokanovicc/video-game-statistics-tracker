@@ -86,6 +86,7 @@
       return $json;
     }
 
+    // error with unranked players
     private function getSummonerRanks($encryptedSummonerId, $region){
       $ch = curl_init();
       $url = 'https://' . $region . '.api.riotgames.com/lol/league/v4/entries/by-summoner/' . $encryptedSummonerId;
