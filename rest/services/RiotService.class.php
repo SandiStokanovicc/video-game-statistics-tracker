@@ -335,9 +335,9 @@
             $returnVal['item4'] = $info['participants'][$i]['item4'];
             $returnVal['item5'] = $info['participants'][$i]['item5'];
             $returnVal['item6'] = $info['participants'][$i]['item6'];
-            if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['matchResult'] = "false";
-            else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['matchResult'] = "true";
-            else $returnVal['matchResult'] = "false";
+            if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['matchResult'] = "Victory";
+            else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['matchResult'] = "Victory";
+            else $returnVal['matchResult'] = "Defeat";
             return $returnVal;
         }}
       }
