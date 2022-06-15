@@ -311,7 +311,6 @@
       'item1' => 0, 'item2' => 0, 'item3' => 0, 'item4' => 0, 'item5' => 0, 'item6' => 0);
       $i = 0;
       while($i<10){
-        $i++;
         if($foundPlayer == "false"){
           if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
             $foundPlayer = true;
@@ -341,6 +340,7 @@
             else $returnVal['matchResult'] = "Defeat";
             return $returnVal;
         }}
+        $i++;
       }
       return $returnVal;
     }
