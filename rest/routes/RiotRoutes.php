@@ -19,9 +19,6 @@ Flight::route("GET /summonersMobileAPI/@summonerName/@region",  function($summon
    Flight::json(Flight::riotService()->getSummonerMatchesMobileAPI($summonerName, $region));
 });
 
-Flight:route("GET /summonersMobileApiIcon/@summonerName/@region", function($summonerName, $region){
-  Flight:json(Flight::riotService()->getSummonerInfo());
-});
 
 
 //Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $region){ 
