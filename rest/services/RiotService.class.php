@@ -97,6 +97,10 @@
       $json = json_decode($response, true);
       $this->checkFor429Error($json);
       //return $json;
+      if(empty($json)){
+        return array('RANKED_FLEX_SR' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
+        'RANKED_SOLO_5x5' => array('tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
+      }
       return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 
       'RANKED_SOLO_5x5' => array('tier' => $json[1]['tier'],'rank' => $json[1]['rank'],'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
     }

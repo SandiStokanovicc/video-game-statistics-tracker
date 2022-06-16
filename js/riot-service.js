@@ -86,6 +86,12 @@ var RiotService = {
                 </div>
                 </div>`;
 
+                if(results.matches.length === 0){
+                    $("#matchContainer").html(html);
+                    RiotService.displayShowMatches();
+                }
+
+                else{
                 var i, itemCount;
 
                 for (i = 0; i < 5; i++) {
@@ -232,6 +238,7 @@ var RiotService = {
                                     }*/
                 $("#matchContainer").html(html);
                 RiotService.displayShowMatches();
+            }
             },
             //complete: function (data) {
             //RiotService.displayShowMatches();
