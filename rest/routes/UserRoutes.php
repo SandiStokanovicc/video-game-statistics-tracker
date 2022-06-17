@@ -80,7 +80,6 @@ Flight::route('POST /login', function(){
       unset($user['password']);
       $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
       Flight::json(['token' => $jwt]);
-      
     }else{
       Flight::json(["message" => "Wrong password"], 404);
     }
