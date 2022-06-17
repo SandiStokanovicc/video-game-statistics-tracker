@@ -172,21 +172,6 @@ var UserService = {
             }
         });
     },
-    googleSignIn: function (googleUser) {
-        var profile = googleUser.getAuthInstance();
-        $("#your-profile").text(profile.getName());
-        localStorage.setItem("token", data.token);
-        window.location.replace("index.html");
-        console.log(googleUser);
-    },
-
-
-   signOut: function() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-          console.log('User signed out.');
-        });
-      }
 }
 
 
