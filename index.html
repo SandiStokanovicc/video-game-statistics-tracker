@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="22008145617-90rlvvhoshsh8f1idqletrotl1amkqiu.apps.googleusercontent.com">
     <title>Stat Track</title>
 
     <link rel="stylesheet" href="style.css">
@@ -506,6 +507,7 @@
                             <input type="checkbox" class="form-check-input" id="rememberMeSignUp" />
                             <label class="form-check-label text-white" for="rememberMeSignUp">Remember me</label>
                         </div>
+                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
                         <div class="modal-footer d-block">
                             <p class="float-start text-white p-2">Already have an account ? <a class="text-white"
                                     href="#" data-bs-toggle="modal" data-bs-target="#modalFormLog">Log In</a></p>
@@ -568,6 +570,7 @@
     <script src="Bootstrap/js/bootstrap.bundle.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="js/UserService.js"></script>
     <script type="text/javascript" scr="js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
