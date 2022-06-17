@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="22008145617-90rlvvhoshsh8f1idqletrotl1amkqiu.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+        content="22008145617-90rlvvhoshsh8f1idqletrotl1amkqiu.apps.googleusercontent.com">
     <title>Stat Track</title>
 
     <link rel="stylesheet" href="style.css">
@@ -561,6 +562,13 @@
             document.getElementById("copyright").classList.add('d-none');
         }
 
+        var input = document.getElementById("SearchPlayerInput");
+        input.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("SearchButtonInput").onclick();
+            }
+        });
 
 
 
