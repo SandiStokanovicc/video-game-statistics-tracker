@@ -101,9 +101,56 @@
         return array('RANKED_FLEX_SR' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
         'RANKED_SOLO_5x5' => array('tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
       }
-      return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 
-      'RANKED_SOLO_5x5' => array('tier' => $json[1]['tier'],'rank' => $json[1]['rank'],'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
+      //var_dump(count($json)==1); die;
+      else if((count($json) == 1) && $json[0]['queueType'] == "RANKED_FLEX_SR"){
+        return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 
+        'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 'RANKED_SOLO_5x5' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0));
+      }
+      else if((count($json) == 1) && $json[0]['queueType'] == "RANKED_SOLO_5x5"){
+        return array('RANKED_SOLO_5x5' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 
+        'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 'RANKED_FLEX_SR' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0));
+      }
+      else{
+        return array($json[0]['queueType'] => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
+        $json[1]['queueType'] => array('tier' => $json[1]['tier'], 'rank' => $json[1]['rank'], 'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
+      }
+     }
+
+    private function getLiveMatchInfo($encryptedSummonerId, $region){
+      $ch = curl_init();
+      //https://eun1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/jAcOJoArjCtbg1CiwxGI01MgIZE80tCQc12UCJPYdEI2faw
+      $url = 'https://' . $region . '.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/' . $encryptedSummonerId;
+
+      $this->setCurlOptions($ch, $url);
+
+      $response = curl_exec($ch);
+      curl_close($ch);
+
+      $json = json_decode($response, true);
+
+      if(isset($json['status'])) return array('IsInMatch' => false);
+      
+      $participants = array();
+
+      $i = 0;
+      while($i<10){
+        $participants[$i] = array('summonerName' => $json['participants'][$i]['summonerName'], 'championId' => $json['participants'][$i]['championId'],
+        'summonerSpell1Id' => $json['participants'][$i]['spell1Id'], 'summonerSpell2Id' => $json['participants'][$i]['spell2Id']);
+        $i++;
+      }
+
+      $bannedChampions = array();
+
+      $i = 0;
+      while($i<10){
+        $bannedChampions[$i] = $json['bannedChampions'][$i]['championId'];
+        $i++;
+      }
+
+      return array('IsInMatch' => true, 'participants' => $participants, 'gameStartTime' => round($json['gameStartTime']/1000/60,2), 
+      'gameLength' => round($json['gameLength'] / 60,2), 'bannedChampions' => $bannedChampions);
     }
+  
 
     private function getMatchInfo($matchId, $continent, $mainPlayerPuuid){
       $ch = curl_init();
@@ -239,6 +286,7 @@
       
       $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
       $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
+      $summoner['liveMatch'] = $this->getLiveMatchInfo($summoner['id'], $region);
       foreach($summoner['matches'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
         //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
