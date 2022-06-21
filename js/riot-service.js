@@ -64,24 +64,26 @@ var RiotService = {
                     </div>
                     <div class="col-sm p-4"">
                     <img src="Pictures/rank/`
-                    + results.ranks.RANKED_SOLO_5x5.tier + '_' + results.ranks.RANKED_SOLO_5x5.rank +
+                    + results.ranks[0].tier + '_' + results.ranks[0].rank +
                     `.png" alt="profileicon" width="100" height="100"></img>
-                    <br>Ranked Solo
+                    <br>`;
+                    html += results.ranks[0].queueType + `
                     <br>Wins: `
-                    + results.ranks.RANKED_SOLO_5x5.wins +
+                    + results.ranks[0].wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_SOLO_5x5.losses +
+                    <br>Losses: ` + results.ranks[0].losses +
                     `
                     </div>
                     <div class="col-sm p-4"">
                     <img src="Pictures/rank/`
-                    + results.ranks.RANKED_FLEX_SR.tier + '_' + results.ranks.RANKED_FLEX_SR.rank +
+                    + results.ranks[1].tier + '_' + results.ranks[1].rank +
                     `.png" alt="profileicon" width="100" height="100"></img>
-                    <br>Ranked Flex
+                    <br>`;
+                    html += results.ranks[1].queueType + `Ranked Flex
                     <br>Wins: `
-                    + results.ranks.RANKED_FLEX_SR.wins +
+                    + results.ranks[1].wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses +
+                    <br>Losses: ` + results.ranks[1].losses +
                     `
                     </div>
                 </div>

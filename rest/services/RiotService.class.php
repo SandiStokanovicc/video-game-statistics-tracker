@@ -97,22 +97,27 @@
       $json = json_decode($response, true);
       $this->checkFor429Error($json);
       //return $json;
+      
       if(empty($json)){
-        return array('RANKED_FLEX_SR' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
-        'RANKED_SOLO_5x5' => array('tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
+        return array(0 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
+        1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
       }
-      //var_dump(count($json)==1); die;
+      else if(count($json) == 1){
+        return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']));
+      }
+      /*
       else if((count($json) == 1) && $json[0]['queueType'] == "RANKED_FLEX_SR"){
         return array('RANKED_FLEX_SR' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 
         'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 'RANKED_SOLO_5x5' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0));
       }
       else if((count($json) == 1) && $json[0]['queueType'] == "RANKED_SOLO_5x5"){
-        return array('RANKED_SOLO_5x5' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 
+        return array(0 => 'RANKED_SOLO_5x5' => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 
         'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']), 'RANKED_FLEX_SR' => array('tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0));
       }
-      else{
-        return array($json[0]['queueType'] => array('tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
-        $json[1]['queueType'] => array('tier' => $json[1]['tier'], 'rank' => $json[1]['rank'], 'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
+      */
+      else {
+        return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
+        1 => array('queueType' => $json[1]['queueType'], 'tier' => $json[1]['tier'], 'rank' => $json[1]['rank'], 'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
       }
      }
 
@@ -188,6 +193,7 @@
             $returnVal['searchedPlayerInfo']['deaths'] = $info['participants'][$i]['deaths'];
             $returnVal['searchedPlayerInfo']['assists'] = $info['participants'][$i]['assists'];
             $returnVal['searchedPlayerInfo']['championName'] = $info['participants'][$i]['championName'];
+            $returnVal['searchedPlayerInfo']['championId'] = $info['participants'][$i]['championId'];
 
             if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['win'] = "true";
             else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['win'] = "true";
@@ -197,6 +203,7 @@
         $returnVal['participants'][$i]['puuid'] = $info['participants'][$i]['puuid'];
         $returnVal['participants'][$i]['champLevel'] = $info['participants'][$i]['champLevel'];
         $returnVal['participants'][$i]['championName'] = $info['participants'][$i]['championName'];
+        $returnVal['participants'][$i]['championId'] = $info['participants'][$i]['championId'];
         $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
         $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
         $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
