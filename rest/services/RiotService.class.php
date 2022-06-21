@@ -102,8 +102,13 @@
         return array(0 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
         1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
       }
-      else if(count($json) == 1){
-        return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']));
+      else if(count($json) == 1 && $json[0]['queueType'] == "RANKED_FLEX_SR"){
+        return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
+        1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "UNRANKED",'rank' => "I",'wins' => 0, 'losses' => 0));
+      }
+      else if(count($json) == 1 && $json[0]['queueType'] == "RANKED_SOLO_5x5"){
+        return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
+        1 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "UNRANKED",'rank' => "I",'wins' => 0, 'losses' => 0));
       }
       /*
       else if((count($json) == 1) && $json[0]['queueType'] == "RANKED_FLEX_SR"){
