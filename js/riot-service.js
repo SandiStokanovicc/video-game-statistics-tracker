@@ -47,6 +47,11 @@ var RiotService = {
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
+                if (results.liveMatch.IsInMatch==true){
+                    html+=`<button>check live game</button>`
+                    for(i=0; i<10; i++){
+                    html+=`<div class="row">`+ results.liveMatch.participants[i].summonerName+ results.liveMatch.participants[i] `</div>`}
+                }
 
                 html += `
                 <div class="container mb-5 mt-5">
@@ -132,7 +137,7 @@ var RiotService = {
 
                         }
                         //`<br>KDA: ` + results.matches[i].info 
-                        html += `<img class="shadow" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championName + `.png" alt="ChampName" width="100" height="100"></img>
+                        html += `<img class="shadow" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName" width="100" height="100"></img>
                         Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
                             results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
@@ -147,7 +152,7 @@ var RiotService = {
                             <div class="container">
                             <div class="row">
                             <div class="col-sm" id="playerName"><p class="h3 mb-lg-2">` + results.matches[i].info.participants[j].summonerName +
-                                `</p><img class="shadow" src="Pictures/champion/` + results.matches[i].info.participants[j].championName + `.png" alt="ChampName" width="100" height="100"></img>` +
+                                `</p><img class="shadow" src="Pictures/champion/` + results.matches[i].info.participants[j].championId + `.png" alt="ChampName" width="100" height="100"></img>` +
                                 `<br>Level: ` + results.matches[i].info.participants[j].champLevel +
                                 `</div> <div class="col-sm" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
                                 `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
