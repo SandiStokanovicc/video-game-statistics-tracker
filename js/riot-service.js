@@ -48,9 +48,9 @@ var RiotService = {
                 var html = "";
                 //$("#matchContainer").html();
                 if (results.liveMatch.IsInMatch==true){
-                    html+=`<button>check live game</button>`
+                    html+=`<button>check live game</button>`;
                     for(i=0; i<10; i++){
-                    html+=`<div class="row">`+ results.liveMatch.participants[i].summonerName+ results.liveMatch.participants[i] `</div>`}
+                    html+=`<div class="row">`+ results.liveMatch.participants[i].summonerName+ results.liveMatch.participants[i] +`</div>`;}
                 }
 
                 html += `
