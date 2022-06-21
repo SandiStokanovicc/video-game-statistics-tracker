@@ -11,7 +11,6 @@ require_once __DIR__.'/services/UserService.class.php';
 require_once __DIR__.'/services/RiotService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
 require_once __DIR__.'/dao/UserDao.class.php';
-require_once __DIR__.'/controllers/AuthenticationController.class.php';
 
 Flight::set('flight.log_errors', true);
 Flight::register('userDao', 'UserDao');
@@ -31,9 +30,8 @@ Flight::route('/*', function(){
     //return TRUE;
     //perform JWT decode
     $path = Flight::request()->url;
-    if ($path == '/login' || $path == '/register' || $path == '/docs.json' 
-    || str_starts_with($path, '/summonersMobileAPI/')) return TRUE; // exclude routes from middleware
-  
+    if ($path == '/login' || $path == '/register' || $path == '/docs.json' ) return TRUE; // exclude routes from middleware
+    //|| str_starts_with($path, '/summonersMobileAPI/')
     $headers = getallheaders();
     if (@!$headers['Authorization']){
         Flight::json(["message" => $path], 403);

@@ -258,4 +258,3 @@ var RiotService = {
         })
     }
 }//if($playedBefore > 86400) $playedBefore /= 86400;
-
