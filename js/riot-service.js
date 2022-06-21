@@ -50,7 +50,11 @@ var RiotService = {
                 if (results.liveMatch.IsInMatch==true){
                     html+=`<button>check live game</button>`;
                     for(i=0; i<10; i++){
-                    html+=`<div class="row">`+ results.liveMatch.participants[i].summonerName+ results.liveMatch.participants[i] +`</div>`;}
+                    html+=`<div>`+ results.liveMatch.participants[i].summonerName+ `<img class="shadow" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div>`;
+                    }
                 }
 
                 html += `

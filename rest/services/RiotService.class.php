@@ -204,6 +204,8 @@
         $returnVal['participants'][$i]['champLevel'] = $info['participants'][$i]['champLevel'];
         $returnVal['participants'][$i]['championName'] = $info['participants'][$i]['championName'];
         $returnVal['participants'][$i]['championId'] = $info['participants'][$i]['championId'];
+        $returnVal['participants'][$i]['summoner1Id'] = $info['participants'][$i]['summoner1Id'];
+        $returnVal['participants'][$i]['summoner2Id'] = $info['participants'][$i]['summoner2Id'];
         $returnVal['participants'][$i]['kills'] = $info['participants'][$i]['kills'];
         $returnVal['participants'][$i]['deaths'] = $info['participants'][$i]['deaths'];
         $returnVal['participants'][$i]['assists'] = $info['participants'][$i]['assists'];
