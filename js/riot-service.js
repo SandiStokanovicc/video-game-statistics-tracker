@@ -84,7 +84,7 @@ var RiotService = {
                     + results.ranks[1].tier + '_' + results.ranks[1].rank +
                     `.png" alt="profileicon" width="100" height="100"></img>
                     <br>`;
-                    html += results.ranks[1].queueType + `Ranked Flex
+                    html += results.ranks[1].queueType + `
                     <br>Wins: `
                     + results.ranks[1].wins +
                     `
