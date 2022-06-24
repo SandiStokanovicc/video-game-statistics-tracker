@@ -30,8 +30,9 @@ Flight::route('/*', function(){
     //return TRUE;
     //perform JWT decode
     $path = Flight::request()->url;
-    if ($path == '/login' || $path == '/register' || $path == '/docs.json' ) return TRUE; // exclude routes from middleware
-    //|| str_starts_with($path, '/summonersMobileAPI/')
+    if ($path == '/login' || $path == '/register' || $path == '/docs.json' ) return TRUE;
+    // || // exclude routes from middleware
+    // str_starts_with($path, '/summonersMobileAPI/') || str_starts_with($path, '/summoners/')
     $headers = getallheaders();
     if (@!$headers['Authorization']){
         Flight::json(["message" => $path], 403);

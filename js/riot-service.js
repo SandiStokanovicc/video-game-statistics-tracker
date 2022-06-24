@@ -47,6 +47,15 @@ var RiotService = {
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
+                if (results.liveMatch.IsInMatch == true) {
+                    html += `<button>check live game</button>`;
+                    for (i = 0; i < 10; i++) {
+                        html += `<div>` + results.liveMatch.participants[i].summonerName + `<img class="shadow" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div>`;
+                    }
+                }
 
                 html += `
                 <div class="container profile-container mb-5 mt-5">
@@ -64,24 +73,26 @@ var RiotService = {
                     </div>
                     <div class="col p-4">
                     <img  class="profileicons" src="Pictures/rank/`
-                    + results.ranks.RANKED_SOLO_5x5.tier + '_' + results.ranks.RANKED_SOLO_5x5.rank +
+                    + results.ranks[0].tier + '_' + results.ranks[0].rank +
                     `.png" alt="profileicon"></img>
-                    <br>Ranked Solo
+                    <br>`;
+                html += results.ranks[0].queueType + `
                     <br>Wins: `
-                    + results.ranks.RANKED_SOLO_5x5.wins +
+                    + results.ranks[0].wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_SOLO_5x5.losses +
+                    <br>Losses: ` + results.ranks[0].losses +
                     `
                     </div>
                     <div class="col p-4">
                     <img  class="profileicons" src="Pictures/rank/`
-                    + results.ranks.RANKED_FLEX_SR.tier + '_' + results.ranks.RANKED_FLEX_SR.rank +
+                    + results.ranks[1].tier + '_' + results.ranks[1].rank +
                     `.png" alt="profileicon"></img>
-                    <br>Ranked Flex
+                    <br>`;
+                html += results.ranks[1].queueType + `
                     <br>Wins: `
-                    + results.ranks.RANKED_FLEX_SR.wins +
+                    + results.ranks[1].wins +
                     `
-                    <br>Losses: ` + results.ranks.RANKED_FLEX_SR.losses +
+                    <br>Losses: ` + results.ranks[1].losses +
                     `
                     </div>
                 </div>
@@ -134,7 +145,7 @@ var RiotService = {
 
                         }
                         //`<br>KDA: ` + results.matches[i].info 
-                        html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championName + `.png" alt="ChampName"></img></div>
+                        html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName"></img></div>
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
                             results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
@@ -149,7 +160,7 @@ var RiotService = {
                             <div class="container">
                             <div class="row">
                             <div class="col-4 col-sm mb-2 mt-2 match-open-text"><p id="playerName" class="mb-md-2">` + results.matches[i].info.participants[j].summonerName +
-                                `</p><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.participants[j].championName + `.png" alt="ChampName" width="100" height="100"></img>` +
+                                `</p><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.participants[j].championId + `.png" alt="ChampName" width="100" height="100"></img>` +
                                 `<br>Level: ` + results.matches[i].info.participants[j].champLevel +
                                 `</div> <div class="col-4 col-sm mb-2 mt-2 match-open-text" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
                                 `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
