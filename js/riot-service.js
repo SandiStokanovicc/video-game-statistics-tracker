@@ -20,11 +20,13 @@ var RiotService = {
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("main").classList.remove('d-none');
     },
-
+    
+    searchPlayerInput:"",
+    regionButton:"",
     getSummonerInfo: function () {
         this.displaySpinner();
-        let searchPlayerInput = $('#SearchPlayerInput').val();
-        let regionButton = $('#RegionButton').html().trim();
+        searchPlayerInput = $('#SearchPlayerInput').val();
+        regionButton = $('#RegionButton').html().trim();
         if (searchPlayerInput.length == 0) searchPlayerInput = "";
         //FavouriteService.addFavourite(searchPlayerInput, regionButton);
         //console.log(regionButton);
@@ -89,7 +91,7 @@ var RiotService = {
                     </div>
                 </div>
                 </div>`;
-                html += `<button onclick="FavouriteService.addFavourite(`+searchPlayerInput+` , `+regionButton+`);">Add Favourite</button>`;
+                html += `<button onclick="FavouriteService.addFavourite();">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
                     html += `<button>check live game</button>`;
                     for (i = 0; i < 10; i++) {

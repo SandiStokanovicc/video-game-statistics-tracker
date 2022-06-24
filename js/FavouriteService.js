@@ -1,15 +1,12 @@
 var FavouriteService = {
-
-    addFavourite: function (summonerName, server) {
+    addFavourite: function () {
+        console.log(JSON.stringify(user));
         var user = new Object();
         user.favouriteId = 0;
-        user.summonerName = summonerName;
-        user.serverId = server;
+        user.summonerName = searchPlayerInput;
+        user.serverId = regionButton;
         user.userId = parsedUser.iduser;
         console.log(user);
-        FavouriteService.addFavourite(user);
-        console.log(JSON.stringify(user));
-        
         $.ajax({
             type: "POST",
             url: ' rest/addFavourite',
