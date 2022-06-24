@@ -152,9 +152,11 @@
       $bannedChampions = array();
 
       $i = 0;
-      while($i<10){
-        $bannedChampions[$i] = $json['bannedChampions'][$i]['championId'];
-        $i++;
+      if(!empty($json['bannedChampions'])){
+        while($i<10){
+          $bannedChampions[$i] = $json['bannedChampions'][$i]['championId'];
+          $i++;
+        }
       }
 
       return array('IsInMatch' => true, 'participants' => $participants, 'gameStartTime' => round($json['gameStartTime']/1000/60,2), 

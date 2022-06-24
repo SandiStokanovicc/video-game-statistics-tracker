@@ -101,7 +101,9 @@ var RiotService = {
                         <div class="col "><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName"</img></div>
                         <div class="col d-flex justify-content-start"><img class="shadow summspell mt-4 me-2" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName"></img>
                         <img class="shadow summspell mt-4" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName"></img></div>
-                        <div class="col"><p class="text-break livematchtext"><br>Banned Champion:</p></div>
+                        <div class="col"><p class="text-break livematchtext"><br>Banned Champion:</p></div>`;
+                        if(results.liveMatch.bannedChampions[i] == undefined) continue;
+                        html+= `
                     <div class="col"><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div></div></div>`;
                     }
                 }
