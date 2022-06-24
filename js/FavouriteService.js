@@ -1,14 +1,13 @@
 var FavouriteService = {
-    init: function(summonerName, server){
 
+    addFavourite: function (summonerName, server) {
         var user = new Object();
+        user.favouriteId = 0;
         user.summonerName = summonerName;
-        user.server = server;
+        user.serverId = server;
         user.userId = parsedUser.iduser;
         console.log(user);
-    },
-
-    addFavourite: function (user) {
+        FavouriteService.addFavourite(user);
         console.log(JSON.stringify(user));
         
         $.ajax({

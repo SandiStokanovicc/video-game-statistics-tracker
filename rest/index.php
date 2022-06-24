@@ -16,6 +16,7 @@ require_once __DIR__.'/dao/FavouriteDao.class.php';
 
 Flight::set('flight.log_errors', true);
 Flight::register('userDao', 'UserDao');
+Flight::register('favouriteDao', 'FavouriteDao');
 Flight::register('userService', 'UserService');
 Flight::register('riotService', 'RiotService');
 Flight::register('favouriteService', 'FavouriteService');

@@ -26,7 +26,7 @@ var RiotService = {
         let searchPlayerInput = $('#SearchPlayerInput').val();
         let regionButton = $('#RegionButton').html().trim();
         if (searchPlayerInput.length == 0) searchPlayerInput = "";
-        FavouriteService.init(searchPlayerInput, regionButton);
+        //FavouriteService.addFavourite(searchPlayerInput, regionButton);
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
@@ -89,7 +89,7 @@ var RiotService = {
                     </div>
                 </div>
                 </div>`;
-                html += `<button onclick="FavouriteService.addFavourite();">Add Favourite</button>`;
+                html += `<button onclick="FavouriteService.addFavourite(`+searchPlayerInput+` , `+regionButton+`);">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
                     html += `<button>check live game</button>`;
                     for (i = 0; i < 10; i++) {
