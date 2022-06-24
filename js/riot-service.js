@@ -20,9 +20,9 @@ var RiotService = {
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("main").classList.remove('d-none');
     },
-    
-    searchPlayerInput:"",
-    regionButton:"",
+
+    searchPlayerInput: "",
+    regionButton: "",
     getSummonerInfo: function () {
         this.displaySpinner();
         searchPlayerInput = $('#SearchPlayerInput').val();
