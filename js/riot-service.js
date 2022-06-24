@@ -47,15 +47,6 @@ var RiotService = {
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
-                if (results.liveMatch.IsInMatch == true) {
-                    html += `<button>check live game</button>`;
-                    for (i = 0; i < 10; i++) {
-                        html += `<div>` + results.liveMatch.participants[i].summonerName + `<img class="shadow" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div>`;
-                    }
-                }
 
                 html += `
                 <div class="container profile-container mb-5 mt-5">
@@ -97,6 +88,16 @@ var RiotService = {
                     </div>
                 </div>
                 </div>`;
+
+                if (results.liveMatch.IsInMatch == true) {
+                    html += `<button>check live game</button>`;
+                    for (i = 0; i < 10; i++) {
+                        html += `<div>` + results.liveMatch.participants[i].summonerName + `<img class="shadow" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName" width="30" height="30"></img>
+                    <img class="shadow" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div>`;
+                    }
+                }
 
                 if (results.matches.length === 0) {
                     $("#matchContainer").html(html);
