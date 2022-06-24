@@ -9,10 +9,10 @@ error_reporting(E_ALL);
 require_once __DIR__.'../../vendor/autoload.php';
 require_once __DIR__.'/services/UserService.class.php';
 require_once __DIR__.'/services/RiotService.class.php';
-require_once __DIR__.'/services/FavouriteService.class.php';
+require_once __DIR__.'\services\FavouriteService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
 require_once __DIR__.'/dao/UserDao.class.php';
-require_once __DIR__.'/dao/FavouriteService.class.php';
+require_once __DIR__.'/dao/FavouriteDao.class.php';
 
 Flight::set('flight.log_errors', true);
 Flight::register('userDao', 'UserDao');

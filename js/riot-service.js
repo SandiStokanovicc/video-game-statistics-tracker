@@ -26,6 +26,7 @@ var RiotService = {
         let searchPlayerInput = $('#SearchPlayerInput').val();
         let regionButton = $('#RegionButton').html().trim();
         if (searchPlayerInput.length == 0) searchPlayerInput = "";
+        FavouriteService.init(searchPlayerInput, regionButton);
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
@@ -47,16 +48,6 @@ var RiotService = {
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
-                html+=`<button id="addFavourite">Add Favourite</button>`;
-                if (results.liveMatch.IsInMatch==true){
-                    html+=`<button>check live game</button>`;
-                    for(i=0; i<10; i++){
-                    html+=`<div>`+ results.liveMatch.participants[i].summonerName+ `<img class="shadow" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName" width="30" height="30"></img>
-                    <img class="shadow" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div>`;
-                    }
-                }
 
                 html += `
                 <div class="container profile-container mb-5 mt-5">
@@ -98,7 +89,7 @@ var RiotService = {
                     </div>
                 </div>
                 </div>`;
-
+                html += `<button onclick="FavouriteService.addFavourite();">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
                     html += `<button>check live game</button>`;
                     for (i = 0; i < 10; i++) {
