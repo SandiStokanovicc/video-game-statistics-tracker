@@ -1,4 +1,5 @@
 var UserService = {
+    parsedUser:"",
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
@@ -12,9 +13,10 @@ var UserService = {
          var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
          }).join(''));
-         var parsedUser = JSON.parse(jsonPayload);
-         console.log(parsedUser.username); 
+         parsedUser = JSON.parse(jsonPayload);
+         
          document.getElementById("your-profile").innerHTML = parsedUser.username;
+
          
          
     } else {

@@ -9,13 +9,17 @@ error_reporting(E_ALL);
 require_once __DIR__.'../../vendor/autoload.php';
 require_once __DIR__.'/services/UserService.class.php';
 require_once __DIR__.'/services/RiotService.class.php';
+require_once __DIR__.'\services\FavouriteService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
 require_once __DIR__.'/dao/UserDao.class.php';
+require_once __DIR__.'/dao/FavouriteDao.class.php';
 
 Flight::set('flight.log_errors', true);
 Flight::register('userDao', 'UserDao');
+Flight::register('favouriteDao', 'FavouriteDao');
 Flight::register('userService', 'UserService');
 Flight::register('riotService', 'RiotService');
+Flight::register('favouriteService', 'FavouriteService');
 
 /* // OVO JE BESKORISNO... ali nek ostane za sad
 Flight::map('error', function(Exception $ex){
@@ -59,5 +63,6 @@ Flight::route('/*', function(){
 
 require_once __DIR__.'/routes/UserRoutes.php';
 require_once __DIR__.'/routes/RiotRoutes.php';
+require_once __DIR__.'/routes/FavouriteRoutes.php';
 
 Flight::start();
