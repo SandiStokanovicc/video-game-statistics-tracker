@@ -20,6 +20,21 @@ var RiotService = {
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("main").classList.remove('d-none');
     },
+
+    showLiveMatch: function(){
+        if($("#liveMatchButton").html() === "Check Live Game"){
+            $("#liveMatchFull").show();
+            $("#liveMatchButton").html("Hide Live Game");
+            $("#liveMatchButton").removeClass("btn btn-success mb-5;");
+            $("#liveMatchButton").addClass("btn btn-danger mb-5;");
+        }
+        else{
+            $("#liveMatchFull").hide();
+            $("#liveMatchButton").html("Check Live Game");
+            $("#liveMatchButton").removeClass("btn btn-danger mb-5;");
+            $("#liveMatchButton").addClass("btn btn-success mb-5;");
+        }
+    },
     
     searchPlayerInput:"",
     regionButton:"",
@@ -93,9 +108,10 @@ var RiotService = {
                 </div>`;
                 html += `<button onclick="FavouriteService.addFavourite();">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
-                    html += `<button id="livegamebutton" type="button" class="btn btn-success mb-5;">
+                    html += `<button id="liveMatchButton" type="button" onclick="RiotService.showLiveMatch()" class="btn btn-success mb-5;">
                     Check Live Game
-                </button>`;
+                </button>
+                <div class="container" style="display: none" id="liveMatchFull">`;
                     for (i = 0; i < 10; i++) {
                         html += `<div class="container" id="livematch"><div class="row"><div class="col text-center"><p class="text-break mt-3 livematchtext"><br>` + results.liveMatch.participants[i].summonerName + `</p></div>
                         <div class="col "><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName"</img></div>
@@ -106,6 +122,7 @@ var RiotService = {
                         html+= `
                     <div class="col"><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div></div></div>`;
                     }
+                    html += `</div>`;
                 }
                 if (results.matches.length === 0) {
                     $("#matchContainer").html(html);
