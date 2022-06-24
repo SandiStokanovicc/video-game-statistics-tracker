@@ -47,6 +47,7 @@ var RiotService = {
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
+                html+=`<button id="addFavourite">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch==true){
                     html+=`<button>check live game</button>`;
                     for(i=0; i<10; i++){
