@@ -93,17 +93,21 @@ var RiotService = {
                 </div>`;
                 html += `<button onclick="FavouriteService.addFavourite();">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
-                    html += `<button id="livegamebutton" type="button" class="btn btn-success mb-5;">
+                    html += `<button id="liveMatchButton" type="button" onclick="RiotService.showLiveMatch()" class="btn btn-success mb-5;">
                     Check Live Game
-                </button>`;
+                </button>
+                <div class="container" style="display: none" id="liveMatchFull">`;
                     for (i = 0; i < 10; i++) {
                         html += `<div class="container" id="livematch"><div class="row"><div class="col text-center"><p class="text-break mt-3 livematchtext"><br>` + results.liveMatch.participants[i].summonerName + `</p></div>
                         <div class="col "><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.participants[i].championId + `.png" alt="ChampName"</img></div>
                         <div class="col d-flex justify-content-start"><img class="shadow summspell mt-4 me-2" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell1Id + `.png" alt="ChampName"></img>
                         <img class="shadow summspell mt-4" src="Pictures/summonerSpells/` + results.liveMatch.participants[i].summonerSpell2Id + `.png" alt="ChampName"></img></div>
-                        <div class="col"><p class="text-break livematchtext"><br>Banned Champion:</p></div>
+                        <div class="col"><p class="text-break livematchtext"><br>Banned Champion:</p></div>`;
+                        if (results.liveMatch.bannedChampions[i] == undefined) continue;
+                        html += `
                     <div class="col"><img class="shadow championicons mt-2" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div></div></div>`;
                     }
+                    html += `</div>`;
                 }
                 if (results.matches.length === 0) {
                     $("#matchContainer").html(html);
