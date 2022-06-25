@@ -21,6 +21,21 @@ var RiotService = {
         document.getElementById("main").classList.remove('d-none');
     },
 
+    showLiveMatch: function () {
+        if ($("#liveMatchButton").html() === "Check Live Game") {
+            $("#liveMatchFull").show();
+            $("#liveMatchButton").html("Hide Live Game");
+            $("#liveMatchButton").removeClass("btn btn-success mb-5;");
+            $("#liveMatchButton").addClass("btn btn-danger mb-5;");
+        }
+        else {
+            $("#liveMatchFull").hide();
+            $("#liveMatchButton").html("Check Live Game");
+            $("#liveMatchButton").removeClass("btn btn-danger mb-5;");
+            $("#liveMatchButton").addClass("btn btn-success mb-5;");
+        }
+    },
+
     searchPlayerInput: "",
     regionButton: "",
     getSummonerInfo: function () {
