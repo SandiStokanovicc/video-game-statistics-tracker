@@ -8,4 +8,7 @@ class FavouriteService extends BaseService {
     parent::__construct(new FavouriteDao());
   }
 
+  public function getFavouriteById($id){
+    return $this->dao->getFavouriteById($id);
+  }
 }

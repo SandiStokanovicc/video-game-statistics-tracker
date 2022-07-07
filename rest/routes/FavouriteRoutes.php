@@ -8,8 +8,15 @@ Flight::route("POST /addFavourite",  function(){
  );
 
 
- Flight::route("POST /addFavourite",  function(){
-    $data = Flight::request()->data->getData();
-    $favourites = Flight::favouriteService()->get_by_id($data);
-    Flight::json($favourites);}
- );
+
+
+ Flight::route("GET /favourites", function(){
+   
+  $user = Flight::request()->data->getData();
+  if(isset($user)){
+  $userFav = Flight::favouriteDao()->getFavouriteById($user);
+  Flight::json($userFav);} 
+   else {
+      Flight::json(["message" => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA password"], 404);
+   }
+ });

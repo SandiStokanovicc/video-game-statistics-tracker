@@ -10,5 +10,7 @@ class FavouriteDao extends BaseDao {
     parent::__construct("favourites");
   }
 
-
+  public function getFavouriteById($userId){
+    return $this->query_unique("SELECT * FROM favourites WHERE userId =: $userId", ['userId' => $userId]);
+  }
 }

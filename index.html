@@ -100,70 +100,18 @@
     <div id="matches" class="d-none">
         <div class="center text text-white">
             <div class="caption text-center" id="matchContainer">
-                <!--
-                <div class="container-sm mb-5 mt-5">
-                    <div class="row">
-                        <div class="col-sm p-4">
-                            Profile
-                        </div>
-                    </div>
-                </div>
-                <div class="container-sm">
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match1">
-                            Match 1
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match2">
-                            Match 2
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match3">
-                            Match 3
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match4">
-                            Match 4
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match5">
-                            Match 5
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match6">
-                            Match 6
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match7">
-                            Match 7
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match8">
-                            Match 8
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match9">
-                            Match 9
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-sm p-2" id="match10">
-                            Match 10
-                        </div>
-                    </div>
-                    -->
+                    
             </div>
         </div>
     </div>
+    <div id="favourites" class="d-none">
+        <div class="center text text-white">
+            <div class="caption text-center" id="favouritesContainer">
+
+            </div>
+        </div>
     </div>
+    
 
     <div id="listallmatches" class="d-none">
         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -520,13 +468,6 @@
             var buttonVal = document.getElementById('RegionButton').innerText = value;
         }
 
-        /*
-            function getPlayer() {
-                var server = document.getElementById('RegionButton').innerText;
-                var summoner = document.getElementById("SearchPlayerInput").value;
-                console.log("Name: " + summoner + " / Server: " + server);
-            }           
-*/
         function displayShowCopyright() {
             document.getElementById("copyright").classList.remove('d-none');
             document.getElementById("copyright-footer").classList.add('text-decoration-underline');
@@ -574,10 +515,11 @@
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/UserService.js"></script>
+    <script type="text/javascript" src="js/FavouriteService.js"></script>    
     <script type="text/javascript" scr="js/toastr.min.js"></script>
-    <script type="text/javascript" src="js/FavouriteService.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>  UserService.init();</script>
+    <script> FavouriteService.init(); </script>
     
 </body>
 
