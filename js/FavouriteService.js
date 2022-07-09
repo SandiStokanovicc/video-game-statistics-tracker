@@ -1,7 +1,6 @@
 var FavouriteService = {
 
     addFavourite: function () {
-        console.log(JSON.stringify(user));
         var user = new Object();
         user.favouriteId = 0;
         user.summonerName = searchPlayerInput;
@@ -25,24 +24,23 @@ var FavouriteService = {
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log(data);
-                toastr.error(XMLHttpRequest.responseJSON.message);
                 //toastr.error("error");
+                toastr.error("User is already a favourite.");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
             }
         });
     },
 
     init: function () {
-        console.log(parsedUser);
-        console.log(parsedUser.iduser)
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: ' rest/favourites',
-            data: parsedUser.iduser,
+            data: JSON.stringify(parsedUser),
+            contentType: "application/json",
+            dataType: "json",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },

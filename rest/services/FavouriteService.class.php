@@ -8,7 +8,11 @@ class FavouriteService extends BaseService {
     parent::__construct(new FavouriteDao());
   }
 
-  public function getFavouriteById($id){
-    return $this->dao->getFavouriteById($id);
+  public function getFavouriteById($userId){
+    return $this->dao->getFavouriteById($userId);
+  }
+
+  public function getIdAndSummonerName($userId, $summonerName){
+    return $this->dao->getIdAndSummonerName($userId, $summonerName);
   }
 }

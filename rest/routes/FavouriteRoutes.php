@@ -2,21 +2,24 @@
 
 
 Flight::route("POST /addFavourite",  function(){
-    $data = Flight::request()->data->getData();
-    $favourite = Flight::favouriteService()->add($data);
-    Flight::json($favourite);}
+  $data = Flight::request()->data->getData();
+  $summonerName = $data['summonerName'];
+  $userId = $data['userId'];
+  $currentUser = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
+  if(!isset($currentUser['userId'])){
+  $favourite = Flight::favouriteService()->add($data);
+}
+}
  );
 
 
 
 
- Flight::route("GET /favourites", function(){
+
+ Flight::route("POST /favourites", function(){
    
-  $user = Flight::request()->data->getData();
-  if(isset($user)){
-  $userFav = Flight::favouriteDao()->getFavouriteById($user);
-  Flight::json($userFav);} 
-   else {
-      Flight::json(["message" => "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA password"], 404);
-   }
- });
+   $user = Flight::request()->data->getData();
+   $userId = $user['iduser'];
+   $favourites = Flight::favouriteService()->getFavouriteById($userId);
+   Flight::json($favourites);
+  });

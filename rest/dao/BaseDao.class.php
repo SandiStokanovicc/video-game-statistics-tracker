@@ -90,5 +90,12 @@ class BaseDao{
     return reset($results);
   }
 
+  
+  protected function query_specific($query){
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
 }
 
