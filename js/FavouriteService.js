@@ -2,7 +2,6 @@ var FavouriteService = {
 
     addFavourite: function () {
         var user = new Object();
-        user.favouriteId = 0;
         user.summonerName = searchPlayerInput;
         user.serverId = regionButton;
         user.userId = parsedUser.iduser;
