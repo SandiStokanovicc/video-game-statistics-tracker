@@ -47,9 +47,7 @@ var RiotService = {
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
-
-        var requestData = {};
-
+        
         $.ajax({
             url: 'rest/summoners/' + searchPlayerInput + "/" + regionButton,
 

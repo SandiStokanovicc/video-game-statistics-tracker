@@ -9,12 +9,14 @@ error_reporting(E_ALL);
 require_once __DIR__.'../../vendor/autoload.php';
 require_once __DIR__.'/services/UserService.class.php';
 require_once __DIR__.'/services/RiotService.class.php';
+require_once __DIR__.'/services/RecentSearchesService.class.php';
 require_once __DIR__.'\services\FavouriteService.class.php';
 require_once __DIR__.'/services/FavouriteMatchService.class.php';
 require_once __DIR__.'/services/SummonersService.class.php';
 require_once __DIR__.'/services/TipsService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
 require_once __DIR__.'/dao/UserDao.class.php';
+require_once __DIR__.'/dao/RecentSearchesDao.class.php';
 require_once __DIR__.'/dao/FavouriteDao.class.php';
 require_once __DIR__.'/dao/FavouriteMatchDao.class.php';
 require_once __DIR__.'/dao/SummonersDao.class.php';
@@ -31,6 +33,7 @@ Flight::register('riotService', 'RiotService');
 Flight::register('favouriteService', 'FavouriteService');
 Flight::register('favouriteMatchService', 'FavouriteMatchService');
 Flight::register('summonersService', 'SummonersService');
+Flight::register('recentSearchesService', 'RecentSearchesService');
 Flight::register('tipsService', 'TipsService');
 
 /* // OVO JE BESKORISNO... ali nek ostane za sad
