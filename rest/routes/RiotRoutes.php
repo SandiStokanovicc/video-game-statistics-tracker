@@ -9,10 +9,27 @@
 */
 
 Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $region){ 
-   //trenutno se poziva sa 
-   //http://localhost/video-game-statistics-tracker/Backend/code/rest/summoners/Condemn%20for%20Stun/eun1
-   //Flight::json(Flight::riotService()->getSummonerInfo($summonerName, $region));
-   Flight::json(Flight::riotService()->getSummonerMatches($summonerName, $region));
+  //var_dump($data['userId']); die;
+  //$summonerName = strtolower(str_replace(' ', '', $summonerName));
+  //var_dump($summonerName); die;
+  $presentInDB = Flight::recentSearchesService()->getSummonerNameRegion($summonerName, $region);
+  if(!empty($presentInDB)){
+    //var_dump("using getRecentSummonerMatches"); die;
+    Flight::json(Flight::riotService()->getRecentSummonerMatches($presentInDB));
+  }
+  else{
+    $responseJSON = Flight::riotService()->getSummonerMatches($summonerName, $region);
+    $dbEntity = array();
+    $dbEntity['profileIconId'] = $responseJSON['profileIconId'];
+    $dbEntity['summonerLevel'] = $responseJSON['summonerLevel']; 
+    $dbEntity['summonerName'] = $summonerName;
+    $dbEntity['region'] = $region;
+    $dbEntity['puuid'] = $responseJSON['puuid'];
+    $dbEntity['encryptedSummonerId'] = $responseJSON['id'];
+    Flight::recentSearchesService()->add($dbEntity);
+    //var_dump("using getSummonerMatches"); die;
+    Flight::json($responseJSON);
+  }
 });
 
 Flight::route("GET /summonersMobileAPI/@summonerName/@region",  function($summonerName, $region){
