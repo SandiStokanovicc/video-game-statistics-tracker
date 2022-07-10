@@ -16,8 +16,9 @@
     <link rel="icon" type="image/x-icon" href="Pictures/favicon.png">
 </head>
 
-<body style="font-family: 'Poppins', sans-serif; background-image: url('Pictures/background1.png');" id="background"
-    class="d-flex flex-column min-vh-100">
+<body
+    style="font-family: 'Poppins', sans-serif; background-image: url('Pictures/background1.png'); background-attachment: fixed;"
+    id="background" class="d-flex flex-column min-vh-100">
 
 
     <!-- NAVBAR -->
@@ -100,7 +101,7 @@
     <div id="matches" class="d-none">
         <div class="center text text-white">
             <div class="caption text-center" id="matchContainer">
-                    
+
             </div>
         </div>
     </div>
@@ -111,7 +112,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <div id="listallmatches" class="d-none">
         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -119,6 +120,8 @@
             </div>
         </div>
     </div>
+
+
 
     <!--COPYRIGHT-->
 
@@ -513,12 +516,12 @@
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/UserService.js"></script>
-    <script type="text/javascript" src="js/FavouriteService.js"></script>    
+    <script type="text/javascript" src="js/FavouriteService.js"></script>
     <script type="text/javascript" scr="js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>  UserService.init();</script>
     <script> FavouriteService.init(); </script>
-    
+
 </body>
 
 </html>
