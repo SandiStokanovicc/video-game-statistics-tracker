@@ -1,13 +1,13 @@
 <?php
 require_once __DIR__.'/BaseDao.class.php';
 
-class FavouriteDao extends BaseDao {
+class FavouriteMatchDao extends BaseDao {
 
   /**
   * constructor of dao class
   */
   public function __construct(){
-    parent::__construct("favourites");
+    parent::__construct("favouriteMatches");
   }
 
   public function getFavouriteById($userId){                        //preko ovoga mozes povlacit, samo ces ime tabele promijeniti

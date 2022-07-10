@@ -2,7 +2,7 @@
 require_once __DIR__.'/BaseService.class.php';
 require_once __DIR__.'/../dao/FavouriteMatchDao.class.php';
 
-class FavouriteService extends BaseService {
+class FavouriteMatchService extends BaseService {
 
   public function __construct() {
     parent::__construct(new FavouriteMatchDao());
