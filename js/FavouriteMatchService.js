@@ -1,15 +1,21 @@
-var FavouriteService = {
+var FavouriteMatchService = {
 
-    addFavourite: function () {
-        var user = new Object();
-        user.summonerName = searchPlayerInput;
-        user.serverId = regionButton;
-        user.userId = parsedUser.iduser;
-        console.log(user);
+    init: function(){
+        if(typeof(parsedUser) == 'undefined') $('#showFavouriteMatchesButton').hide(); 
+    },
+
+    addFavourite: function (matchIndex) {
+        var match = new Object();
+        if($('#RegionButton').html() === "na1") match.continent = "americas";
+        else match.continent = "europe";
+        match.userId = parsedUser.iduser;
+        match.mainPlayerPUUID = globalResults.puuid;
+        match.APImatchID = globalResults.matchIDs[matchIndex];
+        console.log(match);
         $.ajax({
             type: "POST",
-            url: ' rest/addFavourite',
-            data: JSON.stringify(user),
+            url: ' rest/addFavouriteMatch',
+            data: JSON.stringify(match),
             contentType: "application/json",
             dataType: "json",
             beforeSend: function (xhr) {
@@ -20,11 +26,8 @@ var FavouriteService = {
                 console.log("added");
             },
 
-
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                toastr.error("User is already a favourite.");
+                toastr.error("Match is already a favourite.");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
@@ -33,10 +36,10 @@ var FavouriteService = {
         });
     },
 
-    init: function () {
+    listFavouriteMatches: function () {
         $.ajax({
             type: "POST",
-            url: ' rest/favourites',
+            url: ' rest/favouriteMatches',
             data: JSON.stringify(parsedUser),
             contentType: "application/json",
             dataType: "json",
@@ -45,7 +48,9 @@ var FavouriteService = {
             },
 
             success: function (data) {
+                //CHECK IF DATA IS EMPTY, IF YES, SHOW MESSAGE, RELOAD MAIN PAGE
                 console.log(data);
+                RiotService.displayFavouriteMatches(data);
             },
 
 
