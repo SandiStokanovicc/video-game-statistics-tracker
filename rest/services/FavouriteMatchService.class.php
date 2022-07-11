@@ -8,11 +8,14 @@ class FavouriteMatchService extends BaseService {
     parent::__construct(new FavouriteMatchDao());
   }
 
-  public function getFavouriteById($userId){
-    return $this->dao->getFavouriteById($userId);
+  public function getFavouriteMatchesByUserId($userId){
+    return $this->dao->getFavouriteMatchesByUserId($userId);
+    //TREBAT CE OVDJE DODATI DOSTA STVARI, tj. pozivati API
+    //moze mozda preko Flight::riotService() idk
   }
 
-  public function getIdAndSummonerName($userId, $summonerName){
-    return $this->dao->getIdAndSummonerName($userId, $summonerName);
+  public function getIdAndMatchID($userId, $summonerName){
+    return $this->dao->getIdAndMatchID($userId, $summonerName);
   }
+  
 }

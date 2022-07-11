@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-2ee5e483-3b92-4719-931c-e5e3adaef3ba"
+      "X-Riot-Token: RGAPI-a7e9b419-1c1f-441d-bfb5-808ff03d956a"
     );
     
     private function setCurlOptions($ch, $url){
@@ -297,13 +297,14 @@
       else{
         $continent = "europe";
       }
-      
+      $summoner = array();
+
       $summoner = $this->getSummonerInfo($summonerName, $region);
       
       $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
-      $summoner['matches'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
+      $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
       $summoner['liveMatch'] = $this->getLiveMatchInfo($summoner['id'], $region);
-      foreach($summoner['matches'] as $i => $match){
+      foreach($summoner['matchIDs'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
         //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
 
@@ -313,6 +314,18 @@
       //exclude useless info
     }
 
+    //called from FavouriteMatchService.class.php
+    public function getFavouriteMatches($favouriteMatches){
+
+      $summoner = array('matches' => array());
+      foreach($favouriteMatches as $i => $match){
+        $summoner['matches'][$i] = $this->getMatchInfo($match['APIMatchID'], $match['continent'], $match['mainPlayerPUUID']);
+        //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
+      }
+      return $summoner;
+    }
+    
+
     //for those that have already been searched
     public function getRecentSummonerMatches($dbEntity){
       if($dbEntity['region'] == "na1") $continent = "americas";
@@ -321,10 +334,10 @@
       $summoner = array('id' => $dbEntity['encryptedSummonerId'], 'name' => $dbEntity['summonerName'], 'puuid' => $dbEntity['puuid'], 
       'profileIconId' => $dbEntity['profileIconId'], 'summonerLevel' => $dbEntity['summonerLevel']);
       $summoner['ranks'] = $this->getSummonerRanks($dbEntity['encryptedSummonerId'], $dbEntity['region']); 
-      $summoner['matches'] = $this->getSummonerMatchesPrivate($dbEntity['puuid'], $continent);
+      $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($dbEntity['puuid'], $continent);
       $summoner['liveMatch'] = $this->getLiveMatchInfo($dbEntity['encryptedSummonerId'], $dbEntity['region']);
 
-      foreach($summoner['matches'] as $i => $match){
+      foreach($summoner['matchIDs'] as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $dbEntity['puuid']);
         //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
       }

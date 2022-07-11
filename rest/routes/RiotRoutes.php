@@ -59,3 +59,4 @@ Flight::route('GET /matches/@matchId/@continent', function($matchId, $continent)
 });
 */
 
+?>

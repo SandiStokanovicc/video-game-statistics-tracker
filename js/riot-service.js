@@ -36,8 +36,14 @@ var RiotService = {
         }
     },
 
+    globalResults: "",
     searchPlayerInput: "",
     regionButton: "",
+
+    displayFavouriteMatches: function(results) {
+
+    },
+    
     getSummonerInfo: function () {
         this.displaySpinner();
         searchPlayerInput = $('#SearchPlayerInput').val();
@@ -59,7 +65,7 @@ var RiotService = {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },
             success: function (results) {
-
+                globalResults = results;
                 console.log(JSON.stringify(results));
                 var html = "";
                 //$("#matchContainer").html();
@@ -173,7 +179,7 @@ var RiotService = {
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
                             results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
-                            `</div> </button>
+                            `</div> </button><button type="button" onclick="FavouriteMatchService.addFavourite(` + i + `)" class="btn btn-danger mb-5;">Add Favourite</button>
                     </h2>` +
                             `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">

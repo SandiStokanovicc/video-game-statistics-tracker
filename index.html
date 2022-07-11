@@ -85,6 +85,7 @@
                     </button>
                 </div>
             </div>
+            <button type="button" id="showFavouriteMatchesButton" onclick="FavouriteMatchService.listFavouriteMatches();" class="btn btn-danger mb-5;">Favourite Matches</button>
             <div class="mt-5">
                 <div>Did you know ?</div>
                 <div id="tip"></div>
@@ -521,10 +522,12 @@
     <script src="js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/UserService.js"></script>
     <script type="text/javascript" src="js/FavouriteService.js"></script>
+    <script type="text/javascript" src="js/FavouriteMatchService.js"></script>
     <script type="text/javascript" src="js/TipsService.js"></script>
     <script type="text/javascript" scr="js/toastr.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script>  UserService.init();</script>
+    <script> UserService.init();</script>
+    <script> FavouriteMatchService.init(); </script>
     <script> FavouriteService.init(); </script>
     <script> TipsService.init(); </script>
 

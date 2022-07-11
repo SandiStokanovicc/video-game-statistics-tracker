@@ -16,6 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `favmatches`
+--
+
+DROP TABLE IF EXISTS `favmatches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `favmatches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `APIMatchID` varchar(255) DEFAULT NULL,
+  `continent` varchar(45) DEFAULT NULL,
+  `mainPlayerPUUID` varchar(255) DEFAULT NULL,
+  `userId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `userId_idx` (`userId`),
+  CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `favmatches`
+--
+
+LOCK TABLES `favmatches` WRITE;
+/*!40000 ALTER TABLE `favmatches` DISABLE KEYS */;
+INSERT INTO `favmatches` VALUES (1,'EUN1_3169566353','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10),(2,'EUN1_3168310644','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10),(3,'EUN1_3167477156','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10);
+/*!40000 ALTER TABLE `favmatches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `favourites`
 --
 
@@ -190,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-10 16:56:25
+-- Dump completed on 2022-07-11 13:14:37

@@ -7,14 +7,16 @@ class FavouriteMatchDao extends BaseDao {
   * constructor of dao class
   */
   public function __construct(){
-    parent::__construct("favouriteMatches");
+    parent::__construct("favMatches");
   }
 
-  public function getFavouriteById($userId){                        //preko ovoga mozes povlacit, samo ces ime tabele promijeniti
-    return $this->query_specific("SELECT * FROM favourites WHERE userId = $userId", ['userId' => $userId]);
+  public function getFavouriteMatchesByUserId($userId){                        //preko ovoga mozes povlacit, samo ces ime tabele promijeniti
+    return $this->query_specific("SELECT * FROM favMatches WHERE userId = $userId", ['userId' => $userId]);
   }
 
-  public function getIdAndSummonerName($userId, $summonerName){            //ovo se koristi za provjeravanje duplikata, pogledaj kako se u ruti addFavourite koristi, samo ces umjesto summonerName stavit matchID
-    return $this->query_unique("SELECT * FROM favourites WHERE userId = :userId and summonerName = :summonerName", ['userId' => $userId, 'summonerName' => $summonerName]);
+
+  public function getIdAndMatchID($userId, $APIMatchId){            //ovo se koristi za provjeravanje duplikata, pogledaj kako se u ruti addFavourite koristi, samo ces umjesto summonerName stavit matchID
+    return $this->query_unique("SELECT * FROM favMatches WHERE userId = :userId and APIMatchID = :APIMatchId", ['userId' => $userId, 'APIMatchId' => $APIMatchId]);
   }
+  
 }
