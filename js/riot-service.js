@@ -40,10 +40,10 @@ var RiotService = {
     searchPlayerInput: "",
     regionButton: "",
 
-    displayFavouriteMatches: function(results) {
+    displayFavouriteMatches: function (results) {
 
     },
-    
+
     getSummonerInfo: function () {
         this.displaySpinner();
         searchPlayerInput = $('#SearchPlayerInput').val();
@@ -53,7 +53,7 @@ var RiotService = {
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
-        
+
         $.ajax({
             url: 'rest/summoners/' + searchPlayerInput + "/" + regionButton,
 
