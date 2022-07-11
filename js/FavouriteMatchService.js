@@ -49,8 +49,11 @@ var FavouriteMatchService = {
 
             success: function (data) {
                 //CHECK IF DATA IS EMPTY, IF YES, SHOW MESSAGE, RELOAD MAIN PAGE
-                console.log(data);
-                RiotService.displayFavouriteMatches(data);
+                if(data["matches"].length == 0) console.log("empty");
+                else{
+                    console.log(data);
+                    RiotService.displayFavouriteMatches(data);
+                }
             },
 
 
