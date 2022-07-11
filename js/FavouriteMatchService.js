@@ -2,6 +2,7 @@ var FavouriteMatchService = {
     displayShowFavouriteMatches: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
+        document.getElementById("favourites").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
@@ -56,6 +57,15 @@ var FavouriteMatchService = {
                 if (results["matches"].length == 0) console.log("empty");
                 else {
                     var i, html = "";
+                    html += `
+                    <div class="container text-center">
+                        <div class="row">
+                            <h1 class="mt-5 mb-5">
+                                FAVOURITE MATCHES
+                            </h1>
+                        </div>
+                    </div>
+                    `;
                     for (i = 0; i < results['matches'].length; i++) {
                         if (results.matches[i].info.win == "true") {
                             html += `

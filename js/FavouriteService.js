@@ -3,6 +3,7 @@ var FavouriteService = {
     displayShowFavouritePlayers: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
+        document.getElementById("matches").classList.add('d-none');
         document.getElementById("favourites").classList.remove('d-none');
     },
 
@@ -61,20 +62,18 @@ var FavouriteService = {
                                 FAVOURITE PLAYERS
                             </h1>
                         </div>`;
-                for (var i = 0; i < 5; i++) {
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i]);
                     html += `
                         <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
-                            <div class="col">
-                            
+                        <div class="col">
+                            <p class="players-text mt-2 mb-2">  IKONICA </p>
                             </div>
                             <div class="col">
-                                
+                            <p class="players-text mt-2 mb-2"> ` + data[i].summonerName + `</p>
                             </div>
                             <div class="col">
-                                
-                            </div>
-                            <div class="col">
-                                
+                            <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
                             </div>
                         </div>
                         `;
