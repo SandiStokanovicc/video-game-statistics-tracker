@@ -41,9 +41,154 @@ var RiotService = {
     regionButton: "",
 
     displayFavouriteMatches: function(results) {
+        var i, html="";
+        //console.log(results.matches[0].info.searchedPlayerInfo.kills);return;
+        for (i = 0; i < 5; i++) {
+            //console.log(results.matches[i].info.win);return;
+            if(results.matches[i].info.win=="true"){
+                html += `
+            <div id="listallmatches">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item" id="match` + (i + 1) + `">
+                        <h4 class="accordion-header bg-primary p-2" id="flush-heading` + (i + 1) + `">
+                        <button class="accordion-button collapsed bg-primary text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
+                            aria-controls="flush-collapse` + (i + 1) + `">
+                            <div class="match-text">
+                        Match Length: ` + results.matches[i].info.matchLength + ` minutes
+            <br>Victory`;
+            }
+            else {
+                html += `
+            <div  id="listallmatches">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item" id="match` + (i + 1) + `">
+                        <h2 class="accordion-header bg-danger p-2" id="flush-heading` + (i + 1) + `">
+                        <button class="accordion-button collapsed bg-danger text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
+                            aria-controls="flush-collapse` + (i + 1) + `">
+                            <div class="match-text">
+                        Match Length: ` + results.matches[i].info.matchLength + ` minutes
+            <br>Defeat`;
+            }
+            if (results.matches[i].info.playedBefore > 86399) {
+                html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 86400) + ` days`
+            }
+            else if (results.matches[i].info.playedBefore > 3599) {
+                html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
+            }
+            else {
+                html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
 
+            }
+            
+            //`<br>KDA: ` + results.matches[i].info 
+            html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName"></img></div>
+            <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
+                `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
+                results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
+                `</div> </button><button type="button" onclick="FavouriteMatchService.addFavourite(` + i + `)" class="btn btn-danger mb-5;">Add Favourite</button>
+        </h2>` +
+                `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
+        data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body text-white">`;
+        //5 divova
+            for (var j = 0; j < 10; j++) {
+                html += `
+                <div class="container">
+                <div class="row">
+                <div class="col-4 col-sm mb-2 mt-2 match-open-text"><p id="playerName" class="mb-md-2">` + results.matches[i].info.participants[j].summonerName +
+                    `</p><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.participants[j].championId + `.png" alt="ChampName" width="100" height="100"></img>` +
+                    `<br>Level: ` + results.matches[i].info.participants[j].champLevel +
+                    `</div> <div class="col-4 col-sm mb-2 mt-2 match-open-text" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
+                    `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
+                    `<br>Assists: ` + results.matches[i].info.participants[j].assists +
+                    `<br>KDA: ` + results.matches[i].info.participants[j].kda + `</div>` +
+                    `<div class="col-4 col-sm mb-2 mt-2 match-open-text" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
+                    `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
+                    `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
+                    `<div class="col-6 col-sm mt-2 mb-2 match-open-text">
+                <div class="col match-open-text">Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
+                <div class="progress mt-2 mb-2">` +
+                    `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-info text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `"
+                aria-valuemin="0" aria-valuemax="100" style="width:` + ((results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) * 2) + `%` + `;" id="totalDamageDealt">` + " " +
+                    `</div>
+                </div>
+                </div>` +
+                    `<div class="col match-open-text">Damage Taken: ` + results.matches[i].info.participants[j].totalDamageTaken + `
+                <div class="progress mt-2 mb-2">` +
+                    `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-danger text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `"
+                aria-valuemin="0" aria-valuemax="100" style="width:` + ((results.matches[i].info.participants[j].totalDamageTaken / 1000) * 2) + `%` + `;" id="totalDamageDealt">` + " " +
+                    `</div>
+                </div>
+                </div>
+                </div>` +
+                    `<div class="col-6 col-sm mt-2 mb-2 match-open-text">  
+                <div id="minionsKilled"> CS: ` + results.matches[i].info.participants[j].totalMinionsKilled + ` </div> ` +
+                    `<div> CS per Minute: ` + (results.matches[i].info.participants[j].totalMinionsKilled / results.matches[i].info.matchLength).toFixed(2) + `</div>
+                </div>
+
+                <div class="col-12 col-md-3 mt-2">`;
+                //3 diva
+                
+                html += `<div class="row">`
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item0 + `.png" alt="Item"></div>`;
+
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item1 + `.png" alt="Item"></div>`;
+
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item2 + `.png" alt="Item"></div>`;
+                html += `</div><div class="row">`;
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item3 + `.png" alt="Item"></div>`;
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item4 + `.png" alt="Item"></div>`;
+
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item5 + `.png" alt="Item"></div>`;
+                html += `</div><div class="row">`;
+                html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                    results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
+                    //4 diva
+                html += `
+            </div>
+            </div>
+                </div>
+                </div>
+                <hr>
+                `;//0 divova
+            }
+            
+            //5 od ranije
+            
+            html += `       </div>
+                        </div>
+                </div>
+            </div>
+        </div>`;
+        //svi divovi zatvoreni
+        }
+        //console.log(html);
+        //return;
+        /*
+                        for(i = 0; i < 2; i++){
+                            html += `
+                            <div class="container-sm">
+                                <div class="row mb-3">
+                                    <div class="col-sm p-2" id="match` + (i+1) + `">
+                                            <br>name: ` + results.matches[0].participants[0].summonerName + `
+                                    </div>
+                                </div>
+                            </div>`;
+                            }*/
+                            
+        $("#matchContainer").html(html);
+        
+        RiotService.displayShowMatches();
     },
-    
+
     getSummonerInfo: function () {
         this.displaySpinner();
         searchPlayerInput = $('#SearchPlayerInput').val();
@@ -134,7 +279,7 @@ var RiotService = {
                 }
 
                 else {
-                    var i, itemCount;
+                    var i;
 
                     for (i = 0; i < 5; i++) {
 
@@ -185,7 +330,6 @@ var RiotService = {
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body text-white">`;
                         for (var j = 0; j < 10; j++) {
-                            itemCount = 1;
                             html += `
                             <div class="container">
                             <div class="row">
@@ -241,13 +385,6 @@ var RiotService = {
                             html += `</div><div class="row">`;
                             html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
-
-                            //results.matches[i].info.participants[j].some(function (item) {
-                            //if (itemCount == 4) html += `</div><div class="row">`;
-                            //html += `<div class="col-sm mb-2 p-2"><img class="shadow" src="Pictures/item/` + item + `.png" alt="Item" width="50" height="50"></div>`;
-                            //itemCount++;
-                            //return itemCount === 7;
-                            //});
                             html += `
                         </div>
                         </div>
@@ -255,10 +392,6 @@ var RiotService = {
                             </div>
                             <hr>
                             `;
-                            //</hr>results.matches[i].items[j].forEach(item => {
-                            //    html += `<div id="itemBought"><br>Item ` + itemCount + `: ` + item + `</div>`;
-                            //    itemCount++;
-                            //});
                         }
                         html += `       </div>
                                  </div>
