@@ -38,10 +38,11 @@
                             <a id="your-profile" class="nav-link active" href="#">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a id="your-profile" class="nav-link active">Favourite Matches</a>
+                            <a id="your-profile" class="nav-link active" href="#"
+                                onclick="FavouriteMatchService.listFavouriteMatches();">Favourite Matches</a>
                         </li>
                         <li class="nav-item">
-                            <a id="your-profile" class="nav-link active"
+                            <a id="your-profile" class="nav-link active" href="#"
                                 onclick="FavouriteService.getFavouritePlayers()">Favourite Players</a>
                         </li>
                     </ul>
@@ -92,9 +93,6 @@
                     </button>
                 </div>
             </div>
-            <button type="button" id="showFavouriteMatchesButton"
-                onclick="FavouriteMatchService.listFavouriteMatches();" class="btn btn-danger mb-5;">Favourite
-                Matches</button>
             <div class="mt-5">
                 <div>Did you know ?</div>
                 <div id="tip"></div>

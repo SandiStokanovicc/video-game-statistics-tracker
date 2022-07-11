@@ -1,18 +1,17 @@
 var FavouriteMatchService = {
-
     displayShowFavouriteMatches: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
-    init: function(){
-        if(typeof(parsedUser) == 'undefined') $('#showFavouriteMatchesButton').hide(); 
+    init: function () {
+        if (typeof (parsedUser) == 'undefined') $('#showFavouriteMatchesButton').hide();
     },
 
     addFavourite: function (matchIndex) {
         var match = new Object();
-        if($('#RegionButton').html() === "na1") match.continent = "americas";
+        if ($('#RegionButton').html() === "na1") match.continent = "americas";
         else match.continent = "europe";
         match.userId = parsedUser.iduser;
         match.mainPlayerPUUID = globalResults.puuid;
@@ -54,15 +53,11 @@ var FavouriteMatchService = {
             },
 
             success: function (results) {
-                //CHECK IF DATA IS EMPTY, IF YES, SHOW MESSAGE, RELOAD MAIN PAGE
-                if(results["matches"].length == 0) console.log("empty");
-                else{
-                    console.log(results);
-                    var i, html="";
-                    //console.log(results.matches[0].info.searchedPlayerInfo.kills);return;
-                    for (i = 0; i < results.length; i++) {
-                        //console.log(results.matches[i].info.win);return;
-                        if(results.matches[i].info.win=="true"){
+                if (results["matches"].length == 0) console.log("empty");
+                else {
+                    var i, html = "";
+                    for (i = 0; i < results['matches'].length; i++) {
+                        if (results.matches[i].info.win == "true") {
                             html += `
                         <div id="listallmatches">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -98,8 +93,6 @@ var FavouriteMatchService = {
                             html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
 
                         }
-                        
-                        //`<br>KDA: ` + results.matches[i].info 
                         html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName"></img></div>
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
@@ -109,7 +102,7 @@ var FavouriteMatchService = {
                             `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body text-white">`;
-                    //5 divova
+                        //5 divova
                         for (var j = 0; j < 10; j++) {
                             html += `
                             <div class="container">
@@ -146,8 +139,7 @@ var FavouriteMatchService = {
                             </div>
 
                             <div class="col-12 col-md-3 mt-2">`;
-                            //3 diva
-                            
+
                             html += `<div class="row">`
                             html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item0 + `.png" alt="Item"></div>`;
@@ -168,36 +160,28 @@ var FavouriteMatchService = {
                             html += `</div><div class="row">`;
                             html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
-                                //4 diva
                             html += `
                         </div>
                         </div>
                             </div>
                             </div>
                             <hr>
-                            `;//0 divova
+                            `;
                         }
-                        
-                        //5 od ranije
-                        
+
                         html += `       </div>
                                     </div>
                             </div>
                         </div>
                     </div>`;
-                    //svi divovi zatvoreni
-                    //console.log(html);
-                    //return;
-                    }   
-                    $("#matchContainer").html(html);
+                    }
                     FavouriteMatchService.displayShowFavouriteMatches();
+                    $("#matchContainer").html(html);
                 }
             },
 
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
