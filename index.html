@@ -37,6 +37,13 @@
                         <li class="nav-item">
                             <a id="your-profile" class="nav-link active" href="#">Profile</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="your-profile" class="nav-link active">Favourite Matches</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="your-profile" class="nav-link active"
+                                onclick="FavouriteService.getFavouritePlayers()">Favourite Players</a>
+                        </li>
                     </ul>
                     <!-- LOG IN -->
                     <button id="sign-in" type="button" class="btn btn-outline-light" data-bs-toggle="modal"
@@ -85,7 +92,9 @@
                     </button>
                 </div>
             </div>
-            <button type="button" id="showFavouriteMatchesButton" onclick="FavouriteMatchService.listFavouriteMatches();" class="btn btn-danger mb-5;">Favourite Matches</button>
+            <button type="button" id="showFavouriteMatchesButton"
+                onclick="FavouriteMatchService.listFavouriteMatches();" class="btn btn-danger mb-5;">Favourite
+                Matches</button>
             <div class="mt-5">
                 <div>Did you know ?</div>
                 <div id="tip"></div>
@@ -110,6 +119,7 @@
             </div>
         </div>
     </div>
+
     <div id="favourites" class="d-none">
         <div class="center text text-white">
             <div class="caption text-center" id="favouritesContainer">
@@ -528,7 +538,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script> UserService.init();</script>
     <script> FavouriteMatchService.init(); </script>
-    <script> FavouriteService.init(); </script>
     <script> TipsService.init(); </script>
 
 </body>

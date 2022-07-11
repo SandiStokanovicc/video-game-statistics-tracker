@@ -1,5 +1,11 @@
 var FavouriteService = {
 
+    displayShowFavouritePlayers: function () {
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
+        document.getElementById("main").classList.add('d-none');
+        document.getElementById("favourites").classList.remove('d-none');
+    },
+
     addFavourite: function () {
         var user = new Object();
         user.summonerName = searchPlayerInput;
@@ -33,7 +39,7 @@ var FavouriteService = {
         });
     },
 
-    init: function () {
+    getFavouritePlayers: function () {
         $.ajax({
             type: "POST",
             url: ' rest/favourites',
@@ -46,6 +52,40 @@ var FavouriteService = {
 
             success: function (data) {
                 console.log(data);
+                var html = "";
+                html += `
+                <div id="favouriteplayers">
+                    <div class="container text-center">
+                        <div class="row">
+                            <h1 class="mt-5 mb-5">
+                                FAVOURITE PLAYERS
+                            </h1>
+                        </div>`;
+                for (var i = 0; i < 5; i++) {
+                    html += `
+                        <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
+                            <div class="col">
+                            
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                            <div class="col">
+                                
+                            </div>
+                        </div>
+                        `;
+                }
+                html += `
+                    </div>
+                </div>
+                `;
+                ;
+                $("#favouritesContainer").html(html);
+                FavouriteService.displayShowFavouritePlayers();
             },
 
 
