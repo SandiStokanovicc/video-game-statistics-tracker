@@ -7,7 +7,7 @@
       "Accept-Language: en-US,en;q=0.9",
       "Accept-Charset: application/x-www-form-urlencoded; charset=UTF-8",
       "Origin: https://developer.riotgames.com",
-      "X-Riot-Token: RGAPI-a7e9b419-1c1f-441d-bfb5-808ff03d956a"
+      "X-Riot-Token: RGAPI-a7e9b419-1c1f-441d-bfb5-808ff03d956a" //RGAPI-a7e9b419-1c1f-441d-bfb5-808ff03d956a
     );
     
     private function setCurlOptions($ch, $url){
@@ -45,7 +45,7 @@
     }
     
     // NEW STUFF THAT PRINTS FILTERED INFORMATION
-    private function getSummonerInfo($summonerName, $region){
+    public function getSummonerInfo($summonerName, $region){
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
       //$region = "eun1";

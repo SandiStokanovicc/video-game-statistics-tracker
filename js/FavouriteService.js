@@ -39,7 +39,7 @@ var FavouriteService = {
             }
         });
     },
-
+    
     getFavouritePlayers: function () {
         $.ajax({
             type: "POST",
@@ -47,6 +47,7 @@ var FavouriteService = {
             data: JSON.stringify(parsedUser),
             contentType: "application/json",
             dataType: "json",
+            async: false,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },
@@ -63,14 +64,20 @@ var FavouriteService = {
                             </h1>
                         </div>`;
                 for (var i = 0; i < data.length; i++) {
-                    console.log(data[i]);
+                    var info = {};
+                    info =  FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
+                    console.log(info[0]);
+                    console.log(info[1]);
                     html += `
                         <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
                         <div class="col">
-                            <p class="players-text mt-2 mb-2">  IKONICA </p>
+                        <img class="shadow profileicons mt-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon"></p>
                             </div>
                             <div class="col">
                             <p class="players-text mt-2 mb-2"> ` + data[i].summonerName + `</p>
+                            </div>
+                            <div class="col">
+                            <p class="players-text mt-2 mb-2"> Summoner Level: ` + info[1] + `</p>
                             </div>
                             <div class="col">
                             <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
@@ -100,4 +107,35 @@ var FavouriteService = {
         });
 
     },
+
+    getIcon: function(summonerName, server){
+            var info = {};
+            $.ajax({
+                type: "GET",
+                url: ' rest/favList/' + summonerName + '/' + server,
+                contentType: "application/json",
+                async: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+                },
+    
+                success: function (data) {
+                    
+                    info[0] = data.profileIconId;
+                    info[1] = data.summonerLevel;
+                    
+                },
+    
+    
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //console.log(data);
+                    //toastr.error("error");
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(JSON.stringify(XMLHttpRequest));
+                    console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                }
+            });
+            return info;
+    }
 }

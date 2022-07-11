@@ -39,11 +39,13 @@ var RiotService = {
     globalResults: "",
     searchPlayerInput: "",
     regionButton: "",
-
-    getSummonerInfo: function () {
-        this.displaySpinner();
+    getSearch: function (){
         searchPlayerInput = $('#SearchPlayerInput').val();
         regionButton = $('#RegionButton').html().trim();
+        this.getSummonerInfo(this.searchPlayerInput, this.regionButton)
+    },
+    getSummonerInfo: function () {
+        this.displaySpinner();
         if (searchPlayerInput.length == 0) searchPlayerInput = "";
         //FavouriteService.addFavourite(searchPlayerInput, regionButton);
         //console.log(regionButton);

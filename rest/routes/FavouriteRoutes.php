@@ -23,3 +23,8 @@ Flight::route("POST /addFavourite",  function(){
    $favourites = Flight::favouriteService()->getFavouriteById($userId);
    Flight::json($favourites);
   });
+
+
+  Flight::route('GET /favList/@summonerName/@region', function($summonerName, $region){ 
+    Flight::json(Flight::riotService()->getSummonerInfo($summonerName, $region));
+  });
