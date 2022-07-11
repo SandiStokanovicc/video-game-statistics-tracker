@@ -49,7 +49,7 @@ var RiotService = {
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
-        
+
         $.ajax({
             url: 'rest/summoners/' + searchPlayerInput + "/" + regionButton,
 
@@ -123,19 +123,19 @@ var RiotService = {
                         <div class="col"><img class="shadow championicons mt-2 mb-2" src="Pictures/champion/` + results.liveMatch.bannedChampions[i] + `.png" alt="ChampName" width="30" height="30"></img></div></div></div>`;
                     }
                     html += `</div>`;
-            }
-            if (results.matches.length === 0) {
-                $("#matchContainer").html(html);
-                RiotService.displayShowMatches();
-            }
+                }
+                if (results.matches.length === 0) {
+                    $("#matchContainer").html(html);
+                    RiotService.displayShowMatches();
+                }
 
-            else {
-                var i;
+                else {
+                    var i;
 
-                for (i = 0; i < 5; i++) {
+                    for (i = 0; i < 5; i++) {
 
-                    if (results.matches[i].info.win == "true") {
-                        html += `
+                        if (results.matches[i].info.win == "true") {
+                            html += `
                         <div id="listallmatches">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item" id="match` + (i + 1) + `">
@@ -146,9 +146,9 @@ var RiotService = {
                                         <div class="match-text">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
                         <br>Victory`;
-                    }
-                    else {
-                        html += `
+                        }
+                        else {
+                            html += `
                         <div  id="listallmatches">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item" id="match` + (i + 1) + `">
@@ -159,115 +159,115 @@ var RiotService = {
                                         <div class="match-text">
                                     Match Length: ` + results.matches[i].info.matchLength + ` minutes
                         <br>Defeat`;
-                    }
-                    if (results.matches[i].info.playedBefore > 86399) {
-                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 86400) + ` days`
-                    }
-                    else if (results.matches[i].info.playedBefore > 3599) {
-                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
-                    }
-                    else {
-                        html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
+                        }
+                        if (results.matches[i].info.playedBefore > 86399) {
+                            html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 86400) + ` days`
+                        }
+                        else if (results.matches[i].info.playedBefore > 3599) {
+                            html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 3600) + ` hours`
+                        }
+                        else {
+                            html += `<br>Played before: ` + parseInt(results.matches[i].info.playedBefore / 60) + ` minutes`
 
-                    }
-                    //`<br>KDA: ` + results.matches[i].info 
-                    html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName"></img></div>
+                        }
+                        //`<br>KDA: ` + results.matches[i].info 
+                        html += `</div><div class="match-icon"><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.searchedPlayerInfo.championId + `.png" alt="ChampName"></img></div>
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
-                        `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
-                        results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
-                        `</div> </button><button type="button" onclick="FavouriteMatchService.addFavourite(` + i + `)" class="btn btn-danger mb-5;">Add Favourite</button>
+                            `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
+                            results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
+                            `</div> </button><button type="button" onclick="FavouriteMatchService.addFavourite(` + i + `)" class="btn btn-danger mb-5;">Add Favourite</button>
                     </h2>` +
-                        `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
+                            `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body text-white">`;
-                    for (var j = 0; j < 10; j++) {
-                        html += `
+                        for (var j = 0; j < 10; j++) {
+                            html += `
                             <div class="container">
                             <div class="row">
                             <div class="col-4 col-sm mb-2 mt-2 match-open-text"><p id="playerName" class="mb-md-2">` + results.matches[i].info.participants[j].summonerName +
-                            `</p><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.participants[j].championId + `.png" alt="ChampName" width="100" height="100"></img>` +
-                            `<br>Level: ` + results.matches[i].info.participants[j].champLevel +
-                            `</div> <div class="col-4 col-sm mb-2 mt-2 match-open-text" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
-                            `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
-                            `<br>Assists: ` + results.matches[i].info.participants[j].assists +
-                            `<br>KDA: ` + results.matches[i].info.participants[j].kda + `</div>` +
-                            `<div class="col-4 col-sm mb-2 mt-2 match-open-text" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
-                            `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
-                            `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
-                            `<div class="col-6 col-sm mt-2 mb-2 match-open-text">
+                                `</p><img class="shadow championicons" src="Pictures/champion/` + results.matches[i].info.participants[j].championId + `.png" alt="ChampName" width="100" height="100"></img>` +
+                                `<br>Level: ` + results.matches[i].info.participants[j].champLevel +
+                                `</div> <div class="col-4 col-sm mb-2 mt-2 match-open-text" id="Kills">Kills: ` + results.matches[i].info.participants[j].kills +
+                                `<br>Deaths: ` + results.matches[i].info.participants[j].deaths +
+                                `<br>Assists: ` + results.matches[i].info.participants[j].assists +
+                                `<br>KDA: ` + results.matches[i].info.participants[j].kda + `</div>` +
+                                `<div class="col-4 col-sm mb-2 mt-2 match-open-text" id="controlWardsPlaced">Control Wards Placed: ` + results.matches[i].info.participants[j].controlWardsPlaced +
+                                `<br>Wards Killed: ` + results.matches[i].info.participants[j].wardsKilled +
+                                `<br>Wards Placed: ` + results.matches[i].info.participants[j].wardsPlaced + `</div>` +
+                                `<div class="col-6 col-sm mt-2 mb-2 match-open-text">
                             <div class="col match-open-text">Damage Dealt: ` + results.matches[i].info.participants[j].totalDamageDealtToChampions + ` 
                             <div class="progress mt-2 mb-2">` +
-                            `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-info text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `"
+                                `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-info text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) + `"
                             aria-valuemin="0" aria-valuemax="100" style="width:` + ((results.matches[i].info.participants[j].totalDamageDealtToChampions / 1000) * 2) + `%` + `;" id="totalDamageDealt">` + " " +
-                            `</div>
+                                `</div>
                             </div>
                             </div>` +
-                            `<div class="col match-open-text">Damage Taken: ` + results.matches[i].info.participants[j].totalDamageTaken + `
+                                `<div class="col match-open-text">Damage Taken: ` + results.matches[i].info.participants[j].totalDamageTaken + `
                             <div class="progress mt-2 mb-2">` +
-                            `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-danger text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `"
+                                `<div class="progress-bar match-open-text progress-bar-striped progress-bar-animated bg-danger text-dark p-2" role="progressbar" aria-valuenow="` + (results.matches[i].info.participants[j].totalDamageTaken / 1000) + `"
                             aria-valuemin="0" aria-valuemax="100" style="width:` + ((results.matches[i].info.participants[j].totalDamageTaken / 1000) * 2) + `%` + `;" id="totalDamageDealt">` + " " +
-                            `</div>
+                                `</div>
                             </div>
                             </div>
                             </div>` +
-                            `<div class="col-6 col-sm mt-2 mb-2 match-open-text">  
+                                `<div class="col-6 col-sm mt-2 mb-2 match-open-text">  
                             <div id="minionsKilled"> CS: ` + results.matches[i].info.participants[j].totalMinionsKilled + ` </div> ` +
-                            `<div> CS per Minute: ` + (results.matches[i].info.participants[j].totalMinionsKilled / results.matches[i].info.matchLength).toFixed(2) + `</div>
+                                `<div> CS per Minute: ` + (results.matches[i].info.participants[j].totalMinionsKilled / results.matches[i].info.matchLength).toFixed(2) + `</div>
                             </div>
     
                             <div class="col-12 col-md-3 mt-2">`;
-                        html += `<div class="row">`
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item0 + `.png" alt="Item"></div>`;
+                            html += `<div class="row">`
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item0 + `.png" alt="Item"></div>`;
 
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item1 + `.png" alt="Item"></div>`;
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item1 + `.png" alt="Item"></div>`;
 
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item2 + `.png" alt="Item"></div>`;
-                        html += `</div><div class="row">`;
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item3 + `.png" alt="Item"></div>`;
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item4 + `.png" alt="Item"></div>`;
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item2 + `.png" alt="Item"></div>`;
+                            html += `</div><div class="row">`;
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item3 + `.png" alt="Item"></div>`;
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item4 + `.png" alt="Item"></div>`;
 
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item5 + `.png" alt="Item"></div>`;
-                        html += `</div><div class="row">`;
-                        html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
-                            results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
-                        html += `
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item5 + `.png" alt="Item"></div>`;
+                            html += `</div><div class="row">`;
+                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                                results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
+                            html += `
                         </div>
                         </div>
                             </div>
                             </div>
                             <hr>
                             `;
-                    }
-                    html += `       </div>
+                        }
+                        html += `       </div>
                                 </div>
                             </div>
                         </div>
                     </div>`;
+                    }
+                    $("#matchContainer").html(html);
+                    RiotService.displayShowMatches();
                 }
-                $("#matchContainer").html(html);
-                RiotService.displayShowMatches();
+            },
+            //complete: function (data) {
+            //RiotService.displayShowMatches();
+            //this.displayShowMatches(); 
+            //},
+            error: function (errorMessage, XMLHttpRequest, textStatus, errorThrown) {
+                RiotService.unhideMainPageOnFail();
+                $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText;
+                toastr.error($fullErrorMessage);
+                console.log(errorMessage);
+                console.log($fullErrorMessage);
+                //toastr.error(XMLHttpRequest.responseJSON.message);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
             }
-        },
-        //complete: function (data) {
-        //RiotService.displayShowMatches();
-        //this.displayShowMatches(); 
-        //},
-        error: function (errorMessage, XMLHttpRequest, textStatus, errorThrown) {
-            RiotService.unhideMainPageOnFail();
-            $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText;
-            toastr.error($fullErrorMessage);
-            console.log(errorMessage);
-            console.log($fullErrorMessage);
-            //toastr.error(XMLHttpRequest.responseJSON.message);
-            console.log(JSON.stringify(XMLHttpRequest));
-            console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-        }
-    })
-}
+        })
+    }
 }//if($playedBefore > 86400) $playedBefore /= 86400;
