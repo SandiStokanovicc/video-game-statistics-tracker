@@ -1,10 +1,17 @@
 var FavouriteMatchService = {
     globalFavouriteMatches: "",
 
-    displayShowFavouriteMatches: function () {
+    displaySpinner: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
+        document.getElementById("matches").classList.add('d-none');
         document.getElementById("favourites").classList.add('d-none');
+        document.getElementById("main-container").classList.remove('d-none');
+    },
+
+    displayShowFavouriteMatches: function () {
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
+        document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
@@ -82,6 +89,7 @@ var FavouriteMatchService = {
     },
 
     listFavouriteMatches: function () {
+        FavouriteMatchService.displaySpinner();
         var userIdObject = new Object();
         if (typeof (parsedUser) != 'undefined'){
             userIdObject.userId = parsedUser.iduser;};

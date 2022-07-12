@@ -15,7 +15,7 @@ Flight::route('POST /favouriteMatches', function(){
   $userId = $user['userId'];
   $favouriteMatches = Flight::favouriteMatchService()->getFavouriteMatchesByUserId($userId);
   if(sizeof($favouriteMatches) == 0){ 
-    Flight::json(["message" => "No matches to display"], 500); 
+    Flight::json(["message" => "No matches to display"], 400); 
     die;
   }
   Flight::json(Flight::riotService()->getFavouriteMatches($favouriteMatches));
@@ -29,11 +29,17 @@ Flight::route("POST /addFavouriteMatch",  function(){
     $continent = $data['continent'];
     $currentMatch = Flight::favouriteMatchService()->getIdMatchIDContinent($userId, $APIMatchID, $continent);
     if(!isset($currentMatch['userId'])){
-    $favouriteMatch = Flight::favouriteMatchService()->add($data);
-    Flight::json($favouriteMatch);
+      $numOfFavsInDB = Flight::favouriteMatchService()->countFavMatchesByID($userId);
+      //var_dump($numOfFavsInDB);die;
+      if($numOfFavsInDB['count'] >= 5) {
+        Flight::json(["message" => "Reached max number of favourite matches"], 400);
+        die;
+      }
+      $favouriteMatch = Flight::favouriteMatchService()->add($data);
+      Flight::json($favouriteMatch);
     }
     else{
-      Flight::json(["message" => "Match was already added to favourites"], 500);
+      Flight::json(["message" => "Match was already added to favourites"], 400);
     }
 });
 
@@ -49,7 +55,7 @@ Flight::route("DELETE /removeFavouriteMatch",  function(){
   Flight::json($favouriteMatch);
   }
   else{
-    Flight::json(["message" => "Trying to delete non-existing match..."], 500);
+    Flight::json(["message" => "Trying to delete non-existing match..."], 400);
   }
 });
    ?>

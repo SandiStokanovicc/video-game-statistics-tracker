@@ -23,4 +23,8 @@ class FavouriteMatchService extends BaseService {
     }
     return $this->dao->deleteFavouriteMatch($user['iduser'], $APIMatchID, $continent);
   }
+
+  public function countFavMatchesByID($userId){
+    return $this->dao->countFavMatchesByID($userId);
+  }
 }

@@ -5,6 +5,7 @@ var RiotService = {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
         document.getElementById("main-container").classList.remove('d-none');
+        document.getElementById("matches").classList.add('d-none');
     },
 
     displayShowMatches: function () {

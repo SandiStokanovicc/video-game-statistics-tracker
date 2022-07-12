@@ -10,7 +10,7 @@ Flight::route("POST /addFavourite",  function(){
     $favourite = Flight::favouriteService()->add($data);
   }
   else{  
-    Flight::json(["message" => "User is already a favourite."], 500);
+    Flight::json(["message" => "User is already a favourite."], 400);
   }
 });
 
