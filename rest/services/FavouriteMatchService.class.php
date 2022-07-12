@@ -10,12 +10,9 @@ class FavouriteMatchService extends BaseService {
 
   public function getFavouriteMatchesByUserId($userId){
     return $this->dao->getFavouriteMatchesByUserId($userId);
-    //TREBAT CE OVDJE DODATI DOSTA STVARI, tj. pozivati API
-    //moze mozda preko Flight::riotService() idk
   }
 
   public function getIdAndMatchID($userId, $summonerName){
     return $this->dao->getIdAndMatchID($userId, $summonerName);
   }
-  
 }

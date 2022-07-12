@@ -14,7 +14,8 @@ var FavouriteMatchService = {
         var match = new Object();
         if ($('#RegionButton').html() === "na1") match.continent = "americas";
         else match.continent = "europe";
-        match.userId = parsedUser.iduser;
+        if (typeof (parsedUser) != 'undefined'){
+            match.userId = parsedUser.iduser;};
         match.mainPlayerPUUID = globalResults.puuid;
         match.APImatchID = globalResults.matchIDs[matchIndex];
         console.log(match);
@@ -31,22 +32,21 @@ var FavouriteMatchService = {
             success: function (data) {
                 console.log("added");
             },
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error("Match is already a favourite.");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
     },
 
     listFavouriteMatches: function () {
+        var userIdObject = new Object();
+        if (typeof (parsedUser) != 'undefined'){
+            userIdObject.userId = parsedUser.iduser;};
         $.ajax({
             type: "POST",
             url: ' rest/favouriteMatches',
-            data: JSON.stringify(parsedUser),
+            data: JSON.stringify(userIdObject),
             contentType: "application/json",
             dataType: "json",
             beforeSend: function (xhr) {
@@ -190,13 +190,9 @@ var FavouriteMatchService = {
                 }
             },
 
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
 

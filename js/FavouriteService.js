@@ -11,7 +11,8 @@ var FavouriteService = {
         var user = new Object();
         user.summonerName = searchPlayerInput;
         user.serverId = regionButton;
-        user.userId = parsedUser.iduser;
+        if (typeof (parsedUser) != 'undefined'){
+            user.userId = parsedUser.iduser};
         console.log(user);
         $.ajax({
             type: "POST",
@@ -27,24 +28,21 @@ var FavouriteService = {
                 console.log("added");
             },
 
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                toastr.error("User is already a favourite.");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
     },
     
     getFavouritePlayers: function () {
+        var parsedUserData = new Object();
+        if (typeof (parsedUser) != 'undefined'){
+            parsedUserData = parsedUser};
         $.ajax({
             type: "POST",
             url: ' rest/favourites',
-            data: JSON.stringify(parsedUser),
+            data: JSON.stringify(parsedUserData),
             contentType: "application/json",
             dataType: "json",
             async: false,
@@ -92,17 +90,10 @@ var FavouriteService = {
                 ;
                 $("#favouritesContainer").html(html);
                 FavouriteService.displayShowFavouritePlayers();
-            },
-
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+            },    
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
 
@@ -126,14 +117,9 @@ var FavouriteService = {
                     
                 },
     
-    
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //console.log(data);
-                    //toastr.error("error");
-                    console.log(errorThrown);
-                    console.log(textStatus);
-                    console.log(JSON.stringify(XMLHttpRequest));
-                    console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                error: function (errorMessage) {
+                    console.log(errorMessage);
+                    toastr.error(errorMessage.responseJSON.message);
                 }
             });
             return info;
