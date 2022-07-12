@@ -14,9 +14,12 @@ class FavouriteMatchDao extends BaseDao {
     return $this->query_specific("SELECT * FROM favMatches WHERE userId = $userId", ['userId' => $userId]);
   }
 
+  public function getIdMatchIDContinent($userId, $APIMatchID, $continent){            //ovo se koristi za provjeravanje duplikata, pogledaj kako se u ruti addFavourite koristi, samo ces umjesto summonerName stavit matchID
+    return $this->query_unique("SELECT * FROM favMatches WHERE userId = :userId AND APIMatchID = :APIMatchID AND continent = :continent", ['userId' => $userId, 'APIMatchID' => $APIMatchID, 'continent' => $continent]);
+  }
 
-  public function getIdAndMatchID($userId, $APIMatchId){            //ovo se koristi za provjeravanje duplikata, pogledaj kako se u ruti addFavourite koristi, samo ces umjesto summonerName stavit matchID
-    return $this->query_unique("SELECT * FROM favMatches WHERE userId = :userId and APIMatchID = :APIMatchId", ['userId' => $userId, 'APIMatchId' => $APIMatchId]);
+  public function deleteFavouriteMatch($userId, $APIMatchID, $continent){
+    return $this->query("DELETE FROM favMatches WHERE userId = :userId AND APIMatchID = :APIMatchID AND continent = :continent", ['userId' => $userId, 'APIMatchID' => $APIMatchID, 'continent' => $continent]);
   }
   
 }

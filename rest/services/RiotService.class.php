@@ -317,9 +317,10 @@
     //called from FavouriteMatchService.class.php
     public function getFavouriteMatches($favouriteMatches){
 
-      $summoner = array('matches' => array());
+      $summoner = array('matches' => array(), 'matchIDs' => array());
       foreach($favouriteMatches as $i => $match){
         $summoner['matches'][$i] = $this->getMatchInfo($match['APIMatchID'], $match['continent'], $match['mainPlayerPUUID']);
+        array_push($summoner['matchIDs'], $match['APIMatchID']);
         //$summoner['matches'][$i]['items'] = $this->getMatchItems($match, $continent, (int)$summoner['matches'][$i]['info']['matchLength']);
       }
       return $summoner;

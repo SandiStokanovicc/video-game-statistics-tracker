@@ -14,11 +14,11 @@ Flight::route('POST /favouriteMatches', function(){
   $user = Flight::request()->data->getData();
   $userId = $user['userId'];
   $favouriteMatches = Flight::favouriteMatchService()->getFavouriteMatchesByUserId($userId);
-  
+  if(sizeof($favouriteMatches) == 0){ 
+    Flight::json(["message" => "No matches to display"], 500); 
+    die;
+  }
   Flight::json(Flight::riotService()->getFavouriteMatches($favouriteMatches));
-});
-Flight::map('result', function ($status, $result) {
-  Flight::response()->status($status)->header('Access-Control-Allow-Origin', '*')->header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH')->header('Access-Control-Allow-Headers', 'Content-Type')->header('Content-Type', 'application/json')->write(utf8_decode(json_encode($result)))->send();
 });
 
 Flight::route("POST /addFavouriteMatch",  function(){
@@ -26,7 +26,8 @@ Flight::route("POST /addFavouriteMatch",  function(){
     //var_dump($data); die;
     $APIMatchID = $data['APImatchID'];
     $userId = $data['userId'];
-    $currentMatch = Flight::favouriteMatchService()->getIdAndMatchID($userId, $APIMatchID);
+    $continent = $data['continent'];
+    $currentMatch = Flight::favouriteMatchService()->getIdMatchIDContinent($userId, $APIMatchID, $continent);
     if(!isset($currentMatch['userId'])){
     $favouriteMatch = Flight::favouriteMatchService()->add($data);
     Flight::json($favouriteMatch);
@@ -34,6 +35,27 @@ Flight::route("POST /addFavouriteMatch",  function(){
     else{
       Flight::json(["message" => "Match was already added to favourites"], 500);
     }
+});
+
+Flight::route("DELETE /removeFavouriteMatch",  function(){
+  $data = Flight::request()->data->getData();
+  //var_dump($data); die;
+  $APIMatchID = $data['APImatchID'];
+  $userId = $data['userId'];
+  $continent = $data['continent'];
+  $currentMatch = Flight::favouriteMatchService()->getIdMatchIDContinent($userId, $APIMatchID, $continent);
+  if(isset($currentMatch['userId'])){
+  $favouriteMatch = Flight::favouriteMatchService()->deleteFavouriteMatch(Flight::get('user'), $APIMatchID, $continent);
+  Flight::json($favouriteMatch);
+  }
+  else{
+    Flight::json(["message" => "Trying to delete non-existing match..."], 500);
+  }
+});
+
+Flight::route('DELETE /notes/@id', function($id){
+  Flight::favouriteMatchService()->deleteFavouriteMatch(Flight::get('user'), $APIMatchID, $continent);
+  Flight::json(["message" => "deleted"]);
 });
 
    
