@@ -6,6 +6,7 @@ var RiotService = {
         document.getElementById("main").classList.add('d-none');
         document.getElementById("main-container").classList.remove('d-none');
         document.getElementById("matches").classList.add('d-none');
+        document.getElementById("favourites").classList.add('d-none');
     },
 
     displayShowMatches: function () {
@@ -38,23 +39,25 @@ var RiotService = {
     },
 
     globalResults: "",
-    searchPlayerInput: "",
-    regionButton: "",
+    globalPlayerInput: "",
+    globalRegion: "",
     getSearch: function (){
         searchPlayerInput = $('#SearchPlayerInput').val();
         regionButton = $('#RegionButton').html().trim();
-        this.getSummonerInfo(this.searchPlayerInput, this.regionButton)
+        RiotService.getSummonerInfo(searchPlayerInput, regionButton)
     },
-    getSummonerInfo: function () {
+    getSummonerInfo: function (globalPlayerInput = "", globalRegion = "") {
         this.displaySpinner();
-        if (searchPlayerInput.length == 0) searchPlayerInput = "";
+        globalRegion = globalRegion.trim();
+        console.log(globalRegion);
+        //if (searchPlayerInput.length == 0) globalPlayerInput = "";
         //FavouriteService.addFavourite(searchPlayerInput, regionButton);
         //console.log(regionButton);
         //setTimeout(5000);
         //this.displayShowMatches();
 
         $.ajax({
-            url: 'rest/summoners/' + searchPlayerInput + "/" + regionButton,
+            url: 'rest/summoners/' + globalPlayerInput + "/" + globalRegion,
 
             type: 'GET',
             contentType: "application/json",

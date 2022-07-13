@@ -9,8 +9,8 @@ var FavouriteService = {
 
     addFavourite: function () {
         var user = new Object();
-        user.summonerName = searchPlayerInput;
-        user.serverId = regionButton;
+        user.summonerName = globalPlayerInput;
+        user.serverId = globalRegion;
         if (typeof (parsedUser) != 'undefined'){
             user.userId = parsedUser.iduser};
         console.log(user);
@@ -64,8 +64,8 @@ var FavouriteService = {
                 for (var i = 0; i < data.length; i++) {
                     var info = {};
                     info =  FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
-                    console.log(info[0]);
-                    console.log(info[1]);
+                    //console.log(info[0]);
+                    //console.log(info[1]);
                     html += `
                         <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
                         <div class="col">
@@ -80,6 +80,7 @@ var FavouriteService = {
                             <div class="col">
                             <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
                             </div>
+                            <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
                         </div>
                         `;
                 }
