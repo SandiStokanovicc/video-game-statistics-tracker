@@ -4,7 +4,10 @@
 * @OA\Get(path="/summoners/{summonerName}/{region}", tags={"riot"},
 *     @OA\Parameter(in="path", name="summonerName", example="Condemn for Stun", description="player's name"),
 *     @OA\Parameter(in="path", name="region", example="eun1", description="player's server / region"),
-*     @OA\Response(response="200", description="Fetch last 5 matches for player")
+*     @OA\Response(response="200", description="Fetch last 5 matches for player"),
+*     @OA\Response(response="403", description="Forbidden... Incorrect API key / API key level not high enough"),
+*     @OA\Response(response="404", description="Error: Data not found - summoner not found"),
+*     @OA\Response(response="503", description="Service unavailable... RIOT API key outdated or RIOT API server fail")
 * )
 */
 
@@ -50,6 +53,17 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
     Flight::json($responseJSON);
   }
 });
+
+/**
+* @OA\Get(path="/summonersMobileAPI/{summonerName}/{region}", tags={"riot"},
+*     @OA\Parameter(in="path", name="summonerName", example="Condemn for Stun", description="player's name"),
+*     @OA\Parameter(in="path", name="region", example="eun1", description="player's server / region"),
+*     @OA\Response(response="200", description="Fetch 5 simplified matches for player (used for mobile app)"),
+*     @OA\Response(response="403", description="Forbidden... Incorrect API key / API key level not high enough"),
+*     @OA\Response(response="404", description="Error: Data not found - summoner not found"),
+*     @OA\Response(response="503", description="Service unavailable... RIOT API key outdated or RIOT API server fail")
+* )
+*/
 
 Flight::route("GET /summonersMobileAPI/@summonerName/@region",  function($summonerName, $region){
    Flight::json(Flight::riotService()->getSummonerMatchesMobileAPI($summonerName, $region));
