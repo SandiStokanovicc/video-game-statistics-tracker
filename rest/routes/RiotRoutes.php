@@ -11,9 +11,31 @@
 Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $region){ 
   $presentInDB = Flight::recentSearchesService()->getSummonerNameRegion($summonerName, $region);
   if(!empty($presentInDB)){
-    Flight::json(Flight::riotService()->getRecentSummonerMatches($presentInDB));
+    $difftime = strtotime(date('Y-m-d H:i:s')) - strtotime($presentInDB['timeUpdated']);
+    $days = $difftime/24/60/60;
+    var_dump($days);
+    if($days < 1){
+//      var_dump("IN DB; Using recentSummonerMatches"); die;
+      Flight::json(Flight::riotService()->getRecentSummonerMatches($presentInDB));
+    } 
+    else{
+//      var_dump("IN DB; UPDATING; Using getSummonerMatches"); die;
+      $responseJSON = Flight::riotService()->getSummonerMatches($summonerName, $region);
+      $dbEntity = array();
+      $dbEntity['profileIconId'] = $responseJSON['profileIconId'];
+      $dbEntity['summonerLevel'] = $responseJSON['summonerLevel']; 
+      $dbEntity['summonerName'] = $summonerName;
+      $dbEntity['region'] = $region;
+      $dbEntity['puuid'] = $responseJSON['puuid'];
+      $dbEntity['encryptedSummonerId'] = $responseJSON['id'];
+      $dbEntity['timeUpdated'] = new DateTime(date('Y-m-d H:i:s')); 
+      $dbEntity['timeUpdated'] = $dbEntity['timeUpdated']->format('Y-m-d H:i:s');
+      Flight::recentSearchesService()->update($presentInDB['puuid'], $dbEntity, "puuid");
+      Flight::json($responseJSON);
+    } 
   }
   else{
+//    var_dump("NOT IN DB; Using getSummonerMatches"); die;
     $responseJSON = Flight::riotService()->getSummonerMatches($summonerName, $region);
     $dbEntity = array();
     $dbEntity['profileIconId'] = $responseJSON['profileIconId'];
@@ -22,6 +44,8 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
     $dbEntity['region'] = $region;
     $dbEntity['puuid'] = $responseJSON['puuid'];
     $dbEntity['encryptedSummonerId'] = $responseJSON['id'];
+    $dbEntity['timeUpdated'] = new DateTime(date('Y-m-d H:i:s')); 
+    $dbEntity['timeUpdated'] = $dbEntity['timeUpdated']->format('Y-m-d H:i:s');
     Flight::recentSearchesService()->add($dbEntity);
     Flight::json($responseJSON);
   }
