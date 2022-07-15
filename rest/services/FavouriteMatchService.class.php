@@ -28,3 +28,4 @@ class FavouriteMatchService extends BaseService {
     return $this->dao->countFavMatchesByID($userId);
   }
 }
+?>

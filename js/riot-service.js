@@ -1,5 +1,3 @@
-// array.forEach(function(currentValue, index, arr), thisValue)
-
 var RiotService = {
     displaySpinner: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
@@ -10,7 +8,6 @@ var RiotService = {
     },
 
     displayShowMatches: function () {
-        //document.getElementById("main").classList.add('d-none');
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
@@ -54,11 +51,6 @@ var RiotService = {
         }
         globalRegion = globalRegion.trim();
         console.log(globalRegion);
-        //if (searchPlayerInput.length == 0) globalPlayerInput = "";
-        //FavouriteService.addFavourite(searchPlayerInput, regionButton);
-        //console.log(regionButton);
-        //setTimeout(5000);
-        //this.displayShowMatches();
 
         $.ajax({
             url: 'rest/summoners/' + globalPlayerInput + "/" + globalRegion,
@@ -264,20 +256,12 @@ var RiotService = {
                     RiotService.displayShowMatches();
                 }
             },
-            //complete: function (data) {
-            //RiotService.displayShowMatches();
-            //this.displayShowMatches(); 
-            //},
             error: function (errorMessage, XMLHttpRequest, textStatus, errorThrown) {
                 RiotService.unhideMainPageOnFail();
                 $fullErrorMessage = errorMessage.status + ": " + errorMessage.statusText;
                 toastr.error($fullErrorMessage);
                 console.log(errorMessage);
-                console.log($fullErrorMessage);
-                //toastr.error(XMLHttpRequest.responseJSON.message);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
             }
         })
     }
-}//if($playedBefore > 86400) $playedBefore /= 86400;
+}

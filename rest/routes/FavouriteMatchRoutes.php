@@ -103,4 +103,4 @@ Flight::route("DELETE /removeFavouriteMatch",  function(){
     Flight::json(["message" => "Trying to delete non-existing match..."], 400);
   }
 });
-   ?>
+?>
