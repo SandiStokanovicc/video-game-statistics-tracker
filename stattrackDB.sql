@@ -32,7 +32,7 @@ CREATE TABLE `favmatches` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `userId_idx` (`userId`),
   CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `user` (`iduser`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `favmatches` (
 
 LOCK TABLES `favmatches` WRITE;
 /*!40000 ALTER TABLE `favmatches` DISABLE KEYS */;
-INSERT INTO `favmatches` VALUES (1,'EUN1_3169566353','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10),(2,'EUN1_3168310644','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10),(3,'EUN1_3167477156','europe','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q',10);
+INSERT INTO `favmatches` VALUES (37,'EUN1_3168953699','europe','RrrjwpQHidYmA62ikOk7idGtxtuHpCgeBCbWCV1mKbaeRDF2i_IHBIFvTlHH0fWpmhFZT-K60HgIew',10),(38,'EUN1_3168971806','europe','RrrjwpQHidYmA62ikOk7idGtxtuHpCgeBCbWCV1mKbaeRDF2i_IHBIFvTlHH0fWpmhFZT-K60HgIew',10),(39,'EUN1_3169571434','europe','RrrjwpQHidYmA62ikOk7idGtxtuHpCgeBCbWCV1mKbaeRDF2i_IHBIFvTlHH0fWpmhFZT-K60HgIew',10),(40,'EUN1_3169566353','europe','RrrjwpQHidYmA62ikOk7idGtxtuHpCgeBCbWCV1mKbaeRDF2i_IHBIFvTlHH0fWpmhFZT-K60HgIew',10);
 /*!40000 ALTER TABLE `favmatches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,34 +74,6 @@ INSERT INTO `favourites` VALUES (1,'Condemn for Stun','eun1',10),(2,'samiras mid
 UNLOCK TABLES;
 
 --
--- Table structure for table `location`
---
-
-DROP TABLE IF EXISTS `location`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `location` (
-  `iduser` int(11) NOT NULL,
-  `ip` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `region` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `org` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`iduser`),
-  UNIQUE KEY `iduser` (`iduser`),
-  CONSTRAINT `location_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `location`
---
-
-LOCK TABLES `location` WRITE;
-/*!40000 ALTER TABLE `location` DISABLE KEYS */;
-/*!40000 ALTER TABLE `location` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `recentsearches`
 --
 
@@ -116,8 +88,9 @@ CREATE TABLE `recentsearches` (
   `encryptedSummonerId` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `profileIconId` int(12) DEFAULT NULL,
   `summonerLevel` int(12) DEFAULT NULL,
+  `timeUpdated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,36 +99,8 @@ CREATE TABLE `recentsearches` (
 
 LOCK TABLES `recentsearches` WRITE;
 /*!40000 ALTER TABLE `recentsearches` DISABLE KEYS */;
-INSERT INTO `recentsearches` VALUES (19,'Condemn for Stun','eun1','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q','jAcOJoArjCtbg1CiwxGI01MgIZE80tCQc12UCJPYdEI2faw',5141,251);
+INSERT INTO `recentsearches` VALUES (21,'Condemn for Stun','eun1','bFIevMKyxaPWODOXdHmEz8G5fwQ_C6QmHl0R3jNpuc5HgCRDOQ4oPZ-miFQK7GSj1BoDq-obtFt76Q','jAcOJoArjCtbg1CiwxGI01MgIZE80tCQc12UCJPYdEI2faw',5141,251,'2022-07-13 16:02:12'),(22,'samiras midriff','eun1','RrrjwpQHidYmA62ikOk7idGtxtuHpCgeBCbWCV1mKbaeRDF2i_IHBIFvTlHH0fWpmhFZT-K60HgIew','0Yp465woB1s6HeOvoBU0KdRh6VHyxqumddCCvI-JeLQxvSs',5381,331,'2022-07-13 16:01:53');
 /*!40000 ALTER TABLE `recentsearches` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `summoner`
---
-
-DROP TABLE IF EXISTS `summoner`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `summoner` (
-  `idsummoner` int(11) NOT NULL,
-  `summonerName` varchar(45) DEFAULT NULL,
-  `puuid` varchar(78) DEFAULT NULL,
-  `server` varchar(4) DEFAULT NULL,
-  `rank` varchar(2) DEFAULT NULL,
-  `summonerlevel` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idsummoner`),
-  UNIQUE KEY `puuid_UNIQUE` (`puuid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `summoner`
---
-
-LOCK TABLES `summoner` WRITE;
-/*!40000 ALTER TABLE `summoner` DISABLE KEYS */;
-/*!40000 ALTER TABLE `summoner` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-11 13:14:37
+-- Dump completed on 2022-07-15 10:04:01
