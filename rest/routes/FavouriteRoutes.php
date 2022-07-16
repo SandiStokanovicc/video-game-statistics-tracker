@@ -5,6 +5,10 @@ Flight::route("POST /addFavourite",  function(){
   $data = Flight::request()->data->getData();
   $summonerName = $data['summonerName'];
   $userId = $data['userId'];
+  if($userId != Flight::get('user')['iduser']){
+    Flight::json(["message" => "Trying to access blocked data"], 403);
+    die;
+  }
   $currentUser = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
   if(!isset($currentUser['userId'])){
     $favourite = Flight::favouriteService()->add($data);
@@ -29,4 +33,23 @@ Flight::route("POST /addFavourite",  function(){
 
   Flight::route('GET /favList/@summonerName/@region', function($summonerName, $region){ 
     Flight::json(Flight::riotService()->getSummonerInfo($summonerName, $region));
+  });
+
+
+  Flight::route('DELETE /removeFavourite',  function(){
+    $data = Flight::request()->data->getData();
+    $summonerName = $data['summonerName'];
+    $userId = $data['userId'];
+    if($userId != Flight::get('user')['iduser']){
+      Flight::json(["message" => "Trying to access blocked data"], 403);
+      die;
+    }
+    $currentPlayer = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
+    if(isset($currentPlayer['userId'])){
+    Flight::favouriteService()->delete($currentPlayer['id']);
+    Flight::json(["message" => "Match was removed from favourites"], 200);
+    }
+    else{
+      Flight::json(["message" => "Trying to delete non-existing match..."], 400);
+    }
   });

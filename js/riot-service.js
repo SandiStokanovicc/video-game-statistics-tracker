@@ -46,7 +46,7 @@ var RiotService = {
     getSummonerInfo: function (searchPlayerInput = "", regionButton = "") {
         this.displaySpinner();
         if (regionButton != "") {
-            globalRegion = regionButton.trim();
+            globalRegion = regionButton;
             globalPlayerInput = searchPlayerInput;
         }
         globalRegion = globalRegion.trim();

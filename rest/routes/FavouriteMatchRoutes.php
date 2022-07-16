@@ -96,7 +96,7 @@ Flight::route("DELETE /removeFavouriteMatch",  function(){
   $continent = $data['continent'];
   $currentMatch = Flight::favouriteMatchService()->getIdMatchIDContinent($userId, $APIMatchID, $continent);
   if(isset($currentMatch['userId'])){
-  $favouriteMatch = Flight::favouriteMatchService()->deleteFavouriteMatch(Flight::get('user'), $APIMatchID, $continent);
+  Flight::favouriteMatchService()->delete($currentMatch['id']);
   Flight::json(["message" => "Match was removed from favourites"], 200);
   }
   else{
