@@ -106,9 +106,9 @@ var RiotService = {
                         <br>Losses: ` + results.ranks[1].losses +
                     `
                         </div>
+                        <button type="button" onclick="FavouriteService.addFavourite()" class="btn btn-danger mb-5;">Add Favourite</button>
                     </div>
                     </div>`;
-                html += `<button type="button" onclick="FavouriteService.addFavourite()" class="btn btn-danger mb-5;">Add Favourite</button>`;
                 if (results.liveMatch.IsInMatch == true) {
                     html += `<button id="liveMatchButton" type="button" onclick="RiotService.showLiveMatch()" class="btn btn-success mb-5;">
                         Check Live Game

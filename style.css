@@ -96,6 +96,7 @@ body {
 
 .players-text {
     font-size: 22px;
+    margin-top: 70px;
 }
 
 
@@ -167,6 +168,11 @@ body {
         margin-right: 15px;
     }
 
+    .players-text {
+        font-size: 20px;
+        margin-top: 65px;
+    }
+
     .item {
         width: 45px;
         height: 45px;
@@ -183,6 +189,11 @@ body {
     .col-sm {
         background-color: #403742;
         font-size: 15px !important;
+    }
+
+    .players-text {
+        font-size: 18px;
+        margin-top: 50px;
     }
 
     .col {
@@ -284,6 +295,11 @@ body {
         padding-bottom: 1.2rem;
     }
 
+    .players-text {
+        font-size: 18px;
+        margin-top: 30px;
+    }
+
     .btn-lg {
         font-size: 1.2rem;
         padding: .5rem 1rem;
@@ -375,6 +391,10 @@ body {
 
     .match-icon {
         margin-right: 5px;
+    }
+
+    .players-text {
+        font-size: 14px;
     }
 
     .item {

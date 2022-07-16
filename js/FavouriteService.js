@@ -74,13 +74,13 @@ var FavouriteService = {
                         <img class="shadow profileicons mt-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon"></p>
                             </div>
                             <div class="col">
-                            <p class="players-text mt-2 mb-2"> ` + data[i].summonerName + `</p>
+                            <p class="players-text"> ` + data[i].summonerName + `</p>
                             </div>
                             <div class="col">
-                            <p class="players-text mt-2 mb-2"> Summoner Level: ` + info[1] + `</p>
+                            <p class="players-text"> Summoner Level: ` + info[1] + `</p>
                             </div>
                             <div class="col">
-                            <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
+                            <p class="players-text">` + data[i].serverId + `</p>
                             </div>
                             <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
                             <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `',' ` + i + `')" class="btn btn-danger mb-5;">Remove Favourite</button>
@@ -103,30 +103,30 @@ var FavouriteService = {
 
     },
 
-    getIcon: function(summonerName, server){
-            var info = {};
-            $.ajax({
-                type: "GET",
-                url: ' rest/favList/' + summonerName + '/' + server,
-                contentType: "application/json",
-                async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
-                },
-    
-                success: function (data) {
-                    
-                    info[0] = data.profileIconId;
-                    info[1] = data.summonerLevel;
-                    
-                },
-    
-                error: function (errorMessage) {
-                    console.log(errorMessage);
-                    toastr.error(errorMessage.responseJSON.message);
-                }
-            });
-            return info;
+    getIcon: function (summonerName, server) {
+        var info = {};
+        $.ajax({
+            type: "GET",
+            url: ' rest/favList/' + summonerName + '/' + server,
+            contentType: "application/json",
+            async: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+            },
+
+            success: function (data) {
+
+                info[0] = data.profileIconId;
+                info[1] = data.summonerLevel;
+
+            },
+
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
+            }
+        });
+        return info;
     },
 
     removeFavouriteSummoner: function (summonerName, serverId, favouriteIndex) {
@@ -134,34 +134,34 @@ var FavouriteService = {
         $('#favouriteplayer' + (favouriteIndex + 1)).remove();
         toastr.info("Removing in the background...");
         var user = new Object();
-        if (typeof (parsedUser) != 'undefined'){
-        user.userId = parsedUser.iduser;
-        user.summonerName = summonerName;
-        user.serverId = serverId;
-        console.log(user);
-        $.ajax({
-            type: "DELETE",
-            url: ' rest/removeFavourite',
-            data: JSON.stringify(user),
-            contentType: "application/json",
-            dataType: "json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
-            },
+        if (typeof (parsedUser) != 'undefined') {
+            user.userId = parsedUser.iduser;
+            user.summonerName = summonerName;
+            user.serverId = serverId;
+            console.log(user);
+            $.ajax({
+                type: "DELETE",
+                url: ' rest/removeFavourite',
+                data: JSON.stringify(user),
+                contentType: "application/json",
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+                },
 
-            success: function (data) {
-                toastr.success("Removed from favourites");
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
-            }
-        });
+                success: function (data) {
+                    toastr.success("Removed from favourites");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //console.log(data);
+                    //toastr.error("error");
+                    console.log(errorThrown);
+                    console.log(textStatus);
+                    console.log(JSON.stringify(XMLHttpRequest));
+                    console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                    console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+                }
+            });
+        }
     }
-}
 }
