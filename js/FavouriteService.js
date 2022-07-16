@@ -61,7 +61,7 @@ var FavouriteService = {
             data: JSON.stringify(parsedUserData),
             contentType: "application/json",
             dataType: "json",
-            async: false,
+            async: true,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },
