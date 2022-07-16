@@ -60,7 +60,6 @@ Flight::route('/*', function(){
   });
 
   
-// middleware method DEBUGGING!!! USE THE ONE ABOVE!
 
 /* REST API documentation endpoint */
 Flight::route('GET /docs.json', function(){
