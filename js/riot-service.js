@@ -38,15 +38,15 @@ var RiotService = {
     globalResults: "",
     globalPlayerInput: "",
     globalRegion: "",
-    getSearch: function (){
+    getSearch: function () {
         searchPlayerInput = $('#SearchPlayerInput').val();
         regionButton = $('#RegionButton').html().trim();
         RiotService.getSummonerInfo(searchPlayerInput, regionButton)
     },
     getSummonerInfo: function (searchPlayerInput = "", regionButton = "") {
         this.displaySpinner();
-        if(regionButton != ""){
-            globalRegion = regionButton.trim();
+        if (regionButton != "") {
+            globalRegion = regionButton;
             globalPlayerInput = searchPlayerInput;
         }
         globalRegion = globalRegion.trim();
