@@ -15,8 +15,4 @@ class FavouriteService extends BaseService {
   public function getIdAndSummonerName($userId, $summonerName){
     return $this->dao->getIdAndSummonerName($userId, $summonerName);
   }
-
-  public function removeFavouriteSummoner($userId, $summonerName){
-    return $this->dao->removeFavouriteSummoner($userId, $summonerName);
-  }
 }

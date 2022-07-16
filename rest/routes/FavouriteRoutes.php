@@ -36,7 +36,7 @@ Flight::route("POST /addFavourite",  function(){
   });
 
 
-  Flight::route("DELETE /removeFavourite",  function(){
+  Flight::route('DELETE /removeFavourite',  function(){
     $data = Flight::request()->data->getData();
     $summonerName = $data['summonerName'];
     $userId = $data['userId'];
@@ -44,9 +44,9 @@ Flight::route("POST /addFavourite",  function(){
       Flight::json(["message" => "Trying to access blocked data"], 403);
       die;
     }
-    $currentMatch = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
-    if(isset($currentMatch['userId'])){
-    $favouriteMatch = Flight::favouriteService()->removeFavouriteSummoner(Flight::get('user'), $summonerName);
+    $currentPlayer = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
+    if(isset($currentPlayer['userId'])){
+    Flight::favouriteService()->delete($currentPlayer['id']);
     Flight::json(["message" => "Match was removed from favourites"], 200);
     }
     else{
