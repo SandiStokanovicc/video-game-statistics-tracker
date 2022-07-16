@@ -81,6 +81,7 @@ var FavouriteService = {
                             <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
                             </div>
                             <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
+                            <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Remove Favourite</button>
                         </div>
                         `;
                 }
@@ -124,5 +125,48 @@ var FavouriteService = {
                 }
             });
             return info;
+    },
+
+    removeFavouriteSummoner: function (summonerName, serverId) {
+        var old_html = $("#favouriteplayers").html();
+        toastr.info("Removing in the background...");
+        var user = new Object();
+        if (typeof (parsedUser) != 'undefined'){
+        user.userId = parsedUser.iduser;
+        user.summonerName = summonerName;
+        user.serverId = serverId;
+        console.log(user);
+        $.ajax({
+            type: "DELETE",
+            url: ' rest/removeFavourite',
+            data: JSON.stringify(user),
+            contentType: "application/json",
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+            },
+
+            success: function (data) {
+                toastr.success("Removed from favourites");
+                var matchContainer = $('#matchContainer')[0];
+                var matchClass = $('.matchClass')[0];
+
+                //const matchContainer = 
+                if(!matchContainer.contains(matchClass)){
+                    toastr.info("Empty favourites, redirecting...");
+                    setTimeout(() => {window.location.replace("index.html");}, 3000);
+                } 
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                //console.log(data);
+                //toastr.error("error");
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+            }
+        });
     }
+}
 }

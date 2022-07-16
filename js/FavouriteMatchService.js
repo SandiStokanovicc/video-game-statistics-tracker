@@ -243,6 +243,7 @@ var FavouriteMatchService = {
             },
 
             error: function (errorMessage) {
+                RiotService.unhideMainPageOnFail();
                 console.log(errorMessage);
                 toastr.error(errorMessage.responseJSON.message);
             }
