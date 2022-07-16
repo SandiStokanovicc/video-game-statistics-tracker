@@ -69,7 +69,7 @@ var FavouriteService = {
                     //console.log(info[0]);
                     //console.log(info[1]);
                     html += `
-                        <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
+                        <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + ` class=favouriteClass">
                         <div class="col">
                         <img class="shadow profileicons mt-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon"></p>
                             </div>
@@ -83,7 +83,7 @@ var FavouriteService = {
                             <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
                             </div>
                             <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
-                            <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Remove Favourite</button>
+                            <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `',' ` + i + `')" class="btn btn-danger mb-5;">Remove Favourite</button>
                         </div>
                         `;
                 }
@@ -129,8 +129,9 @@ var FavouriteService = {
             return info;
     },
 
-    removeFavouriteSummoner: function (summonerName, serverId) {
+    removeFavouriteSummoner: function (summonerName, serverId, favouriteIndex) {
         var old_html = $("#favouriteplayers").html();
+        $('#favouriteplayer' + (favouriteIndex + 1)).remove();
         toastr.info("Removing in the background...");
         var user = new Object();
         if (typeof (parsedUser) != 'undefined'){
@@ -150,14 +151,6 @@ var FavouriteService = {
 
             success: function (data) {
                 toastr.success("Removed from favourites");
-                var matchContainer = $('#matchContainer')[0];
-                var matchClass = $('.matchClass')[0];
-
-                //const matchContainer = 
-                if(!matchContainer.contains(matchClass)){
-                    toastr.info("Empty favourites, redirecting...");
-                    setTimeout(() => {window.location.replace("index.html");}, 3000);
-                } 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 //console.log(data);
