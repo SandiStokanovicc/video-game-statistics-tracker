@@ -11,8 +11,9 @@ var FavouriteService = {
         var user = new Object();
         user.summonerName = globalPlayerInput;
         user.serverId = globalRegion;
-        if (typeof (parsedUser) != 'undefined'){
-            user.userId = parsedUser.iduser};
+        if (typeof (parsedUser) != 'undefined') {
+            user.userId = parsedUser.iduser
+        };
         console.log(user);
         $.ajax({
             type: "POST",
@@ -34,11 +35,12 @@ var FavouriteService = {
             }
         });
     },
-    
+
     getFavouritePlayers: function () {
         var parsedUserData = new Object();
-        if (typeof (parsedUser) != 'undefined'){
-            parsedUserData = parsedUser};
+        if (typeof (parsedUser) != 'undefined') {
+            parsedUserData = parsedUser
+        };
         $.ajax({
             type: "POST",
             url: ' rest/favourites',
@@ -63,7 +65,7 @@ var FavouriteService = {
                         </div>`;
                 for (var i = 0; i < data.length; i++) {
                     var info = {};
-                    info =  FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
+                    info = FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
                     //console.log(info[0]);
                     //console.log(info[1]);
                     html += `
@@ -91,7 +93,7 @@ var FavouriteService = {
                 ;
                 $("#favouritesContainer").html(html);
                 FavouriteService.displayShowFavouritePlayers();
-            },    
+            },
             error: function (errorMessage) {
                 console.log(errorMessage);
                 toastr.error(errorMessage.responseJSON.message);
@@ -100,29 +102,29 @@ var FavouriteService = {
 
     },
 
-    getIcon: function(summonerName, server){
-            var info = {};
-            $.ajax({
-                type: "GET",
-                url: ' rest/favList/' + summonerName + '/' + server,
-                contentType: "application/json",
-                async: false,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
-                },
-    
-                success: function (data) {
-                    
-                    info[0] = data.profileIconId;
-                    info[1] = data.summonerLevel;
-                    
-                },
-    
-                error: function (errorMessage) {
-                    console.log(errorMessage);
-                    toastr.error(errorMessage.responseJSON.message);
-                }
-            });
-            return info;
+    getIcon: function (summonerName, server) {
+        var info = {};
+        $.ajax({
+            type: "GET",
+            url: ' rest/favList/' + summonerName + '/' + server,
+            contentType: "application/json",
+            async: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
+            },
+
+            success: function (data) {
+
+                info[0] = data.profileIconId;
+                info[1] = data.summonerLevel;
+
+            },
+
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
+            }
+        });
+        return info;
     }
 }
