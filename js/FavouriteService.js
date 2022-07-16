@@ -9,9 +9,10 @@ var FavouriteService = {
 
     addFavourite: function () {
         var user = new Object();
-        user.summonerName = searchPlayerInput;
-        user.serverId = regionButton;
-        user.userId = parsedUser.iduser;
+        user.summonerName = globalPlayerInput;
+        user.serverId = globalRegion;
+        if (typeof (parsedUser) != 'undefined'){
+            user.userId = parsedUser.iduser};
         console.log(user);
         $.ajax({
             type: "POST",
@@ -27,24 +28,21 @@ var FavouriteService = {
                 console.log("added");
             },
 
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                toastr.error("User is already a favourite.");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
     },
     
     getFavouritePlayers: function () {
+        var parsedUserData = new Object();
+        if (typeof (parsedUser) != 'undefined'){
+            parsedUserData = parsedUser};
         $.ajax({
             type: "POST",
             url: ' rest/favourites',
-            data: JSON.stringify(parsedUser),
+            data: JSON.stringify(parsedUserData),
             contentType: "application/json",
             dataType: "json",
             async: false,
@@ -66,8 +64,8 @@ var FavouriteService = {
                 for (var i = 0; i < data.length; i++) {
                     var info = {};
                     info =  FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
-                    console.log(info[0]);
-                    console.log(info[1]);
+                    //console.log(info[0]);
+                    //console.log(info[1]);
                     html += `
                         <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + `">
                         <div class="col">
@@ -82,6 +80,7 @@ var FavouriteService = {
                             <div class="col">
                             <p class="players-text mt-2 mb-2">` + data[i].serverId + `</p>
                             </div>
+                            <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
                         </div>
                         `;
                 }
@@ -92,17 +91,10 @@ var FavouriteService = {
                 ;
                 $("#favouritesContainer").html(html);
                 FavouriteService.displayShowFavouritePlayers();
-            },
-
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                //toastr.error("error");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+            },    
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
 
@@ -126,14 +118,9 @@ var FavouriteService = {
                     
                 },
     
-    
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //console.log(data);
-                    //toastr.error("error");
-                    console.log(errorThrown);
-                    console.log(textStatus);
-                    console.log(JSON.stringify(XMLHttpRequest));
-                    console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+                error: function (errorMessage) {
+                    console.log(errorMessage);
+                    toastr.error(errorMessage.responseJSON.message);
                 }
             });
             return info;

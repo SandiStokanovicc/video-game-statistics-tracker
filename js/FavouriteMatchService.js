@@ -1,8 +1,17 @@
 var FavouriteMatchService = {
-    displayShowFavouriteMatches: function () {
+    globalFavouriteMatches: "",
+
+    displaySpinner: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
+        document.getElementById("matches").classList.add('d-none');
         document.getElementById("favourites").classList.add('d-none');
+        document.getElementById("main-container").classList.remove('d-none');
+    },
+
+    displayShowFavouriteMatches: function () {
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
+        document.getElementById("main-container").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
@@ -14,7 +23,8 @@ var FavouriteMatchService = {
         var match = new Object();
         if ($('#RegionButton').html() === "na1") match.continent = "americas";
         else match.continent = "europe";
-        match.userId = parsedUser.iduser;
+        if (typeof (parsedUser) != 'undefined'){
+            match.userId = parsedUser.iduser;};
         match.mainPlayerPUUID = globalResults.puuid;
         match.APImatchID = globalResults.matchIDs[matchIndex];
         console.log(match);
@@ -29,24 +39,64 @@ var FavouriteMatchService = {
             },
 
             success: function (data) {
-                console.log("added");
+                toastr.success("Added to favourites");
+            },
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
+            }
+        });
+    },
+
+    removeFavourite: function (matchIndex) {
+        var old_html = $("#matchContainer").html();
+        $('#match' + (matchIndex + 1)).remove();
+        toastr.info("Removing in the background...");
+        var match = new Object();
+        if ($('#RegionButton').html() === "na1") match.continent = "americas";
+        else match.continent = "europe";
+        if (typeof (parsedUser) != 'undefined'){
+            match.userId = parsedUser.iduser;};
+        match.APImatchID = globalFavouriteMatches.matchIDs[matchIndex];
+        console.log(match);
+        $.ajax({
+            type: "DELETE",
+            url: ' rest/removeFavouriteMatch',
+            data: JSON.stringify(match),
+            contentType: "application/json",
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
             },
 
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error("Match is already a favourite.");
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            success: function (data) {
+                toastr.success("Removed from favourites");
+                var matchContainer = $('#matchContainer')[0];
+                var matchClass = $('.matchClass')[0];
+
+                //const matchContainer = 
+                if(!matchContainer.contains(matchClass)){
+                    toastr.info("Empty favourites, redirecting...");
+                    setTimeout(() => {window.location.replace("index.html");}, 3000);
+                } 
+            },
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
+                $("#matchContainer").html(old_html);
             }
         });
     },
 
     listFavouriteMatches: function () {
+        FavouriteMatchService.displaySpinner();
+        var userIdObject = new Object();
+        if (typeof (parsedUser) != 'undefined'){
+            userIdObject.userId = parsedUser.iduser;};
         $.ajax({
             type: "POST",
             url: ' rest/favouriteMatches',
-            data: JSON.stringify(parsedUser),
+            data: JSON.stringify(userIdObject),
             contentType: "application/json",
             dataType: "json",
             beforeSend: function (xhr) {
@@ -54,6 +104,8 @@ var FavouriteMatchService = {
             },
 
             success: function (results) {
+                globalFavouriteMatches = results;
+                console.log(results);
                 if (results["matches"].length == 0) console.log("empty");
                 else {
                     var i, html = "";
@@ -69,9 +121,9 @@ var FavouriteMatchService = {
                     for (i = 0; i < results['matches'].length; i++) {
                         if (results.matches[i].info.win == "true") {
                             html += `
-                        <div id="listallmatches">
+                        <div id="match` + (i + 1) + `", class="matchClass">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    <div class="accordion-item" id="match` + (i + 1) + `">
+                                    <div class="accordion-item" id="matchDiv2` + (i + 1) + `">
                                     <h4 class="accordion-header bg-primary p-2" id="flush-heading` + (i + 1) + `">
                                     <button class="accordion-button collapsed bg-primary text-white" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
@@ -82,9 +134,9 @@ var FavouriteMatchService = {
                         }
                         else {
                             html += `
-                        <div  id="listallmatches">
+                        <div  id="match` + (i + 1) + `", class="matchClass">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    <div class="accordion-item" id="match` + (i + 1) + `">
+                                    <div class="accordion-item" id="matchDiv2` + (i + 1) + `">
                                     <h2 class="accordion-header bg-danger p-2" id="flush-heading` + (i + 1) + `">
                                     <button class="accordion-button collapsed bg-danger text-white" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
@@ -107,7 +159,7 @@ var FavouriteMatchService = {
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
                             results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
-                            `</div> </button><button type="button" onclick="FavouriteMatchService.addFavourite(` + i + `)" class="btn btn-danger mb-5;">Add Favourite</button>
+                            `</div> </button><button type="button" onclick="FavouriteMatchService.removeFavourite(` + i + `)" class="btn btn-danger mb-5;">Remove Favourite</button>
                     </h2>` +
                             `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">
@@ -190,13 +242,9 @@ var FavouriteMatchService = {
                 }
             },
 
-
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(errorThrown);
-                console.log(textStatus);
-                console.log(JSON.stringify(XMLHttpRequest));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
+            error: function (errorMessage) {
+                console.log(errorMessage);
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
 
