@@ -12,6 +12,11 @@ var FavouriteMatchService = {
     displayShowFavouriteMatches: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main-container").classList.add('d-none');
+        document.getElementById("main").classList.add('d-none');
+        document.getElementById("faq").classList.add('d-none');
+        document.getElementById("copyright").classList.add('d-none');
+        document.getElementById("about-us").classList.add('d-none');
+        document.getElementById("favourites").classList.add('d-none');
         document.getElementById("matches").classList.remove('d-none');
     },
 
@@ -23,8 +28,9 @@ var FavouriteMatchService = {
         var match = new Object();
         if ($('#RegionButton').html() === "na1") match.continent = "americas";
         else match.continent = "europe";
-        if (typeof (parsedUser) != 'undefined'){
-            match.userId = parsedUser.iduser;};
+        if (typeof (parsedUser) != 'undefined') {
+            match.userId = parsedUser.iduser;
+        };
         match.mainPlayerPUUID = globalResults.puuid;
         match.APImatchID = globalResults.matchIDs[matchIndex];
         console.log(match);
@@ -55,8 +61,9 @@ var FavouriteMatchService = {
         var match = new Object();
         if ($('#RegionButton').html() === "na1") match.continent = "americas";
         else match.continent = "europe";
-        if (typeof (parsedUser) != 'undefined'){
-            match.userId = parsedUser.iduser;};
+        if (typeof (parsedUser) != 'undefined') {
+            match.userId = parsedUser.iduser;
+        };
         match.APImatchID = globalFavouriteMatches.matchIDs[matchIndex];
         console.log(match);
         $.ajax({
@@ -75,10 +82,10 @@ var FavouriteMatchService = {
                 var matchClass = $('.matchClass')[0];
 
                 //const matchContainer = 
-                if(!matchContainer.contains(matchClass)){
+                if (!matchContainer.contains(matchClass)) {
                     toastr.info("Empty favourites, redirecting...");
-                    setTimeout(() => {window.location.replace("index.html");}, 3000);
-                } 
+                    setTimeout(() => { window.location.replace("index.html"); }, 3000);
+                }
             },
             error: function (errorMessage) {
                 console.log(errorMessage);
@@ -91,8 +98,9 @@ var FavouriteMatchService = {
     listFavouriteMatches: function () {
         FavouriteMatchService.displaySpinner();
         var userIdObject = new Object();
-        if (typeof (parsedUser) != 'undefined'){
-            userIdObject.userId = parsedUser.iduser;};
+        if (typeof (parsedUser) != 'undefined') {
+            userIdObject.userId = parsedUser.iduser;
+        };
         $.ajax({
             type: "POST",
             url: ' rest/favouriteMatches',
@@ -124,7 +132,8 @@ var FavouriteMatchService = {
                         <div id="match` + (i + 1) + `", class="matchClass">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item" id="matchDiv2` + (i + 1) + `">
-                                    <h4 class="accordion-header bg-primary p-2" id="flush-heading` + (i + 1) + `">
+                                    <h2 class="accordion-header bg-primary p-2" id="flush-heading` + (i + 1) + `">
+                                    <button type="button" onclick="FavouriteMatchService.removeFavourite(` + i + `)" class="btn btn-primary mb-5;">Remove Favourite</button>
                                     <button class="accordion-button collapsed bg-primary text-white" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
@@ -138,6 +147,7 @@ var FavouriteMatchService = {
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <div class="accordion-item" id="matchDiv2` + (i + 1) + `">
                                     <h2 class="accordion-header bg-danger p-2" id="flush-heading` + (i + 1) + `">
+                                    <button type="button" onclick="FavouriteMatchService.removeFavourite(` + i + `)" class="btn btn-danger mb-5;">Remove Favourite</button>
                                     <button class="accordion-button collapsed bg-danger text-white" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#flush-collapse` + (i + 1) + `" aria-expanded="false"
                                         aria-controls="flush-collapse` + (i + 1) + `">
@@ -159,7 +169,7 @@ var FavouriteMatchService = {
                         <div class="match-text">Champion: ` + results.matches[i].info.searchedPlayerInfo.championName +
                             `<br>K/ ` + results.matches[i].info.searchedPlayerInfo.kills + ` D/ ` +
                             results.matches[i].info.searchedPlayerInfo.deaths + ` A/ ` + results.matches[i].info.searchedPlayerInfo.assists +
-                            `</div> </button><button type="button" onclick="FavouriteMatchService.removeFavourite(` + i + `)" class="btn btn-danger mb-5;">Remove Favourite</button>
+                            `</div> </button>
                     </h2>` +
                             `<div id="flush-collapse` + (i + 1) + `" class="accordion-collapse collapse" aria-labelledby="flush-heading` + (i + 1) + `"
                     data-bs-parent="#accordionFlushExample">

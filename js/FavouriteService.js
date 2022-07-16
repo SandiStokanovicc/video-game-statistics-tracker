@@ -1,10 +1,23 @@
 var FavouriteService = {
 
-    displayShowFavouritePlayers: function () {
+    displaySpinner: function () {
         document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
         document.getElementById("main").classList.add('d-none');
         document.getElementById("matches").classList.add('d-none');
+        document.getElementById("favourites").classList.add('d-none');
+        document.getElementById("main-container").classList.remove('d-none');
+    },
+
+    displayShowFavouritePlayers: function () {
+        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
+        document.getElementById("main-container").classList.add('d-none');
+        document.getElementById("main").classList.add('d-none');
+        document.getElementById("faq").classList.add('d-none');
+        document.getElementById("copyright").classList.add('d-none');
+        document.getElementById("about-us").classList.add('d-none');
+        document.getElementById("matches").classList.remove('d-none');
         document.getElementById("favourites").classList.remove('d-none');
+
     },
 
     addFavourite: function () {
@@ -37,6 +50,7 @@ var FavouriteService = {
     },
 
     getFavouritePlayers: function () {
+        FavouriteService.displaySpinner();
         var parsedUserData = new Object();
         if (typeof (parsedUser) != 'undefined') {
             parsedUserData = parsedUser
@@ -91,13 +105,13 @@ var FavouriteService = {
                     </div>
                 </div>
                 `;
-                ;
-                $("#favouritesContainer").html(html);
                 FavouriteService.displayShowFavouritePlayers();
+                $("#favouritesContainer").html(html);
             },
             error: function (errorMessage) {
                 console.log(errorMessage);
                 toastr.error(errorMessage.responseJSON.message);
+                RiotService.unhideMainPageOnFail();
             }
         });
 
@@ -130,7 +144,7 @@ var FavouriteService = {
     },
 
     removeFavouriteSummoner: function (summonerName, serverId, favouriteIndex) {
-        var old_html = $("#favouriteplayers").html();
+        var old_html = $("#favouriteContainer").html();
         $('#favouriteplayer' + (favouriteIndex + 1)).remove();
         toastr.info("Removing in the background...");
         var user = new Object();
