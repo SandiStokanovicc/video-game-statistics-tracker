@@ -1,7 +1,7 @@
 <?php
 
 /**
-* @OA\POST(path="/favouriteMatches", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
+* @OA\Post(path="/favouriteMatches", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
 *     @OA\RequestBody(description="user's id", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(@OA\Property(property="userId", type="integer", example=10, description="id of the logged in user"))
@@ -29,7 +29,7 @@ Flight::route('POST /favouriteMatches', function(){
 
 
 /**
-* @OA\POST(path="/addFavouriteMatch", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
+* @OA\Post(path="/addFavouriteMatch", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
 *     @OA\RequestBody(description="User id and match info", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
@@ -70,7 +70,7 @@ Flight::route("POST /addFavouriteMatch",  function(){
 });
 
 /**
-* @OA\DELETE(path="/removeFavouriteMatch", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
+* @OA\Delete(path="/removeFavouriteMatch", tags={"favourite matches"}, security={{"ApiKeyAuth": {}}},
 *     @OA\RequestBody(description="User id and match info", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
