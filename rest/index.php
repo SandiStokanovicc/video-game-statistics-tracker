@@ -10,7 +10,7 @@ require_once __DIR__.'../../vendor/autoload.php';
 require_once __DIR__.'/services/UserService.class.php';
 require_once __DIR__.'/services/RiotService.class.php';
 require_once __DIR__.'/services/RecentSearchesService.class.php';
-require_once __DIR__.'\services\FavouriteService.class.php';
+require_once __DIR__.'/services/FavouriteService.class.php';
 require_once __DIR__.'/services/FavouriteMatchService.class.php';
 require_once __DIR__.'/services/TipsService.class.php';
 require_once __DIR__.'/dao/BaseDao.class.php';
