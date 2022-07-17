@@ -26,7 +26,6 @@ var FavouriteService = {
         if (typeof (parsedUser) != 'undefined') {
             user.userId = parsedUser.iduser
         };
-        console.log(user);
         $.ajax({
             type: "POST",
             url: ' rest/addFavourite',
@@ -38,7 +37,7 @@ var FavouriteService = {
             },
 
             success: function (data) {
-                console.log("added");
+                toastr.success("added");
             },
 
             error: function (errorMessage) {
@@ -150,7 +149,6 @@ var FavouriteService = {
             user.userId = parsedUser.iduser;
             user.summonerName = summonerName;
             user.serverId = serverId;
-            console.log(user);
             $.ajax({
                 type: "DELETE",
                 url: ' rest/removeFavourite',

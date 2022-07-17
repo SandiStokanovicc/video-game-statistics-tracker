@@ -3,8 +3,7 @@ var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
-            try {
-                var token = localStorage.getItem("token");
+            try { 
                 var base64Url = token.split('.')[1];
                 var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
                 var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -111,7 +110,6 @@ var UserService = {
 
     },
     login: function (user) {
-        console.log(JSON.stringify(user));
 
         $.ajax({
             type: "POST",
@@ -121,21 +119,16 @@ var UserService = {
             dataType: "json",
 
             success: function (data) {
-                console.log(data);
                 localStorage.setItem("token", data.token);
                 window.location.replace("index.html");
             },
 
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                //console.log(data);
-                toastr.error(XMLHttpRequest.responseJSON.message);
-                //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
-                console.log(JSON.stringify(XMLHttpRequest.responseJSON.message));
             }
         });
     },
@@ -161,10 +154,8 @@ var UserService = {
             success: function (data) {
                 $('#SignUpModal').modal('toggle');
                 localStorage.setItem("token", data.token);
-                console.log(data.token);
                 toastr.success('You have been succesfully registered.');
                 localStorage.clear();
-                console.log("data");
                 window.location.replace("index.html");
 
             },
