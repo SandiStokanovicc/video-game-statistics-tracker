@@ -26,6 +26,7 @@ Flight::route("POST /addFavourite",  function(){
   $currentUser = Flight::favouriteService()->getIdAndSummonerName($userId, $summonerName);
   if(!isset($currentUser['userId'])){
     $favourite = Flight::favouriteService()->add($data);
+    Flight::json($favourite);
   }
   else{  
     Flight::json(["message" => "User is already a favourite."], 400);

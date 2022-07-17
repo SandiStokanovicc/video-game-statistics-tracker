@@ -40,10 +40,18 @@ var FavouriteService = {
                 toastr.success("added");
             },
 
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            }
+            /*
             error: function (errorMessage) {
                 console.log(errorMessage);
-                toastr.error(errorMessage.responseJSON.message);
+                //toastr.error(errorMessage.responseJSON.message);
             }
+            */
         });
     },
 
