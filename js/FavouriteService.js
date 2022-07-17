@@ -15,7 +15,7 @@ var FavouriteService = {
         document.getElementById("faq").classList.add('d-none');
         document.getElementById("copyright").classList.add('d-none');
         document.getElementById("about-us").classList.add('d-none');
-        document.getElementById("matches").classList.remove('d-none');
+        document.getElementById("matches").classList.add('d-none');
         document.getElementById("favourites").classList.remove('d-none');
 
     },
@@ -83,7 +83,7 @@ var FavouriteService = {
                     //console.log(info[0]);
                     //console.log(info[1]);
                     html += `
-                        <div class="row mt-4 mb-4 shadow" id="favouriteplayer`+ (i + 1) + ` class=favouriteClass">
+                        <div class="row mt-4 mb-4 shadow favmatch" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" href="#" id="favouriteplayer` + (i + 1) + ` class=favouriteClass">
                         <div class="col">
                             <img class="shadow profileicons mt-3 mb-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon">
                         </div>
@@ -96,7 +96,6 @@ var FavouriteService = {
                         <div class="col">
                             <p class="players-text">` + data[i].serverId + `</p>
                         </div>
-                            <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
                             <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `',' ` + i + `')" class="btn btn-danger mt-5;">Remove Favourite</button>
                         </div>
                         `;
