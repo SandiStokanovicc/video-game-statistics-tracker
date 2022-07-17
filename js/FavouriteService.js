@@ -17,7 +17,6 @@ var FavouriteService = {
         document.getElementById("about-us").classList.add('d-none');
         document.getElementById("matches").classList.add('d-none');
         document.getElementById("favourites").classList.remove('d-none');
-
     },
 
     addFavourite: function () {
@@ -83,9 +82,9 @@ var FavouriteService = {
                     //console.log(info[0]);
                     //console.log(info[1]);
                     html += `
-                        <div class="row mt-4 mb-4 shadow favmatch" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" href="#" id="favouriteplayer` + (i + 1) + ` class=favouriteClass">
+                        <div class="row mt-4 mb-4 shadow" id="favouriteplayer` + (i + 1) + ` class=favouriteClass">
                         <div class="col">
-                            <img class="shadow profileicons mt-3 mb-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon">
+                            <img class="shadow profileicons mt-3 mb-3 favmatch" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')">
                         </div>
                         <div class="col">
                             <p class="players-text"> ` + data[i].summonerName + `</p>

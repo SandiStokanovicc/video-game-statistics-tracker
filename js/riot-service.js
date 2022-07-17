@@ -221,24 +221,24 @@ var RiotService = {
     
                             <div class="col-12 col-md-3 mt-2">`;
                             html += `<div class="row">`
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item0 + `.png" alt="Item"></div>`;
 
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item1 + `.png" alt="Item"></div>`;
 
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item2 + `.png" alt="Item"></div>`;
                             html += `</div><div class="row">`;
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item3 + `.png" alt="Item"></div>`;
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item4 + `.png" alt="Item"></div>`;
 
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item5 + `.png" alt="Item"></div>`;
                             html += `</div><div class="row">`;
-                            html += `<div class="col mb-sm-2 p-2"><img class="shadow item" src="Pictures/item/` +
+                            html += `<div class="col mb-sm-2 p-2"><img class="item" src="Pictures/item/` +
                                 results.matches[i].info.participants[j].item6 + `.png" alt="Item"></div>`;
                             html += `
                         </div>

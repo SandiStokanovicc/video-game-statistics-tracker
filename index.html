@@ -85,7 +85,6 @@
                     <input id="SearchPlayerInput" class="form-control" type="text" placeholder="Search for a Player"
                         aria-label="Search">
                 </form>
-                <!-- <div id="search-button" class="btn-group" onclick="RiotService.getSummonerInfo()">-->
                 <div id="search-button" class="btn-group">
                     <button id="SearchButtonInput" type="button" class="btn btn-danger"
                         onclick="RiotService.getSearch()">
@@ -93,6 +92,10 @@
                     </button>
                 </div>
             </div>
+
+            <!--DID YOU KNOW TIP-->
+
+
             <div class="mt-5">
                 <div>Did you know ?</div>
                 <div id="tip"></div>
@@ -100,9 +103,8 @@
         </div>
     </div>
 
-
-
     <!-- SPINNER -->
+
     <div id="main-container" class="d-none">
         <div id="first-half"></div>
         <div id="second-half"></div>
@@ -110,6 +112,7 @@
     </div>
 
     <!-- MATCHES -->
+
     <div id="matches" class="d-none">
         <div class="center text text-white">
             <div class="caption text-center" id="matchContainer">
@@ -118,7 +121,8 @@
         </div>
     </div>
 
-    <!-- FAVOURITES -->
+    <!-- FAVOURITES PROFILES -->
+
     <div id="favourites" class="d-none">
         <div class="center text text-white">
             <div class="caption text-center" id="favouritesContainer">
@@ -126,16 +130,6 @@
             </div>
         </div>
     </div>
-
-
-    <div id="listallmatches" class="d-none">
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-            </div>
-        </div>
-    </div>
-
-
 
     <!--COPYRIGHT-->
 
@@ -422,10 +416,6 @@
                             <input type="password" class="form-control" id="passwordLogIn" name="passwordLogIn"
                                 placeholder="Enter your password" />
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMeLogIn" />
-                            <label class="form-check-label text-white" for="rememberMeSignIn">Remember me</label>
-                        </div>
                         <div class="modal-footer d-block">
                             <p class="float-start text-white p-2">Don't have an account yet ? <a class="text-white"
                                     href="#" data-bs-toggle="modal" data-bs-target="#modalFormSign">Sign Up</a></p>
@@ -485,6 +475,7 @@
             var buttonVal = document.getElementById('RegionButton').innerText = value;
         }
 
+        /*SHOW COPYRIGHT*/
         function displayShowCopyright() {
             document.getElementById("copyright").classList.remove('d-none');
             document.getElementById("copyright-footer").classList.add('text-decoration-underline');
@@ -497,6 +488,7 @@
             document.getElementById("favourites").classList.add('d-none');
         }
 
+        /*SHOW FAQ*/
         function displayShowFaq() {
             document.getElementById("faq").classList.remove('d-none');
             document.getElementById("faq-footer").classList.add('text-decoration-underline');
@@ -509,6 +501,7 @@
             document.getElementById("favourites").classList.add('d-none');
         }
 
+        /*SHOW ABOUT US*/
         function displayShowAboutUs() {
             document.getElementById("about-us").classList.remove('d-none');
             document.getElementById("about-us-footer").classList.add('text-decoration-underline');
@@ -521,6 +514,7 @@
             document.getElementById("favourites").classList.add('d-none');
         }
 
+        /*SEARCH ON ENTER*/
         var input = document.getElementById("SearchPlayerInput");
         input.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
