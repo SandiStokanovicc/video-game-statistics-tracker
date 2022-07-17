@@ -83,21 +83,21 @@ var FavouriteService = {
                     //console.log(info[0]);
                     //console.log(info[1]);
                     html += `
-                        <div class="row mt-4 mb-4" id="favouriteplayer`+ (i + 1) + ` class=favouriteClass">
+                        <div class="row mt-4 mb-4 shadow" id="favouriteplayer`+ (i + 1) + ` class=favouriteClass">
                         <div class="col">
-                        <img class="shadow profileicons mt-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon"></p>
-                            </div>
-                            <div class="col">
+                            <img class="shadow profileicons mt-3 mb-3" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon">
+                        </div>
+                        <div class="col">
                             <p class="players-text"> ` + data[i].summonerName + `</p>
-                            </div>
-                            <div class="col">
+                        </div>
+                        <div class="col">
                             <p class="players-text"> Summoner Level: ` + info[1] + `</p>
-                            </div>
-                            <div class="col">
+                        </div>
+                        <div class="col">
                             <p class="players-text">` + data[i].serverId + `</p>
-                            </div>
+                        </div>
                             <button type="button" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')" class="btn btn-danger mb-5;">Show matches</button>
-                            <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `',' ` + i + `')" class="btn btn-danger mb-5;">Remove Favourite</button>
+                            <button type="button" onclick="FavouriteService.removeFavouriteSummoner('` + data[i].summonerName + `',' ` + data[i].serverId + `',' ` + i + `')" class="btn btn-danger mt-5;">Remove Favourite</button>
                         </div>
                         `;
                 }
