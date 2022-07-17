@@ -8,7 +8,7 @@ class FavouriteMatchDao extends BaseDao {
   }
 
   public function getFavouriteMatchesByUserId($userId){
-    return $this->query_specific("SELECT * FROM favmatches WHERE userId = $userId", ['userId' => $userId]);
+    return $this->query("SELECT * FROM favmatches WHERE userId = :userId", ['userId' => $userId]);
   }
 
   public function getIdMatchIDContinent($userId, $APIMatchID, $continent){
