@@ -14,7 +14,7 @@ var RiotService = {
     },
 
     unhideMainPageOnFail: function () {
-        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
+        $("#background").css({"background-image": "url('Pictures/background1.png')"});
         $("#main-container").addClass('d-none');
         $("#matches").addClass('d-none');
         $("#main").removeClass('d-none');
