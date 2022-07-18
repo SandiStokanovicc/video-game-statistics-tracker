@@ -21,7 +21,7 @@ var UserService = {
             $("#or").addClass('d-none');
             $("#sign-out").removeClass('d-none');
 
-            $("#your-profile").innerHTML = parsedUser.username;
+            $("#your-profile").html(parsedUser.username);
 
 
         } else { //if user isn't logged in
