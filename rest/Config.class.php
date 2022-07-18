@@ -21,6 +21,7 @@ class Config {
     return Config::get_env("JWT_SECRET", "ezcb9s8UcF");
   }
 
+  // USED FOR FETCHING VARIOUS HIDDEN DATA FROM ENVIRONMENT VARIABLES FOR SECURITY REASONS + USES DEFAULT IF NONE ARE FOUND
   public static function get_env($name, $default){
    return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
   }

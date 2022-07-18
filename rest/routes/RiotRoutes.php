@@ -11,18 +11,18 @@
 * )
 */
 
+// MAIN ROUTE FOR SEARCHING PLAYERS
 Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $region){ 
   $presentInDB = Flight::recentSearchesService()->getSummonerNameRegion($summonerName, $region);
   if(!empty($presentInDB)){
     $difftime = strtotime(date('Y-m-d H:i:s')) - strtotime($presentInDB['timeUpdated']);
     $days = $difftime/24/60/60;
-    var_dump($days);
     if($days < 1){
-//      var_dump("IN DB; Using recentSummonerMatches"); die;
+      // IF THE PLAYER WASN'T ADDED TOO LONG AGO, GRABS SOME DATA FROM DB + MAKES LESS API CALLS
       Flight::json(Flight::riotService()->getRecentSummonerMatches($presentInDB));
     } 
     else{
-//      var_dump("IN DB; UPDATING; Using getSummonerMatches"); die;
+      // IF THE PLAYER WAS ADDED TOO LONG AGO, USES MORE API CALLS + ADDS THE PLAYER TO THE DB
       $responseJSON = Flight::riotService()->getSummonerMatches($summonerName, $region);
       $dbEntity = array();
       $dbEntity['profileIconId'] = $responseJSON['profileIconId'];
@@ -38,7 +38,7 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
     } 
   }
   else{
-//    var_dump("NOT IN DB; Using getSummonerMatches"); die;
+    // IF THE PLAYER ISN'T IN THE DB, USES MORE API CALLS + ADDS THE PLAYER TO THE DB
     $responseJSON = Flight::riotService()->getSummonerMatches($summonerName, $region);
     $dbEntity = array();
     $dbEntity['profileIconId'] = $responseJSON['profileIconId'];
@@ -65,6 +65,7 @@ Flight::route('GET /summoners/@summonerName/@region', function($summonerName, $r
 * )
 */
 
+// ROUTE FOR THE MOBILE APPLICATION (USED AS AN EXTERNAL API, RETURNS LESS INFO)
 Flight::route("GET /summonersMobileAPI/@summonerName/@region",  function($summonerName, $region){
    Flight::json(Flight::riotService()->getSummonerMatchesMobileAPI($summonerName, $region));
 });

@@ -1,6 +1,9 @@
 <?php
   class RiotService {
 
+    /////////////////////////////////// SETUP FUNCTIONS
+
+    // HEADERS WHICH ARE USED FOR THE CURL CONNECTION
     var $headers = array(
       "Content-Type: text/html; charset=utf-8",
       "User-Agent: StatTrack",
@@ -10,6 +13,7 @@
       "X-Riot-Token: RGAPI-8cf45b92-9f22-40a0-8b5e-11fc61995a24"
     );
     
+    // SET CURL CONNECTION OPTIONS: HEADERS, URL, ACCEPT RETURNED INFO, SSL)
     private function setCurlOptions($ch, $url){
       curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
       curl_setopt($ch, CURLOPT_URL, $url);
@@ -17,13 +21,19 @@
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     }
 
+    // CHECK FOR VARIOUS ERRORS IN THE JSON THAT WAS RETURNED FROM RIOT AND KILL THE REQUEST IF AN ERROR IS FOUND
     private function checkFor429Error($json){
       
+      // IF THERE IS NO 'status' FIELD, THERE IS NO ERROR, CONTINUE NORMALLY
       if(!isset($json['status'])) return;
+
+      // ELSE, SET CUSTOM MESSAGE FOR ERROR 429 (TOO MANY API REQUESTS, SLOW DOWN)
       else if($json['status']['status_code'] == 429){
         $httpStatusCode = 429;
         $httpStatusMsg  = 'Rate limit exceeded';
         $phpSapiName    = substr(php_sapi_name(), 0, 3);
+
+        // CHECK IF THE PHP WAS RUN USING THE Common Gateway Interface OR THE Command Line Interface AND SET THE ERROR RESPONSES ACCORDINGLY
         if ($phpSapiName == 'cgi' || $phpSapiName == 'fpm') {
           Flight::json(["message" => $httpStatusMsg]);
           die(header('Status: '.$httpStatusCode.' '.$httpStatusMsg));
@@ -33,6 +43,8 @@
           die(header($protocol.' '.$httpStatusCode.' '.$httpStatusMsg));
         }
       }
+
+      // ELSE, SOME OTHER ERROR APPEARED, RETURN THE ORIGINAL ERROR MESSAGE
       else{
         $httpStatusCode = $json['status']['status_code'];
         $httpStatusMsg  = $json['status']['message'];
@@ -48,6 +60,7 @@
       } 
     }
     
+    // SETS THE SUMMONER'S CONTINENT BASED ON HIS REGION (REGION = EUW1 / EUN1; CONTINENT = EUROPE)
     private function setContinent($region){
       if($region == "na1"){
         return "americas";
@@ -56,8 +69,67 @@
         return "europe";
       }
     }
+
+        /////////////////////////////////////////// API CALLS
+
+        // MAIN FUNCTION FOR SEARCHING SUMMONERS USING THE RIOT API
+        public function getSummonerMatches($summonerName, $region){
+          $continent = $this->setContinent($region);
+          $summoner = array();
     
-    // NEW STUFF THAT PRINTS FILTERED INFORMATION
+          // GET BASIC SUMMONER FROM RIOT API
+          $summoner = $this->getSummonerInfo($summonerName, $region);
+          
+          // GET RANKS + MATCH IDs
+          $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
+          $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
+          
+          // GET MATCH INFO FOR EACH MATCHID
+          foreach($summoner['matchIDs'] as $i => $match){
+            $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
+          }
+
+          // GET INFO ON SUMMONER'S LIVE MATCH STATUS (NOT PLAYING / PLAYING + INFO)
+          $summoner['liveMatch'] = $this->getLiveMatchInfo($summoner['id'], $region);
+
+          // RETURN DATA
+          return $summoner;
+        }
+    
+        // RETURNS FAVOURITE MATCHES
+        // CALLED FROM FavouriteMatchRoutes.php;
+        public function getFavouriteMatches($favouriteMatches){
+          $summoner = array('matches' => array(), 'matchIDs' => array());
+          foreach($favouriteMatches as $i => $match){
+            $summoner['matches'][$i] = $this->getMatchInfo($match['APIMatchID'], $match['continent'], $match['mainPlayerPUUID']);
+            array_push($summoner['matchIDs'], $match['APIMatchID']);
+          }
+          return $summoner;
+        }
+        
+        // TAKE SUMMONER INFO FROM DB + CALL ROUTE WITH LESS RIOT API CALLS
+        public function getRecentSummonerMatches($dbEntity){
+          
+          // SET CONTINENT ACCORDING TO REGION
+          $continent = $this->setContinent($dbEntity['region']);
+
+          // SET SUMMONER INFO FROM THE DB
+          $summoner = array('id' => $dbEntity['encryptedSummonerId'], 'name' => $dbEntity['summonerName'], 'puuid' => $dbEntity['puuid'], 
+          'profileIconId' => $dbEntity['profileIconId'], 'summonerLevel' => $dbEntity['summonerLevel']);
+
+          // GET INFO FROM RIOT
+          $summoner['ranks'] = $this->getSummonerRanks($dbEntity['encryptedSummonerId'], $dbEntity['region']); 
+          $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($dbEntity['puuid'], $continent);
+          foreach($summoner['matchIDs'] as $i => $match){
+            $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $dbEntity['puuid']);
+          }
+          $summoner['liveMatch'] = $this->getLiveMatchInfo($dbEntity['encryptedSummonerId'], $dbEntity['region']);
+
+          return $summoner;
+        }
+    
+    
+    // RETURNS BASIC SUMMONER INFO
     public function getSummonerInfo($summonerName, $region){
       $summonerName = str_replace(" ", "%20", $summonerName); // space replaced with "%20" for GET method. Doesn't work otherwise
       $summonerName = htmlspecialchars($summonerName); // replaces < with &lt, > with &gt, etc. for avoiding XSS attacks
@@ -65,41 +137,58 @@
       $ch = curl_init(); // initialize cURL_PHP connection
       $url = 'https://' . $region .'.api.riotgames.com/lol/summoner/v4/summoners/by-name/' . $summonerName;
      
-      $this->setCurlOptions($ch, $url);
+      $this->setCurlOptions($ch, $url); // set various options
 
       $response = curl_exec($ch); // get results
       curl_close($ch); // close connection
 
-      $json = json_decode($response, true); // transform result from JSON (or whatever) into array
+      // DECODE RESPONSE FROM JSON TO ARRAY AND CHECK FOR ERRORS
+      $json = json_decode($response, true);
       $this->checkFor429Error($json);
 
+      // RETURN DATA
       return array('id' => $json['id'], 'name' => $json['name'], 'puuid' => $json['puuid'], 'profileIconId' => $json['profileIconId'], 'summonerLevel' => $json['summonerLevel']);
     }
 
+    // RETURNS MATCH IDs
     private function getSummonerMatchesPrivate($puuid, $continent){
+
+      // SET UP CURL CONNECTION
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/by-puuid/' . $puuid . '/ids?start=0&count=5&type=ranked';
       $this->setCurlOptions($ch, $url);
 
+      // DECODE RESPONSE FROM JSON TO ARRAY AND CHECK FOR ERRORS
       $response = curl_exec($ch);
       $json = json_decode($response, true);
       $this->checkFor429Error($json);
+
+      // RETURN DATA
       return $json;
     }
 
+    // RETURNS RANKS
     private function getSummonerRanks($encryptedSummonerId, $region){
+
+      // SET UP CURL CONNECTION
       $ch = curl_init();
       $url = 'https://' . $region . '.api.riotgames.com/lol/league/v4/entries/by-summoner/' . $encryptedSummonerId;
       $this->setCurlOptions($ch, $url);
 
+      // GET RESPONSE
       $response = curl_exec($ch);
+
+      // DECODE RESPONSE FROM JSON TO ARRAY AND CHECK FOR ERRORS
       $json = json_decode($response, true);
       $this->checkFor429Error($json);
 
+      // IF RIOT API DIDN'T RETURN ANYTHING, THE PLAYER IS UNRANKED
       if(empty($json)){
-        return array(0 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "", 'rank' => "UNRANKED", 'wins' => 0, 'losses' => 0), 
-        1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "",'rank' => "UNRANKED",'wins' => 0, 'losses' => 0));  
+        return array(0 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "UNRANKED", 'rank' => "I", 'wins' => 0, 'losses' => 0), 
+        1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "UNRANKED",'rank' => "I",'wins' => 0, 'losses' => 0));  
       }
+
+      // IF THE PLAYER ONLY HAS ONE RANK, SET THE OTHER RANK TO UNRANKED AND RETURN
       else if(count($json) == 1 && $json[0]['queueType'] == "RANKED_FLEX_SR"){
         return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
         1 => array('queueType' => 'RANKED_SOLO_5x5', 'tier' => "UNRANKED",'rank' => "I",'wins' => 0, 'losses' => 0));
@@ -108,69 +197,109 @@
         return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
         1 => array('queueType' => 'RANKED_FLEX_SR', 'tier' => "UNRANKED",'rank' => "I",'wins' => 0, 'losses' => 0));
       }
+
+      // IF THE RETURNED DATA HAS 2 RESPONSES, MARK THEM AS SUCH AND RETURN;
+      // (RIOT API COULD RETURN A WRONG RANK, THEREFORE IT'S NOT HARDCODED TO AVOID CRASHES; THINK OF THE TFT RANK INCIDENT)
       else {
         return array(0 => array('queueType' => $json[0]['queueType'], 'tier' => $json[0]['tier'], 'rank' => $json[0]['rank'], 'wins' => $json[0]['wins'], 'losses' => $json[0]['losses']),
         1 => array('queueType' => $json[1]['queueType'], 'tier' => $json[1]['tier'], 'rank' => $json[1]['rank'], 'wins' => $json[1]['wins'], 'losses' => $json[1]['losses']));
       }
      }
 
+    // CHECKS IF PLAYER IS IN A MATCH AND RETURNS LIVE MATCH INFO IF TRUE
     private function getLiveMatchInfo($encryptedSummonerId, $region){
+
+      // SET UP CURL CONNECTION
       $ch = curl_init();
       //https://eun1.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/jAcOJoArjCtbg1CiwxGI01MgIZE80tCQc12UCJPYdEI2faw
       $url = 'https://' . $region . '.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/' . $encryptedSummonerId;
       $this->setCurlOptions($ch, $url);
+
+      // GET RESPONSE
       $response = curl_exec($ch);
       curl_close($ch);
 
+      // DECODE RESPONSE FROM JSON TO ARRAY
       $json = json_decode($response, true);
 
+  // IF STATUS IS SET, PLAYER IS NOT IN A LIVE MATCH
       if(isset($json['status'])) return array('IsInMatch' => false);
       
+  // ELSE
+
+      // GET PARTICIPANT INFO
       $participants = array();
       $i = 0;
+      
       while($i<10){
         $participants[$i] = array('summonerName' => $json['participants'][$i]['summonerName'], 'championId' => $json['participants'][$i]['championId'],
         'summonerSpell1Id' => $json['participants'][$i]['spell1Id'], 'summonerSpell2Id' => $json['participants'][$i]['spell2Id']);
         $i++;
       }
 
+      // GET BANNED CHAMPIONS IF THE BANNING PHASE IS FINISHED
       $bannedChampions = array();
       $i = 0;
+
       if(!empty($json['bannedChampions'])){
         while($i<10){
           $bannedChampions[$i] = $json['bannedChampions'][$i]['championId'];
           $i++;
         }
       }
+
+      // RETURN DATA
       return array('IsInMatch' => true, 'participants' => $participants, 'gameStartTime' => round($json['gameStartTime']/1000/60,2), 
       'gameLength' => round($json['gameLength'] / 60,2), 'bannedChampions' => $bannedChampions);
     }
   
+    // RETURNS MAIN MATCH INFO BY CALLING filterInfo()
     private function getMatchInfo($matchId, $continent, $mainPlayerPuuid){
+      
+      // SET UP CURL CONNECTION
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
       $this->setCurlOptions($ch, $url);
 
+      // GET RESPONSE
       $response = curl_exec($ch);
+
+      // DECODE RESPONSE FROM JSON TO ARRAY AND CHECK FOR ERRORS
       $json = json_decode($response, true);
       $this->checkFor429Error($json);
+
+      // RETURN DATA
       return $json = $this->filterInfo($json['info'], $mainPlayerPuuid);
     }
     
+    // FILTERS MAIN PLAYER INFO + MATCH INFO + CALL TO filterParticipants()
     private function filterInfo($info, $mainPlayerPuuid){
+
+      // $parts HOLDS PARTICIPANT INFO
       $parts = $this->filterParticipants($info, $mainPlayerPuuid);
+
+      // RETURN FULL MATCH INFO, INCLUDING PARTICIPANTS WHEN FINISHED
       return array('info' => array('searchedPlayerInfo' => $parts['searchedPlayerInfo'], 'participants' => $parts['participants'], 'win' => $parts['win'],
       'matchLength' => (round(($info['gameEndTimestamp']-$info['gameStartTimestamp'])/1000/60,2)), 'playedBefore' => (int)(time() - $info['gameStartTimestamp'] / 1000)));
     }
 
+    // FILTERS PARTICIPANTS
     private function filterParticipants($info, $mainPlayerPuuid){
+
+      // SET UP RETURN ARRAY
       $foundPlayer = "false";
       $returnVal = array('win'=>" ", 'searchedPlayerInfo' => array('kills' => 0, 'deaths' => 0, 'assists' => 0, 'championId' => 0), 'participants' => array('0' => [], '1' => [], '2' => [], 
       '3' => [], '4' => [], '5' => [],
       '6' => [], '7' => [],'8' => [], '9' => []));
+
+      // GO THROUGH EACH PLAYER'S MATCH INFO
       $i = 0;
       while($i<10){
+
+        // IF THE MAIN PLAYER WASN'T ALREADY FOUND, CHECK ON CURRENT ITERATION
         if($foundPlayer == "false"){
+
+          // IF THE MAIN PLAYER WAS FOUND IN THE CURRENT ITERATION, SAVE HIS DATA TO $returnVal['searchedPlayerInfo']
           if($info['participants'][$i]['puuid'] == $mainPlayerPuuid){
             $foundPlayer = true;
             $returnVal['searchedPlayerInfo']['kills'] = $info['participants'][$i]['kills'];
@@ -179,10 +308,13 @@
             $returnVal['searchedPlayerInfo']['championName'] = $info['participants'][$i]['championName'];
             $returnVal['searchedPlayerInfo']['championId'] = $info['participants'][$i]['championId'];
 
+            // CHECK IF THE MAIN PLAYER IS IN THE WINNING TEAM TO DECIDE THE MATCH OUTCOME FROM THE MAIN PLAYER'S PERSPECTIVE
             if (($info['participants'][$i]['teamId'] == 100) && ($info['teams']['0']['win'] == true)) $returnVal['win'] = "true";
             else if (($info['participants'][$i]['teamId'] == 200) && ($info['teams']['1']['win'] == true)) $returnVal['win'] = "true";
             else $returnVal['win'] = "false";
         }}
+
+        // COLLECT PARTICIPANT'S MATCH DATA, REGARDLESS OF WHO THE PARTICIPANT IS
         $returnVal['participants'][$i]['summonerName'] = $info['participants'][$i]['summonerName'];
         $returnVal['participants'][$i]['puuid'] = $info['participants'][$i]['puuid'];
         $returnVal['participants'][$i]['champLevel'] = $info['participants'][$i]['champLevel'];
@@ -212,50 +344,9 @@
       return $returnVal;
     }
 
-    // MAIN FUNCTION
-    public function getSummonerMatches($summonerName, $region){
-      $continent = $this->setContinent($region);
-      $summoner = array();
-
-      $summoner = $this->getSummonerInfo($summonerName, $region);
-      
-      $summoner['ranks'] = $this->getSummonerRanks($summoner['id'], $region);
-      $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($summoner['puuid'], $continent);
-      $summoner['liveMatch'] = $this->getLiveMatchInfo($summoner['id'], $region);
-      foreach($summoner['matchIDs'] as $i => $match){
-        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $summoner['puuid']);
-      }
-      return $summoner;
-    }
-
-    //called from FavouriteMatchService.class.php
-    public function getFavouriteMatches($favouriteMatches){
-      $summoner = array('matches' => array(), 'matchIDs' => array());
-      foreach($favouriteMatches as $i => $match){
-        $summoner['matches'][$i] = $this->getMatchInfo($match['APIMatchID'], $match['continent'], $match['mainPlayerPUUID']);
-        array_push($summoner['matchIDs'], $match['APIMatchID']);
-      }
-      return $summoner;
-    }
+///////////////////////////////////////////////////////// MOBILE API
     
-    //for those that have already been searched
-    public function getRecentSummonerMatches($dbEntity){
-      $continent = $this->setContinent($dbEntity['region']);
-      $summoner = array('id' => $dbEntity['encryptedSummonerId'], 'name' => $dbEntity['summonerName'], 'puuid' => $dbEntity['puuid'], 
-      'profileIconId' => $dbEntity['profileIconId'], 'summonerLevel' => $dbEntity['summonerLevel']);
-      $summoner['ranks'] = $this->getSummonerRanks($dbEntity['encryptedSummonerId'], $dbEntity['region']); 
-      $summoner['matchIDs'] = $this->getSummonerMatchesPrivate($dbEntity['puuid'], $continent);
-      $summoner['liveMatch'] = $this->getLiveMatchInfo($dbEntity['encryptedSummonerId'], $dbEntity['region']);
-
-      foreach($summoner['matchIDs'] as $i => $match){
-        $summoner['matches'][$i] = $this->getMatchInfo($match, $continent, $dbEntity['puuid']);
-      }
-      return $summoner;
-    }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    //route used as an external API for our mobile application
+    // ROUTE USED AS AN EXTERNAL API FOR OUR MOBILE APPLICATION
     public function getSummonerMatchesMobileAPI($summonerName, $region){
       $continent = $this->setContinent($region);
       
@@ -267,6 +358,7 @@
       return $summoner;
     }
 
+    // SAME AS getMatchInfo() BUT ADJUSTED FOR MOBILE API
     private function getMatchInfoMobileAPI($matchId, $continent, $mainPlayerPuuid){
       $ch = curl_init();
       $url = 'https://' . $continent . '.api.riotgames.com/lol/match/v5/matches/' . $matchId;
@@ -278,11 +370,13 @@
       return $json = $this->filterInfoMobileAPI($json['info'], $mainPlayerPuuid);
     }
     
+    // SAME AS filterInfo() BUT ADJUSTED FOR MOBILE API
     private function filterInfoMobileAPI($info, $mainPlayerPuuid){
       $parts = $this->filterParticipantsMobileAPI($info, $mainPlayerPuuid);
       return $parts;
     }
     
+    // SAME AS filterParticipants() BUT ADJUSTED FOR MOBILE API
     private function filterParticipantsMobileAPI($info, $mainPlayerPuuid){
       $foundPlayer = "false";
       $returnVal = array('championIcon' => 0,'kda' => 0, 'matchResult' => " ", 'killsDeathsAssists' => 0, 

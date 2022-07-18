@@ -12,6 +12,7 @@
 * )
 */
 
+// RETURNS FAVOURITE MATCHES
 Flight::route('POST /favouriteMatches', function(){ 
   $user = Flight::request()->data->getData();
   $userId = $user['userId'];
@@ -45,6 +46,7 @@ Flight::route('POST /favouriteMatches', function(){
 * )
 */
 
+// ADDS A MATCH TO THE FAVOURITES
 Flight::route("POST /addFavouriteMatch",  function(){
     $data = Flight::request()->data->getData();
     $APIMatchID = $data['APImatchID'];
@@ -57,6 +59,8 @@ Flight::route("POST /addFavouriteMatch",  function(){
     $currentMatch = Flight::favouriteMatchService()->getIdMatchIDContinent($userId, $APIMatchID, $continent);
     if(!isset($currentMatch['userId'])){
       $numOfFavsInDB = Flight::favouriteMatchService()->countFavMatchesByID($userId);
+
+      // LIMITS THE NUMBER OF FAVOURITE MATCHES PER USER TO 5
       if($numOfFavsInDB['count'] >= 5) {
         Flight::json(["message" => "Reached max number of favourite matches"], 400);
         die;
@@ -85,6 +89,7 @@ Flight::route("POST /addFavouriteMatch",  function(){
 * )
 */
 
+// REMOVES A MATCH FROM THE FAVOURITES
 Flight::route("DELETE /removeFavouriteMatch",  function(){
   $data = Flight::request()->data->getData();
   $APIMatchID = $data['APImatchID'];

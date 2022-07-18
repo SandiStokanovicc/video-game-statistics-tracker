@@ -11,7 +11,7 @@ class FavouriteDao extends BaseDao {
   }
 
   public function getFavouriteById($userId){
-    return $this->query_specific("SELECT * FROM favourites WHERE userId = $userId", ['userId' => $userId]);
+    return $this->query("SELECT * FROM favourites WHERE userId = :userId", ['userId' => $userId]);
   }
 
   public function getIdAndSummonerName($userId, $summonerName){

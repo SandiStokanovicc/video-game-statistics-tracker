@@ -3,7 +3,7 @@ var UserService = {
     init: function () {
         var token = localStorage.getItem("token");
         if (token) {
-            try { 
+            try {
                 var base64Url = token.split('.')[1];
                 var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
                 var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {

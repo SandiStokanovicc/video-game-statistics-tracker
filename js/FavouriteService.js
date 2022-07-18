@@ -40,10 +40,18 @@ var FavouriteService = {
                 toastr.success("added");
             },
 
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(errorThrown);
+                console.log(textStatus);
+                console.log(JSON.stringify(XMLHttpRequest));
+                console.log(JSON.stringify(XMLHttpRequest.responseJSON));
+            }
+            /*
             error: function (errorMessage) {
                 console.log(errorMessage);
-                toastr.error(errorMessage.responseJSON.message);
+                //toastr.error(errorMessage.responseJSON.message);
             }
+            */
         });
     },
 
@@ -78,10 +86,8 @@ var FavouriteService = {
                 for (var i = 0; i < data.length; i++) {
                     var info = {};
                     info = FavouriteService.getIcon(data[i].summonerName, data[i].serverId);
-                    //console.log(info[0]);
-                    //console.log(info[1]);
                     html += `
-                        <div class="row mt-4 mb-4 shadow" id="favouriteplayer` + (i + 1) + ` class=favouriteClass">
+                        <div class="row mt-4 mb-4 shadow favouriteClass " id="favouriteplayer` + (i + 1) + `">
                         <div class="col">
                             <img class="shadow profileicons mt-3 mb-3 favmatch" src="Pictures/profileIcons/` + info[0] + `.png" alt="profileicon" onclick="RiotService.getSummonerInfo('` + data[i].summonerName + `',' ` + data[i].serverId + `')">
                         </div>
@@ -103,6 +109,7 @@ var FavouriteService = {
                 </div>
                 `;
                 FavouriteService.displayShowFavouritePlayers();
+                console.log(html);
                 $("#favouritesContainer").html(html);
             },
             error: function (errorMessage) {
@@ -141,8 +148,9 @@ var FavouriteService = {
     },
 
     removeFavouriteSummoner: function (summonerName, serverId, favouriteIndex) {
-        var old_html = $("#favouriteContainer").html();
-        $('#favouriteplayer' + (favouriteIndex + 1)).remove();
+        var old_html = $("#favouritesContainer").html();
+        var favDel = '#favouriteplayer' + (parseInt(favouriteIndex) + 1);
+        $(favDel).remove();
         toastr.info("Removing in the background...");
         var user = new Object();
         if (typeof (parsedUser) != 'undefined') {
@@ -159,12 +167,17 @@ var FavouriteService = {
                     xhr.setRequestHeader('Authorization', localStorage.getItem("token"));
                 },
 
-                success: function (data) {
+                success: function () {
                     toastr.success("Removed from favourites");
+                    var favContainer = $('#favouritesContainer')[0];
+                    var favClass = $('.favouriteClass')[0];
+                    if (!favContainer.contains(favClass)) {
+                        toastr.info("Empty favourites, redirecting...");
+                        setTimeout(() => { window.location.replace("index.html"); }, 3000);
+                    }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //console.log(data);
-                    //toastr.error("error");
+                    $("#favouritesContainer").html(old_html);
                     console.log(errorThrown);
                     console.log(textStatus);
                     console.log(JSON.stringify(XMLHttpRequest));
