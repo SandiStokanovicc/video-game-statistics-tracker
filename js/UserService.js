@@ -2,9 +2,9 @@ var UserService = {
     parsedUser: "",
     init: function () {
         var token = localStorage.getItem("token");
-        if (token) {
+        if (token) { // if user is logged in
             try {
-                var base64Url = token.split('.')[1];
+                var base64Url = token.split('.')[1];      //function for getting data from JWT key
                 var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
                 var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
                     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
@@ -24,7 +24,7 @@ var UserService = {
             $("#your-profile").innerHTML = parsedUser.username;
 
 
-        } else {
+        } else { //if user isn't logged in
             $("#sign-in").removeClass('d-none');
             $("#sign-up").removeClass('d-none');
             $("#sign-out").addClass('d-none');
@@ -33,7 +33,7 @@ var UserService = {
         }
 
 
-
+        // login and signup forms validations and function calls
         $('#login-form').validate({
             rules: {
                 emailLogIn: {
@@ -109,6 +109,8 @@ var UserService = {
 
 
     },
+
+    //login
     login: function (user) {
 
         $.ajax({
@@ -119,7 +121,7 @@ var UserService = {
             dataType: "json",
 
             success: function (data) {
-                localStorage.setItem("token", data.token);
+                localStorage.setItem("token", data.token); //sets jwt token from data
                 window.location.replace("index.html");
             },
 
@@ -134,14 +136,14 @@ var UserService = {
     },
 
 
-
+    //log out user
     logout: function () {
-        localStorage.clear();
+        localStorage.clear(); //remove token from local storage
         window.location.replace("index.html");
     },
 
 
-
+    //register user
     register: function (user) {
         console.log(JSON.stringify(user));
         $.ajax({
@@ -160,8 +162,6 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
-                //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));

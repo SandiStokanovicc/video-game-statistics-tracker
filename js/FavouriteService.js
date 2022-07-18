@@ -1,7 +1,7 @@
 var FavouriteService = {
 
     displaySpinner: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')})
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main").addClass('d-none');
         $("#matches").addClass('d-none');
         $("#favourites").addClass('d-none');
@@ -9,7 +9,7 @@ var FavouriteService = {
     },
 
     displayShowFavouritePlayers: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')})
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main-container").addClass('d-none');
         $("#main").addClass('d-none');
         $("#faq").addClass('d-none');
@@ -20,7 +20,7 @@ var FavouriteService = {
     },
 
     addFavourite: function () {
-        var user = new Object();
+        var user = new Object();                //creating user object for easier transfer of data to backend
         user.summonerName = globalPlayerInput;
         user.serverId = globalRegion;
         if (typeof (parsedUser) != 'undefined') {
@@ -46,19 +46,14 @@ var FavouriteService = {
                 console.log(JSON.stringify(XMLHttpRequest));
                 console.log(JSON.stringify(XMLHttpRequest.responseJSON));
             }
-            /*
-            error: function (errorMessage) {
-                console.log(errorMessage);
-                //toastr.error(errorMessage.responseJSON.message);
-            }
-            */
         });
     },
 
+    //displays favourite players
     getFavouritePlayers: function () {
         FavouriteService.displaySpinner();
         var parsedUserData = new Object();
-        if (typeof (parsedUser) != 'undefined') {
+        if (typeof (parsedUser) != 'undefined') { //if user is logged in
             parsedUserData = parsedUser
         };
         $.ajax({
@@ -73,7 +68,6 @@ var FavouriteService = {
             },
 
             success: function (data) {
-                console.log(data);
                 var html = "";
                 html += `
                 <div id="favouriteplayers">
@@ -109,12 +103,10 @@ var FavouriteService = {
                 </div>
                 `;
                 FavouriteService.displayShowFavouritePlayers();
-                console.log(html);
                 $("#favouritesContainer").html(html);
             },
             error: function (errorMessage) {
                 console.log(errorMessage);
-                toastr.error(errorMessage.responseJSON.message);
                 RiotService.unhideMainPageOnFail();
             }
         });
@@ -133,7 +125,7 @@ var FavouriteService = {
             },
 
             success: function (data) {
-
+                //gets data for summoner from api call and adds into array, sends array to get favourites
                 info[0] = data.profileIconId;
                 info[1] = data.summonerLevel;
 
@@ -147,12 +139,13 @@ var FavouriteService = {
         return info;
     },
 
+    //removes a summoner from favourites
     removeFavouriteSummoner: function (summonerName, serverId, favouriteIndex) {
         var old_html = $("#favouritesContainer").html();
-        var favDel = '#favouriteplayer' + (parseInt(favouriteIndex) + 1);
+        var favDel = '#favouriteplayer' + (parseInt(favouriteIndex) + 1); //Deleting the summoner in frontend
         $(favDel).remove();
         toastr.info("Removing in the background...");
-        var user = new Object();
+        var user = new Object(); //object for backend
         if (typeof (parsedUser) != 'undefined') {
             user.userId = parsedUser.iduser;
             user.summonerName = summonerName;
@@ -169,8 +162,8 @@ var FavouriteService = {
 
                 success: function () {
                     toastr.success("Removed from favourites");
-                    var favContainer = $('#favouritesContainer')[0];
-                    var favClass = $('.favouriteClass')[0];
+                    var favContainer = $('#favouritesContainer')[0];           //checking if user needs to be redirected since 0 summoners
+                    var favClass = $('.favouriteClass')[0];     
                     if (!favContainer.contains(favClass)) {
                         toastr.info("Empty favourites, redirecting...");
                         setTimeout(() => { window.location.replace("index.html"); }, 3000);

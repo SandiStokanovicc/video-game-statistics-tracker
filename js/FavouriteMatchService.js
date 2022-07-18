@@ -2,7 +2,7 @@ var FavouriteMatchService = {
     globalFavouriteMatches: "",
 
     displaySpinner: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main").addClass('d-none');
         $("#matches").addClass('d-none');
         $("#favourites").addClass('d-none');
@@ -10,7 +10,7 @@ var FavouriteMatchService = {
     },
 
     displayShowFavouriteMatches: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main-container").addClass('d-none');
         $("#main").addClass('d-none');
         $("#faq").addClass('d-none');
