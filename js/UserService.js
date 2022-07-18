@@ -160,7 +160,6 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                toastr.error(XMLHttpRequest.responseJSON.message);
                 //toastr.error("error");
                 console.log(errorThrown);
                 console.log(textStatus);
