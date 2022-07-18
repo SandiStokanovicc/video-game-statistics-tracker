@@ -1,6 +1,6 @@
 var RiotService = {
     displaySpinner: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main").addClass('d-none');
         $("#main-container").removeClass('d-none');
         $("#matches").addClass('d-none');
@@ -8,13 +8,13 @@ var RiotService = {
     },
 
     displayShowMatches: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main-container").addClass('d-none');
         $("#matches").removeClass('d-none');
     },
 
     unhideMainPageOnFail: function () {
-        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#background").css({"background-image": "url('Pictures/background-blur.png')"});
         $("#main-container").addClass('d-none');
         $("#matches").addClass('d-none');
         $("#main").removeClass('d-none');

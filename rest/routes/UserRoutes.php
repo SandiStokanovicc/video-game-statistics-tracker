@@ -1,18 +1,7 @@
 <?php
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-// CRUD operations for todos entity
 
-/**
-* List all todos
-*/
-Flight::route('GET /users', function(){
-  Flight::json(Flight::userService()->get_all());
-});
-
-/**
-* register user
-*/
 /**
 * @OA\Post(
 *     path="/register",
@@ -37,16 +26,13 @@ Flight::route('GET /users', function(){
 * )
 */
 
+//register a user
 Flight::route('POST /register', function(){
-$data = Flight::request()->data->getData();
-$data['password'] = md5($data['password']);
-$user = Flight::userService()->add($data);
+$data = Flight::request()->data->getData(); //get data from post ajax
+$data['password'] = md5($data['password']); //hash the password
+$user = Flight::userService()->add($data); //add user to db
 Flight::json($user);}
 );
-/**
-* login user
-*/
-
 
 
 /**
@@ -72,13 +58,14 @@ Flight::json($user);}
 * )
 */
 
+//user login
 Flight::route('POST /login', function(){
-  $login = Flight::request()->data->getData();
-  $user = Flight::userDao()->getUserByEmail($login['emailLogIn']);
-  if (isset($user['iduser'])){
-    if($user['password'] == md5($login['passwordLogIn'])){
+  $login = Flight::request()->data->getData(); //get data from post ajax
+  $user = Flight::userDao()->getUserByEmail($login['emailLogIn']); 
+  if (isset($user['iduser'])){ //check if user exists in db
+    if($user['password'] == md5($login['passwordLogIn'])){ //check password validity
       unset($user['password']);
-      $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256');
+      $jwt = JWT::encode($user, Config::JWT_SECRET(), 'HS256'); //if all ios good, create jwt token and return it to the ajax call
       Flight::json(['token' => $jwt]);
     }else{
       Flight::json(["message" => "Wrong password"], 404);
