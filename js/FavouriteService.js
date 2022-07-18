@@ -108,6 +108,7 @@ var FavouriteService = {
             error: function (errorMessage) {
                 console.log(errorMessage);
                 RiotService.unhideMainPageOnFail();
+                toastr.error(errorMessage.responseJSON.message);
             }
         });
 
