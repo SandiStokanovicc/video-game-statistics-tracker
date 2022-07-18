@@ -1,23 +1,23 @@
 var RiotService = {
     displaySpinner: function () {
-        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
-        document.getElementById("main").classList.add('d-none');
-        document.getElementById("main-container").classList.remove('d-none');
-        document.getElementById("matches").classList.add('d-none');
-        document.getElementById("favourites").classList.add('d-none');
+        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#main").addClass('d-none');
+        $("#main-container").removeClass('d-none');
+        $("#matches").addClass('d-none');
+        $("#favourites").addClass('d-none');
     },
 
     displayShowMatches: function () {
-        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
-        document.getElementById("main-container").classList.add('d-none');
-        document.getElementById("matches").classList.remove('d-none');
+        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#main-container").addClass('d-none');
+        $("#matches").removeClass('d-none');
     },
 
     unhideMainPageOnFail: function () {
-        document.getElementById("background").style.backgroundImage = "url('Pictures/background1.png')";
-        document.getElementById("main-container").classList.add('d-none');
-        document.getElementById("matches").classList.add('d-none');
-        document.getElementById("main").classList.remove('d-none');
+        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#main-container").addClass('d-none');
+        $("#matches").addClass('d-none');
+        $("#main").removeClass('d-none');
     },
 
     showLiveMatch: function () {

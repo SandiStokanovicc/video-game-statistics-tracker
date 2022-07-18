@@ -2,22 +2,22 @@ var FavouriteMatchService = {
     globalFavouriteMatches: "",
 
     displaySpinner: function () {
-        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
-        document.getElementById("main").classList.add('d-none');
-        document.getElementById("matches").classList.add('d-none');
-        document.getElementById("favourites").classList.add('d-none');
-        document.getElementById("main-container").classList.remove('d-none');
+        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#main").addClass('d-none');
+        $("#matches").addClass('d-none');
+        $("#favourites").addClass('d-none');
+        $("#main-container").removeClass('d-none');
     },
 
     displayShowFavouriteMatches: function () {
-        document.getElementById("background").style.backgroundImage = "url('Pictures/background-blur.png')";
-        document.getElementById("main-container").classList.add('d-none');
-        document.getElementById("main").classList.add('d-none');
-        document.getElementById("faq").classList.add('d-none');
-        document.getElementById("copyright").classList.add('d-none');
-        document.getElementById("about-us").classList.add('d-none');
-        document.getElementById("favourites").classList.add('d-none');
-        document.getElementById("matches").classList.remove('d-none');
+        $("#background").css({"background-image": url('Pictures/background-blur.png')});
+        $("#main-container").addClass('d-none');
+        $("#main").addClass('d-none');
+        $("#faq").addClass('d-none');
+        $("#copyright").addClass('d-none');
+        $("#about-us").addClass('d-none');
+        $("#favourites").addClass('d-none');
+        $("#matches").removeClass('d-none');
     },
 
     init: function () {

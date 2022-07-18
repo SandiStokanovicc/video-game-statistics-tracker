@@ -16,20 +16,20 @@ var UserService = {
                 setTimeout(() => { this.logout(); }, 3000);
 
             }
-            document.getElementById("sign-in").classList.add('d-none');
-            document.getElementById("sign-up").classList.add('d-none');
-            document.getElementById("or").classList.add('d-none');
-            document.getElementById("sign-out").classList.remove('d-none');
+            $("#sign-in").addClass('d-none');
+            $("#sign-up").addClass('d-none');
+            $("#or").addClass('d-none');
+            $("#sign-out").removeClass('d-none');
 
-            document.getElementById("your-profile").innerHTML = parsedUser.username;
+            $("#your-profile").innerHTML = parsedUser.username;
 
 
         } else {
-            document.getElementById("sign-in").classList.remove('d-none');
-            document.getElementById("sign-up").classList.remove('d-none');
-            document.getElementById("sign-out").classList.add('d-none');
-            document.getElementById("your-profile").classList.add('d-none');
-            document.getElementById("or").classList.remove('d-none');
+            $("#sign-in").removeClass('d-none');
+            $("#sign-up").removeClass('d-none');
+            $("#sign-out").addClass('d-none');
+            $("#your-profile").addClass('d-none');
+            $("#or").removeClass('d-none');
         }
 
 

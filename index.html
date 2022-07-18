@@ -477,51 +477,53 @@
 
         /*SHOW COPYRIGHT*/
         function displayShowCopyright() {
-            document.getElementById("copyright").classList.remove('d-none');
-            document.getElementById("copyright-footer").classList.add('text-decoration-underline');
-            document.getElementById("faq-footer").classList.remove('text-decoration-underline');
-            document.getElementById("about-us-footer").classList.remove('text-decoration-underline');
-            document.getElementById("main").classList.add('d-none');
-            document.getElementById("faq").classList.add('d-none');
-            document.getElementById("about-us").classList.add('d-none');
-            document.getElementById("matches").classList.add('d-none');
-            document.getElementById("favourites").classList.add('d-none');
+            $("#copyright").removeClass('d-none');
+            $("#copyright-footer").addClass('text-decoration-underline');
+            $("#faq-footer").removeClass('text-decoration-underline');
+            $("#about-us-footer").removeClass('text-decoration-underline');
+            $("#main").addClass('d-none');
+            $("#faq").addClass('d-none');
+            $("#about-us").addClass('d-none');
+            $("#matches").addClass('d-none');
+            $("#favourites").addClass('d-none');
         }
 
         /*SHOW FAQ*/
         function displayShowFaq() {
-            document.getElementById("faq").classList.remove('d-none');
-            document.getElementById("faq-footer").classList.add('text-decoration-underline');
-            document.getElementById("copyright-footer").classList.remove('text-decoration-underline');
-            document.getElementById("about-us-footer").classList.remove('text-decoration-underline');
-            document.getElementById("main").classList.add('d-none');
-            document.getElementById("copyright").classList.add('d-none');
-            document.getElementById("about-us").classList.add('d-none');
-            document.getElementById("matches").classList.add('d-none');
-            document.getElementById("favourites").classList.add('d-none');
+            $("#faq").removeClass('d-none');
+            $("#faq-footer").addClass('text-decoration-underline');
+            $("#copyright-footer").removeClass('text-decoration-underline');
+            $("#about-us-footer").removeClass('text-decoration-underline');
+            $("#main").addClass('d-none');
+            $("#copyright").addClass('d-none');
+            $("#about-us").addClass('d-none');
+            $("#matches").addClass('d-none');
+            $("#favourites").addClass('d-none');
         }
 
         /*SHOW ABOUT US*/
         function displayShowAboutUs() {
-            document.getElementById("about-us").classList.remove('d-none');
-            document.getElementById("about-us-footer").classList.add('text-decoration-underline');
-            document.getElementById("faq-footer").classList.remove('text-decoration-underline');
-            document.getElementById("copyright-footer").classList.remove('text-decoration-underline');
-            document.getElementById("main").classList.add('d-none');
-            document.getElementById("faq").classList.add('d-none');
-            document.getElementById("copyright").classList.add('d-none');
-            document.getElementById("matches").classList.add('d-none');
-            document.getElementById("favourites").classList.add('d-none');
+            $("#about-us").removeClass('d-none');
+            $("#about-us-footer").addClass('text-decoration-underline');
+            $("#faq-footer").removeClass('text-decoration-underline');
+            $("#copyright-footer").removeClass('text-decoration-underline');
+            $("#main").addClass('d-none');
+            $("#faq").addClass('d-none');
+            $("#copyright").addClass('d-none');
+            $("#matches").addClass('d-none');
+            $("#favourites").addClass('d-none');
         }
 
         /*SEARCH ON ENTER*/
-        var input = document.getElementById("SearchPlayerInput");
-        input.addEventListener("keypress", function (event) {
+        function searchOnEnter(){
+        var input = $("#SearchPlayerInput");
+        input.on("keypress", function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                document.getElementById("SearchButtonInput").onclick();
+                $("#SearchButtonInput").click();
             }
         });
+    }
 
 
     </script>
@@ -538,6 +540,7 @@
     <script> UserService.init();</script>
     <script> FavouriteMatchService.init(); </script>
     <script> TipsService.init(); </script>
+    <script> searchOnEnter();</script>
 
 </body>
 
