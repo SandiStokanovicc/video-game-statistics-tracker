@@ -162,10 +162,6 @@ var UserService = {
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-<<<<<<< HEAD
-                //toastr.error("error");
-=======
->>>>>>> 39fd7fa794cad8e98dd17755625cdeb8800ef9cf
                 console.log(errorThrown);
                 console.log(textStatus);
                 console.log(JSON.stringify(XMLHttpRequest));
